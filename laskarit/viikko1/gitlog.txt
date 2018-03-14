@@ -1,0 +1,116 @@
+commit 7fca88e847e5275df1de2d7897f77eb68e36d6c2
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Wed Mar 14 12:34:33 2018 +0200
+
+    poisto ja uudelleen nimeäminen
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit e4b7e32a9a1cdeca9045c2463c3def4d01b12a37
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Wed Mar 14 12:31:42 2018 +0200
+
+    tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 7349314009e4ad7fdb66521a47be382e42d66add
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 16:13:40 2018 +0200
+
+    lisäyksiä ja poistoja
+
+ eka.txt    | 27 +++++++--------------------
+ kolmas.txt |  5 ++++-
+ 2 files changed, 11 insertions(+), 21 deletions(-)
+
+commit 964bd945727b1a2f87806a01a8d2be00a558c585
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 16:11:20 2018 +0200
+
+    nimetty tiedosto -> eka
+
+ eka.txt      | 623 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tiedosto.txt | 623 -----------------------------------------------------------
+ 2 files changed, 623 insertions(+), 623 deletions(-)
+
+commit a1cfd85f794b40e7eefd19825c6fc074fe134778
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 16:09:59 2018 +0200
+
+    poistettu toinen
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 45be8bf772b09055dc4eb5f52e9fe643b849ee7d
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 16:06:45 2018 +0200
+
+    poistettu vähän ja lisätty vähän
+
+ tiedosto.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit cedf391645dd73aeba1bbc2c46b06050ea4f89e5
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 16:04:56 2018 +0200
+
+    kopioitu paljon tekstiä tiedostoon
+
+ tiedosto.txt | 623 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 622 insertions(+), 1 deletion(-)
+
+commit abe412b0c47886c48616f640361912f41dfbd0eb
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 16:00:23 2018 +0200
+
+    lisätty stuff
+
+ stuff/jokinTiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 2ff47f61bf3cee087bdbab2ddfb313261a8091e3
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 15:59:38 2018 +0200
+
+    muokattu toinen ja kolmas
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit f45b856e0c4e2998918571df4da6de476642b581
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 15:58:48 2018 +0200
+
+    lisätty kolmas.txt
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 22120bab88616cca2531c4799bf5848933cd835f
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 15:56:45 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 8470caac840433513f95f0720939b9273163d852
+Author: Oskari <oskari.tommiska@helsinki.fi>
+Date:   Tue Mar 13 15:55:03 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
