@@ -9,7 +9,10 @@
 
 **Viikko 2:**
 
-Tehtävät palautettu hakemistoon */laskarit/viikko2*
+*Viikon 2 palautus kesken*
+
+Harjoitustehtävät palautettu hakemistoon */laskarit/viikko2*
+Määrittelydokumentti lisätty hakemistoon [*/dokumentointi/*](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
 
 
 *Work in progress*
