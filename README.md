@@ -6,7 +6,8 @@
 
 [komentorivi.txt](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)\
 [gitlog.txt](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-
+\
+\
 **Viikko 2:**
 
 *Viikon 2 palautus kesken*
