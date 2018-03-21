@@ -6,7 +6,7 @@
 
 ## Viikko 1:
 
-Harjoitustehtävät:
+Harjoitustehtävät:\
 [komentorivi.txt](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)\
 [gitlog.txt](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
@@ -14,11 +14,11 @@ Harjoitustehtävät:
 
 ## Viikko 2:
 
-Harjoitustehtävät:
-[*/laskarit/viikko2*\](https://github.com/oskarioskari/otm-harjoitustyo/tree/master/laskarit/viikko2)
+Harjoitustehtävät:\
+[/laskarit/viikko2](https://github.com/oskarioskari/otm-harjoitustyo/tree/master/laskarit/viikko2)
 
-Harjoitustyö:
-Määrittelydokumentti lisätty: [*vaatimusmaarittely.md*](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
+Harjoitustyö:\
+[*vaatimusmaarittely.md*](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
 
 
 
