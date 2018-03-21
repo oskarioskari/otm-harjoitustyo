@@ -7,6 +7,8 @@
 
 Sovellus on peli, jossa sivulta päin kuvatulla kaksiuloitteisella kartalla kaksi tykkitornia pyrkivät tuhoamaan toisensa erilaisia aseita/ammuksia käyttämällä. Eri aseilla/ammuksilla on erilaisia ominaisuuksia, jotka vaikuttavat mm. niiden lentoratoihin ja tuhovoimaan. Peliä pelataan vuorotellen.
 
+(Kyseessä on siis klooni Aapelin (aapeli.com) Tykkipelistä sillä erotuksella, että peliä voi pelata vain paikallisesti.)
+
 
 ## Käyttäjät
 
