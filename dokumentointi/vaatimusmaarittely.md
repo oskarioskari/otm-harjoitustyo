@@ -22,7 +22,7 @@ Sovelluksessa on kaksi eri näkymää: *päävalikkonäkymä* ja *pelinäkymä*.
 * Pelinäkymä koostuu kaksiulotteisesta, sivulta päin kuvatusta kartasta, jolla itse pelaaminen tapahtuu. Kartta koostuu kahdesta alueesta: maasta ja ilmasta. Tykit sijaitsevat maan pinnalla.
 
 
-![Havainnollistava kuva](/kuvat/vaatimusmaarittely.jpg)
+<img src="https://raw.githubusercontent.com/oskarioskari/otm-harjoitustyo/master/dokumentointi/kuvat/vaatimusmaarittely.jpg" width="750">
 
 
 ## Perusversion tarjoama toiminnallisuus
