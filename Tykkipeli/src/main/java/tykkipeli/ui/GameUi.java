@@ -1,6 +1,7 @@
 package tykkipeli.ui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,25 +20,29 @@ public class GameUi extends Application {
     @Override
     public void start(Stage stage) {
 
-        Button startGame = new Button("Start Game");
+        // Setting up main menu:
+        Button startGame = new Button("Start Game");    // Start game
+        Button settings = new Button("Settings");       // Open settings menu
+        Button quitGame = new Button("Quit Game");      // Quit game
+
+        // Button sizes
         startGame.setPrefSize(200, 50);
-
-        Button settings = new Button("Settings");
         settings.setPrefSize(200, 50);
-
-        Button quitGame = new Button("Quit Game");
         quitGame.setPrefSize(200, 50);
 
-        VBox vbox = new VBox(30);
-        vbox.setPadding(new Insets(80));
+        VBox menu1 = new VBox(30);
+        menu1.setPadding(new Insets(80));
 
-        vbox.getChildren().add(startGame);
-        vbox.getChildren().add(settings);
-        vbox.getChildren().add(quitGame);
+        menu1.getChildren().add(startGame);
+        menu1.getChildren().add(settings);
+        menu1.getChildren().add(quitGame);
 
-        Scene scene = new Scene(vbox);
+        Scene mainMenu = new Scene(menu1);
+        stage.setTitle("Tykkipeli");
+        stage.setScene(mainMenu);
+        stage.show();
 
-        // EventHandlers for buttons:
+        // EventHandlers for main menu buttons:
         startGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -51,27 +56,46 @@ public class GameUi extends Application {
         settings.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Button select1 = new Button("Select 1");
-                Button select2 = new Button("Select 2");
-                Button back = new Button("Back");
-                back.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent t) {
-                        stage.setScene(scene);
-                    }
-                });
-                VBox selections = new VBox(30);
-                selections.setPadding(new Insets(80));
-                selections.getChildren().add(select1);
-                selections.getChildren().add(select2);
-                selections.getChildren().add(back);
-                Scene settingsScene = new Scene(selections);
-                stage.setScene(settingsScene);
+                settingsScreen(stage, mainMenu); // Changes stage to settingsMenu
             }
         });
 
-        stage.setTitle("Tykkipeli");
-        stage.setScene(scene);
-        stage.show();
+        quitGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Platform.exit();
+            }
+
+        });
+    }
+
+    public void settingsScreen(Stage stage, Scene mainMenu) { // Settings menu
+        Button select1 = new Button("Select 1");    // Placeholders
+        Button select2 = new Button("Select 2");    //
+        Button back = new Button("Back");           // Back
+
+        select1.setPrefSize(200, 50);
+        select2.setPrefSize(200, 50);
+        back.setPrefSize(200, 50);
+
+        // Get back to main menu
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                stage.setScene(mainMenu);
+            }
+        });
+
+        VBox menu2 = new VBox(30);
+        menu2.setPadding(new Insets(80));
+        menu2.getChildren().add(select1);
+        menu2.getChildren().add(select2);
+        menu2.getChildren().add(back);
+        Scene settingsMenu = new Scene(menu2);
+        stage.setScene(settingsMenu);
+    }
+
+    public void gameScreen() {
+        
     }
 }
