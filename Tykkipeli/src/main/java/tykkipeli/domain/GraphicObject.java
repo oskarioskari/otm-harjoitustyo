@@ -2,23 +2,27 @@ package tykkipeli.domain;
 
 public class GraphicObject {
 
-    double mass, speed, direction;
-    int x, y;
+    private double mass, speed, speedDirection, acceleration, accDirection;
+    private double x, y;
 
     public GraphicObject(int x, int y) {
         this.x = x;
         this.y = y;
         this.mass = 0.0;
         this.speed = 0.0;
-        this.direction = 0.0;
+        this.speedDirection = 0.0;
+        this.acceleration = 0.0;
+        this.accDirection = 0.0;
     }
 
-    public GraphicObject(int x, int y, double mass, double velocity, double direction) {
+    public GraphicObject(int x, int y, double mass, double velocity, double vDirection, double acceleration, double aDirection) {
         this.x = x;
         this.y = y;
         this.mass = mass;
         this.speed = velocity;
-        this.direction = direction;
+        this.speedDirection = vDirection;
+        this.acceleration = acceleration;
+        this.accDirection = aDirection;
     }
 
     public double getMass() {
@@ -29,12 +33,12 @@ public class GraphicObject {
         this.mass = newMass;
     }
 
-    public int[] getLocation() {
-        int[] location = {this.x, this.y};
+    public double[] getLocation() {
+        double[] location = {this.x, this.y};
         return location;
     }
 
-    public void setLocation(int[] newLocation) {
+    public void setLocation(double[] newLocation) {
         this.x = newLocation[0];
         this.y = newLocation[1];
     }
@@ -48,11 +52,24 @@ public class GraphicObject {
     }
 
     public double getDirection() {
-        return this.direction;
+        return this.speedDirection;
     }
 
-    public void setDirection(double newDirection) {
-        this.direction = newDirection;
+    public void setSpeedDirection(double newDirection) {
+        this.speedDirection = newDirection;
+    }
+
+    public double[] getAcceleration() {
+        double[] ret = {this.acceleration, this.accDirection};
+        return ret;
+    }
+
+    public void setAcceleration(double newAcceleration) {
+        this.acceleration = newAcceleration;
+    }
+
+    public void setAccelerationDirection(double newDirection) {
+        this.accDirection = newDirection;
     }
 
 }
