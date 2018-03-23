@@ -1,15 +1,22 @@
 package tykkipeli.ui;
 
+import java.io.File;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class GameUi extends Application {
 
@@ -43,47 +50,30 @@ public class GameUi extends Application {
         stage.show();
 
         // EventHandlers for main menu buttons:
-        startGame.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage game = new Stage();
-                game.setTitle("Tykkipeli");
-                Scene playArea = new Scene(new StackPane(), 100, 100);
-                game.show();
-            }
+        startGame.setOnAction((ActionEvent event) -> {
+            gameScreen(1);                                  // Opens new window
         });
 
-        settings.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                settingsScreen(stage, mainMenu); // Changes stage to settingsMenu
-            }
+        settings.setOnAction((ActionEvent event) -> {
+            settingsScreen(stage, mainMenu);                // Changes stage to settingsMenu
         });
 
-        quitGame.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Platform.exit();
-            }
-
+        quitGame.setOnAction((ActionEvent event) -> {
+            Platform.exit();                                // Quits program
         });
     }
 
-    public void settingsScreen(Stage stage, Scene mainMenu) { // Settings menu
+    public void settingsScreen(Stage stage, Scene mainMenu) {
         Button select1 = new Button("Select 1");    // Placeholders
         Button select2 = new Button("Select 2");    //
-        Button back = new Button("Back");           // Back
+        Button back = new Button("Back");           // Back to main menu
 
         select1.setPrefSize(200, 50);
         select2.setPrefSize(200, 50);
         back.setPrefSize(200, 50);
 
-        // Get back to main menu
-        back.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                stage.setScene(mainMenu);
-            }
+        back.setOnAction((ActionEvent t) -> {
+            stage.setScene(mainMenu);
         });
 
         VBox menu2 = new VBox(30);
@@ -91,11 +81,43 @@ public class GameUi extends Application {
         menu2.getChildren().add(select1);
         menu2.getChildren().add(select2);
         menu2.getChildren().add(back);
+
         Scene settingsMenu = new Scene(menu2);
         stage.setScene(settingsMenu);
     }
 
-    public void gameScreen() {
+    public void gameScreen(int turn) {
+        Stage stage = new Stage();
+        Group root = new Group();
+        Scene gameScene = new Scene(root);
+        stage.setScene(gameScene);
+
+        Canvas canvas = new Canvas(800, 500);
+        root.getChildren().add(canvas);
         
+        Image cannon_left = new Image("file:res/pictures/cannon_left.png");
+        Image cannon_right = new Image("file:res/pictures/cannon_right.png");
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        Timeline gameLoop = new Timeline();
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+        final long timeStart = System.currentTimeMillis();
+
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.017), (ActionEvent event) -> {
+            gc.setFill(new Color(0.85, 0.85, 1.0, 1.0));
+            gc.fillRect(0, 0, 800, 500);
+            gc.setFill(Color.BLUE);
+//            gc.clearRect(0, 0, 800, 500);
+            
+            gc.drawImage(cannon_left, 100, 400);
+            gc.drawImage(cannon_right, 700, 400);
+        });
+
+        gameLoop.getKeyFrames().add(kf);
+        gameLoop.play();
+
+        stage.show();
     }
 }
