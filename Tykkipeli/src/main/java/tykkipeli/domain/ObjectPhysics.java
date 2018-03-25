@@ -45,6 +45,15 @@ public class ObjectPhysics {
         velocity[0] += Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
         return velocity;
     }
+    
+    public double[] nextStepOnlyGravity(GraphicObject object) {
+        double[] newLoc = nextLocation(object);
+        double[] newVel = nextVelocity(object, object.getAcceleration());
+        object.setLocation(newLoc);
+        object.setSpeed(newVel[0]);
+        object.setSpeedDirection(newVel[1]);
+        return newLoc;
+    }
 
 //    public double[] calculateDrag() {
 //        TODO

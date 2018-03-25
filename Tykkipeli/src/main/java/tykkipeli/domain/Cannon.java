@@ -2,7 +2,7 @@ package tykkipeli.domain;
 
 public class Cannon extends GraphicObject {
 
-    public Cannon(int x, int y) {
+    public Cannon(double x, double y) {
         super(x, y);
     }
 

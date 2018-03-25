@@ -4,8 +4,12 @@ public class GraphicObject {
 
     private double mass, speed, speedDirection, acceleration, accDirection;
     private double x, y;
+    
+    public GraphicObject() {
+        
+    }
 
-    public GraphicObject(int x, int y) {
+    public GraphicObject(double x, double y) {
         this.x = x;
         this.y = y;
         this.mass = 0.0;
@@ -15,7 +19,7 @@ public class GraphicObject {
         this.accDirection = 0.0;
     }
 
-    public GraphicObject(int x, int y, double mass, double velocity, double vDirection, double acceleration, double aDirection) {
+    public GraphicObject(double x, double y, double mass, double velocity, double vDirection, double acceleration, double aDirection) {
         this.x = x;
         this.y = y;
         this.mass = mass;
