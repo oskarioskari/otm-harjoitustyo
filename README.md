@@ -1,6 +1,6 @@
 # README
 
-**Ohjelmistotekniikan menetelmät 2018**
+**Ohjelmistotekniikan menetelmät, kevät 2018**
 
 
 
