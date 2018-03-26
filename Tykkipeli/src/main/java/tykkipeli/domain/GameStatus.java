@@ -6,7 +6,7 @@ public class GameStatus {
     private int wait;
     
     public GameStatus() {
-        this.playerInTurn = 1;
+        this.playerInTurn = 0;
         this.wait = 0;
     }
     

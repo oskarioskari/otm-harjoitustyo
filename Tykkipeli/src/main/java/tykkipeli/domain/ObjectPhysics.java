@@ -39,13 +39,13 @@ public class ObjectPhysics {
     public double[] nextVelocity(GraphicObject object, double[] newAcceleration) {
         double[] velocity = {object.getSpeed(), object.getDirection()};
         double[] oldAcceleration = object.getAcceleration();
-        double deltaX = 0.5 * (oldAcceleration[0] * Math.cos(oldAcceleration[1] + newAcceleration[0] * Math.cos(newAcceleration[1])));
-        double deltaY = 0.5 * (oldAcceleration[0] * Math.sin(oldAcceleration[1] + newAcceleration[0] * Math.sin(newAcceleration[1])));
+        double deltaX = 0.5 * (oldAcceleration[0] * Math.cos(oldAcceleration[1]) + newAcceleration[0] * Math.cos(newAcceleration[1]));
+        double deltaY = 0.5 * (oldAcceleration[0] * Math.sin(oldAcceleration[1]) + newAcceleration[0] * Math.sin(newAcceleration[1]));
         velocity[1] = Math.atan((deltaY + velocity[0] * Math.sin(velocity[1])) / (deltaX + velocity[0] * Math.cos(velocity[1])));
         velocity[0] += Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
         return velocity;
     }
-    
+
     public double[] nextStepOnlyGravity(GraphicObject object) {
         double[] newLoc = nextLocation(object);
         double[] newVel = nextVelocity(object, object.getAcceleration());

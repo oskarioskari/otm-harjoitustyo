@@ -107,10 +107,15 @@ public class GameUi extends Application {
 
         double[] leftLoc = {100, 400};
         double[] rightLoc = {700, 400};
-        double angle = -1.0 * Math.PI / 4.0;
-        double power = 1.5;
+        double leftStartAngle = -1.0 * Math.PI / 4.0;
+        double rightStartAngle = (5.0 / 4.0) * Math.PI;
+        double leftStartPower = 5;
+        double rightStartPower = -5;
 
-        double gravity = 0.05;
+        Cannon leftCannon = new Cannon(leftLoc[0], leftLoc[1], leftStartAngle, leftStartPower);
+        Cannon rightCannon = new Cannon(rightLoc[0], rightLoc[1], rightStartAngle, rightStartPower);
+
+        double gravity = 0.5;
         double gravityDirection = Math.PI / 2.0;
 
         GameStatus gameStatus = new GameStatus();
@@ -119,6 +124,9 @@ public class GameUi extends Application {
 
         ArrayList<GraphicObject> ammolist = new ArrayList();
         ammolist.add(0, basicshell);
+        ArrayList<Cannon> cannons = new ArrayList();
+        cannons.add(0, leftCannon);
+        cannons.add(1, rightCannon);
 
         int selectedBullet = 0;
 
@@ -135,8 +143,8 @@ public class GameUi extends Application {
             gc.fillRect(0, 0, 800, 500);
             gc.setFill(Color.BLUE);
 
-            gc.drawImage(cannon_left, leftLoc[0], leftLoc[1]);
-            gc.drawImage(cannon_right, rightLoc[0], rightLoc[1]);
+            gc.drawImage(cannon_left, cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1]);
+            gc.drawImage(cannon_right, cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1]);
 
             if (gameStatus.getWait() == 1) {
                 moveAmmo(ammolist.get(selectedBullet), physics);
@@ -146,12 +154,19 @@ public class GameUi extends Application {
                 if (y > 400) {
                     gameStatus.setWait(0);
                     gc.drawImage(explosion1, x, y);
+                    if (gameStatus.getTurn() == 0) {
+                        gameStatus.setTurn(1);
+                    } else {
+                        gameStatus.setTurn(0);
+                    }
                 }
             }
 
             gameScene.setOnKeyPressed((KeyEvent keypressed) -> {
-                if (keypressed.getCode().toString().equals("ENTER")) {
-                    fireCannon(ammolist.get(selectedBullet), gameStatus.getTurn(), leftLoc, rightLoc, angle, power, gravity, gravityDirection);
+                if (keypressed.getCode().toString().equals("ENTER") && gameStatus.getWait() == 0) {
+                    double selectedAngle = cannons.get(gameStatus.getTurn()).getCannonAngle();
+                    double selectedPower = cannons.get(gameStatus.getTurn()).getCannonPower();
+                    fireCannon(ammolist.get(selectedBullet), gameStatus.getTurn(), leftLoc, rightLoc, selectedAngle, selectedPower, gravity, gravityDirection);
                     gc.drawImage(bullet, ammolist.get(selectedBullet).getLocation()[0], ammolist.get(selectedBullet).getLocation()[1]);
                     gameStatus.setWait(1);
                 }
@@ -167,13 +182,15 @@ public class GameUi extends Application {
     public void fireCannon(GraphicObject bullet, int player, double[] leftCannon, double[] rightCannon, double angle, double power, double gravity, double gravityDirection) {
         double[] loc = {0, 0};
 
-        if (player == 1) {
+        if (player == 0) {
             loc[0] = leftCannon[0] + 25;
             loc[1] = leftCannon[1] - 7;
-        } else if (player == 2) {
+        } else if (player == 1) {
             loc[0] = rightCannon[0] - 7;
             loc[1] = rightCannon[1] - 7;
         }
+        System.out.println(player);
+        System.out.println(angle);
 
         bullet.setLocation(loc);
         bullet.setSpeed(power);
@@ -184,6 +201,7 @@ public class GameUi extends Application {
 
     public void moveAmmo(GraphicObject ammo, ObjectPhysics physics) {
         double[] next = physics.nextStepOnlyGravity(ammo);
+        System.out.println(ammo.getDirection());
         ammo.setLocation(next);
     }
 
