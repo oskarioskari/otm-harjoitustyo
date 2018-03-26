@@ -6,3 +6,4 @@ Päivä | Käytetty aika | Selite
 21.3  | 2             | Täydennetty vaatimusmäärittelyä ja lisätty kuva. Tehty rautalankaversio päävalikkonäkymästä.
 22.3  | 3             | Jatkettu käyttöliittymän tekemistä. Aloitettu pelilogiikan tekeminen. Opiskeltu JavaFX:ää.
 23.3  | 3             | Edelleen opiskeltu JavaFX:ää. Ensimmäinen versio pelinäkymästä.
+25.3  | 2             | Toteutettu tykillä ampuminen ja yksinkertainen fysiikkamallinnus.
