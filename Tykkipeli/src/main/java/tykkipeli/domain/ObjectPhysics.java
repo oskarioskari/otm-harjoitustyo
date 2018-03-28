@@ -7,42 +7,51 @@ public class ObjectPhysics {
     public ObjectPhysics() {
     }
 
+    // Object behavior is calculated using Velocity Verlet algorithm.
+    // For more info: https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet
+    // Unit of length is "pixels/frame update" and unit of time is "time between two frames".
     public double[] nextLocation(GraphicObject object) {
+        // Calculate object location during step i+1.
         double[] location = object.getLocation();
-        double speed = object.getSpeed();
-        double direction = object.getDirection();
+        double[] speed = object.getSpeed();
         double[] acc = object.getAcceleration();
-        double deltaX = speed * Math.cos(direction) + 0.5 * acc[0] * Math.cos(acc[1]);
-        double deltaY = speed * Math.sin(direction) + 0.5 * acc[0] * Math.sin(acc[1]);
+        double deltaX = speed[0] + 0.5 * acc[0];
+        double deltaY = speed[1] + 0.5 * acc[1];
         location[0] += deltaX;
         location[1] += deltaY;
         return location;
     }
 
-    public double[] sumAcceleration(GraphicObject object, ArrayList<double[]> forces) {
+    public double[] sumAcceleration(GraphicObject object, ArrayList<double[]> newAccelerations) {
+        // Method assumes that all accelerations are listed in "newAccelerations".
+        // If "newAccelerations" is not empty the method will overwrite all old values.
         double[] netAcceleration = object.getAcceleration();
-        if (forces.isEmpty()) {
+        if (newAccelerations.isEmpty()) {           // Use old values.
             return netAcceleration;
-        } else {
+        } else {                                    // Calculate new sum acceleration and discard old values.
             double deltaX = 0.0;
             double deltaY = 0.0;
-            for (double[] f : forces) {
-                deltaX += f[0] * Math.cos(f[1]);
-                deltaY += f[0] * Math.sin(f[1]);
+            for (double[] a : newAccelerations) {
+                deltaX += a[0];
+                deltaY += a[1];
             }
-            netAcceleration[0] = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-            netAcceleration[1] = Math.atan(deltaX / deltaY);
+            netAcceleration[0] = deltaX;
+            netAcceleration[1] = deltaY;
         }
         return netAcceleration;
     }
 
+    // TODO: Remove angle dependency of acceleration and velocity. Replace with (x,y) vectors.
+    // TODO: In GameUi calculate x- and y-components using given absolute value and angle.
+    // It's too late already. Go to sleep. Die Hard 4.0 is an OK movie.
     public double[] nextVelocity(GraphicObject object, double[] newAcceleration) {
-        double[] velocity = {object.getSpeed(), object.getDirection()};
+        // Calculate object velocity for step i+1.
+        double[] velocity = object.getSpeed();
         double[] oldAcceleration = object.getAcceleration();
-        double deltaX = 0.5 * (oldAcceleration[0] * Math.cos(oldAcceleration[1]) + newAcceleration[0] * Math.cos(newAcceleration[1]));
-        double deltaY = 0.5 * (oldAcceleration[0] * Math.sin(oldAcceleration[1]) + newAcceleration[0] * Math.sin(newAcceleration[1]));
-        velocity[1] = Math.atan((deltaY + velocity[0] * Math.sin(velocity[1])) / (deltaX + velocity[0] * Math.cos(velocity[1])));
-        velocity[0] += Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+        double deltaX = 0.5 * (oldAcceleration[0] + newAcceleration[0]);
+        double deltaY = 0.5 * (oldAcceleration[1] + newAcceleration[1]);
+        velocity[0] += deltaX;
+        velocity[1] += deltaY;
         return velocity;
     }
 
@@ -50,8 +59,7 @@ public class ObjectPhysics {
         double[] newLoc = nextLocation(object);
         double[] newVel = nextVelocity(object, object.getAcceleration());
         object.setLocation(newLoc);
-        object.setSpeed(newVel[0]);
-        object.setSpeedDirection(newVel[1]);
+        object.setSpeed(newVel[0], newVel[1]);
         return newLoc;
     }
 
