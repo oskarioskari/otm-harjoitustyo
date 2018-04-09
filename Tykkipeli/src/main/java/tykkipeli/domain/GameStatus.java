@@ -29,7 +29,9 @@ public class GameStatus {
     }
 
     public void addPoint(int player) {
-        this.playerScores[player]++;
+        if (player == 0 || player == 1) {
+            this.playerScores[player]++;
+        }
     }
 
     public int[] getPlayerScores() {
