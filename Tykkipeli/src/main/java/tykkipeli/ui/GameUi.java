@@ -106,7 +106,7 @@ public class GameUi extends Application {
         Image explosion1 = new Image("file:res/pictures/explosion1.png");
 
         double[] leftLoc = {100, 375};
-        double[] rightLoc = {700, 375};
+        double[] rightLoc = {675, 375};
         double leftStartAngle = -1.0 * Math.PI / 4.0;
         double rightStartAngle = -1.0 * Math.PI / 4.0;
         double leftStartPower = 10;
@@ -138,15 +138,18 @@ public class GameUi extends Application {
         double spf = 0.017; // How many seconds one frame is being shown (0.017 ~ 60 fps, 0.033 ~ 30 fps)
 
         KeyFrame kf = new KeyFrame(Duration.seconds(spf), (ActionEvent event) -> {
-            //gc.setFill(new Color(0.85, 0.85, 1.0, 1.0));
-            gc.fillRect(0, 0, 800, 500);
-            gc.setFill(Color.GREEN);
-            
-            gc.fillRect(0, 400, 800, 100);
             gc.setFill(Color.SKYBLUE);
+            gc.fillRect(0, 0, 800, 500);
+
+            gc.setFill(Color.GREEN);
+            gc.fillRect(0, 400, 800, 100);
 
             gc.drawImage(cannon_left, cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1]);
             gc.drawImage(cannon_right, cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1]);
+
+            gc.setFill(Color.BLACK);
+            gc.fillText("Player 1\n Score:", cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1] + 50);
+            gc.fillText("Player 2\n Score:", cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1] + 50);
 
             if (gameStatus.getWait() == 1) {
                 moveAmmo(ammolist.get(selectedBullet), physics);
@@ -166,12 +169,17 @@ public class GameUi extends Application {
             }
 
             gameScene.setOnKeyPressed((KeyEvent keypressed) -> {
-                if (keypressed.getCode().toString().equals("ENTER") && gameStatus.getWait() == 0) {
-                    double selectedAngle = cannons.get(gameStatus.getTurn()).getCannonAngle();
-                    double selectedPower = cannons.get(gameStatus.getTurn()).getCannonPower();
-                    fireCannon(ammolist.get(selectedBullet), gameStatus.getTurn(), leftLoc, rightLoc, selectedAngle, selectedPower, gravity);
-                    gc.drawImage(bullet, ammolist.get(selectedBullet).getLocation()[0], ammolist.get(selectedBullet).getLocation()[1]);
-                    gameStatus.setWait(1);
+                if (gameStatus.getWait() == 0) {
+                    String pressedKey = keypressed.getCode().toString();
+                    if (pressedKey.equals("ENTER")) {
+                        double selectedAngle = cannons.get(gameStatus.getTurn()).getCannonAngle();
+                        double selectedPower = cannons.get(gameStatus.getTurn()).getCannonPower();
+                        fireCannon(ammolist.get(selectedBullet), gameStatus.getTurn(), leftLoc, rightLoc, selectedAngle, selectedPower, gravity);
+                        gc.drawImage(bullet, ammolist.get(selectedBullet).getLocation()[0], ammolist.get(selectedBullet).getLocation()[1]);
+                        gameStatus.setWait(1);
+                    } else if (pressedKey.equals("UP")) {
+
+                    }
                 }
             });
         });
