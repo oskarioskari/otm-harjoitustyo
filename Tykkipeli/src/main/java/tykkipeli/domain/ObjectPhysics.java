@@ -10,6 +10,7 @@ public class ObjectPhysics {
     // Object behavior is calculated using Velocity Verlet algorithm.
     // For more info: https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet
     // Unit of length is "pixels/frame update" and unit of time is "time between two frames".
+    
     public double[] nextLocation(GraphicObject object) {
         // Calculate object location during step i+1.
         double[] location = object.getLocation();
@@ -40,10 +41,7 @@ public class ObjectPhysics {
         }
         return netAcceleration;
     }
-
-    // TODO: Remove angle dependency of acceleration and velocity. Replace with (x,y) vectors.
-    // TODO: In GameUi calculate x- and y-components using given absolute value and angle.
-    // It's too late already. Go to sleep. Die Hard 4.0 is an OK movie.
+    
     public double[] nextVelocity(GraphicObject object, double[] newAcceleration) {
         // Calculate object velocity for step i+1.
         double[] velocity = object.getSpeed();
