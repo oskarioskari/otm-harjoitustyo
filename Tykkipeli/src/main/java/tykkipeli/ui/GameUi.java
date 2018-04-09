@@ -100,20 +100,18 @@ public class GameUi extends Application {
         Canvas canvas = new Canvas(800, 500);
         root.getChildren().add(canvas);
 
-        Image cannon_left = new Image("file:res/pictures/cannon_left.png");
-        Image cannon_right = new Image("file:res/pictures/cannon_right.png");
+        Image cannonLeft = new Image("file:res/pictures/cannon_left.png");
+        Image cannonRight = new Image("file:res/pictures/cannon_right.png");
         Image bullet = new Image("file:res/pictures/basicShell.png");
         Image explosion1 = new Image("file:res/pictures/explosion1.png");
 
         double[] leftLoc = {100, 375};
         double[] rightLoc = {675, 375};
-        double leftStartAngle = -1.0 * Math.PI / 4.0;
-        double rightStartAngle = -1.0 * Math.PI / 4.0;
-        double leftStartPower = 10;
-        double rightStartPower = 10;
+        double startAngle = -1.0 * Math.PI / 4.0;
+        double startPower = 10;
 
-        Cannon leftCannon = new Cannon(leftLoc[0], leftLoc[1], leftStartAngle, leftStartPower);
-        Cannon rightCannon = new Cannon(rightLoc[0], rightLoc[1], rightStartAngle, rightStartPower);
+        Cannon leftCannon = new Cannon(leftLoc[0], leftLoc[1], startAngle, startPower);
+        Cannon rightCannon = new Cannon(rightLoc[0], rightLoc[1], startAngle, startPower);
 
         double[] gravity = {0, 0.5};
 
@@ -127,15 +125,13 @@ public class GameUi extends Application {
         cannons.add(0, leftCannon);
         cannons.add(1, rightCannon);
 
-        int selectedBullet = 0;
-
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Timeline gameLoop = new Timeline();
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         final long timeStart = System.currentTimeMillis();
-        double spf = 0.017; // How many seconds one frame is being shown (0.017 ~ 60 fps, 0.033 ~ 30 fps)
+        double spf = 0.033; // How many seconds one frame is being shown (0.017 ~ 60 fps, 0.033 ~ 30 fps)
 
         KeyFrame kf = new KeyFrame(Duration.seconds(spf), (ActionEvent event) -> {
             gc.setFill(Color.SKYBLUE);
@@ -144,17 +140,25 @@ public class GameUi extends Application {
             gc.setFill(Color.GREEN);
             gc.fillRect(0, 400, 800, 100);
 
-            gc.drawImage(cannon_left, cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1]);
-            gc.drawImage(cannon_right, cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1]);
+            gc.drawImage(cannonLeft, cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1]);
+            gc.drawImage(cannonRight, cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1]);
 
             gc.setFill(Color.BLACK);
-            gc.fillText("Player 1\n Score:", cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1] + 50);
-            gc.fillText("Player 2\n Score:", cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1] + 50);
+            gc.fillText("Player 1\n"
+                    + " Score: " + gameStatus.getPlayerScores()[0] + "\n"
+                    + "Angle: " + Math.abs(Math.toDegrees(cannons.get(0).getCannonAngle())) + "\n"
+                    + "Power: " + cannons.get(0).getCannonPower(),
+                    cannons.get(0).getLocation()[0], cannons.get(0).getLocation()[1] + 50);
+            gc.fillText("Player 2\n"
+                    + " Score: " + gameStatus.getPlayerScores()[1] + "\n"
+                    + "Angle: " + Math.abs(Math.toDegrees(cannons.get(1).getCannonAngle())) + "\n"
+                    + "Power: " + cannons.get(1).getCannonPower(),
+                    cannons.get(1).getLocation()[0], cannons.get(1).getLocation()[1] + 50);
 
             if (gameStatus.getWait() == 1) {
-                moveAmmo(ammolist.get(selectedBullet), physics);
-                double x = ammolist.get(selectedBullet).getLocation()[0];
-                double y = ammolist.get(selectedBullet).getLocation()[1];
+                moveAmmo(ammolist.get(gameStatus.getWeapon()), physics);
+                double x = ammolist.get(gameStatus.getWeapon()).getLocation()[0];
+                double y = ammolist.get(gameStatus.getWeapon()).getLocation()[1];
                 gc.drawImage(bullet, x, y);
                 if (y > 400) {
                     gameStatus.setWait(0);
@@ -174,11 +178,25 @@ public class GameUi extends Application {
                     if (pressedKey.equals("ENTER")) {
                         double selectedAngle = cannons.get(gameStatus.getTurn()).getCannonAngle();
                         double selectedPower = cannons.get(gameStatus.getTurn()).getCannonPower();
-                        fireCannon(ammolist.get(selectedBullet), gameStatus.getTurn(), leftLoc, rightLoc, selectedAngle, selectedPower, gravity);
-                        gc.drawImage(bullet, ammolist.get(selectedBullet).getLocation()[0], ammolist.get(selectedBullet).getLocation()[1]);
+                        fireCannon(ammolist.get(gameStatus.getWeapon()), gameStatus.getTurn(), leftLoc, rightLoc, selectedAngle, selectedPower, gravity);
+                        gc.drawImage(bullet, ammolist.get(gameStatus.getWeapon()).getLocation()[0], ammolist.get(gameStatus.getWeapon()).getLocation()[1]);
                         gameStatus.setWait(1);
                     } else if (pressedKey.equals("UP")) {
-
+                        cannons.get(gameStatus.getTurn()).increaseCannonAngle(0.01);
+                    } else if (pressedKey.equals("DOWN")) {
+                        cannons.get(gameStatus.getTurn()).increaseCannonAngle(-0.01);
+                    } else if (pressedKey.equals("LEFT")) {
+                        if (gameStatus.getTurn() == 0) {
+                            cannons.get(gameStatus.getTurn()).increaseCannonPower(-0.1);
+                        } else {
+                            cannons.get(gameStatus.getTurn()).increaseCannonPower(-0.1);
+                        }
+                    } else if (pressedKey.equals("RIGHT")) {
+                        if (gameStatus.getTurn() == 0) {
+                            cannons.get(gameStatus.getTurn()).increaseCannonPower(0.1);
+                        } else {
+                            cannons.get(gameStatus.getTurn()).increaseCannonPower(-0.1);
+                        }
                     }
                 }
             });
