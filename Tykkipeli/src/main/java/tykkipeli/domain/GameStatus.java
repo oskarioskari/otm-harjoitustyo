@@ -5,23 +5,25 @@ public class GameStatus {
     private int playerInTurn;
     private int wait;
     private int[] playerScores;
+    private int selectedWeapon;
 
     public GameStatus() {
         this.playerInTurn = 0;
         this.wait = 0;
         this.playerScores = new int[]{0, 0};
+        this.selectedWeapon = 0;
     }
 
     public void setTurn(int player) {
         this.playerInTurn = player;
     }
 
-    public void setWait(int wait) {
-        this.wait = wait;
-    }
-
     public int getTurn() {
         return this.playerInTurn;
+    }
+
+    public void setWait(int wait) {
+        this.wait = wait;
     }
 
     public int getWait() {
@@ -36,6 +38,14 @@ public class GameStatus {
 
     public int[] getPlayerScores() {
         return this.playerScores;
+    }
+
+    public void setWeapon(int w) {
+        this.selectedWeapon = w;
+    }
+
+    public int getWeapon() {
+        return this.selectedWeapon;
     }
 
 }
