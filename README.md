@@ -1,6 +1,7 @@
 # Tykkipeli
 
-Harjoitustyö kurssille Ohjelmistotekniikan menetelmät (kevät 2018). Lisäksi kansiosta *laskarit* löytyy kurssin laskuharjoitusten vastaukset.
+Harjoitustyö kurssille Ohjelmistotekniikan menetelmät (kevät 2018).\
+Lisäksi kansiosta *laskarit* löytyy kurssin laskuharjoitusten vastaukset.
 
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)\
