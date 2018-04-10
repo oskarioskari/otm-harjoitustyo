@@ -189,7 +189,7 @@ public class GameUi extends Application {
                         if (gameStatus.getTurn() == 0) {
                             cannons.get(gameStatus.getTurn()).increaseCannonPower(-0.1);
                         } else {
-                            cannons.get(gameStatus.getTurn()).increaseCannonPower(-0.1);
+                            cannons.get(gameStatus.getTurn()).increaseCannonPower(0.1);
                         }
                     } else if (pressedKey.equals("RIGHT")) {
                         if (gameStatus.getTurn() == 0) {
