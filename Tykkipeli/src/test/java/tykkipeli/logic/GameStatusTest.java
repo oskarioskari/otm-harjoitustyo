@@ -1,4 +1,4 @@
-package tykkipeli.domain;
+package tykkipeli.logic;
 
 import tykkipeli.objects.Player;
 import tykkipeli.objects.Cannon;
