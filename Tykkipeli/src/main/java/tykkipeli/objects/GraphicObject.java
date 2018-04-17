@@ -1,4 +1,4 @@
-package tykkipeli.domain;
+package tykkipeli.objects;
 
 public class GraphicObject {
 

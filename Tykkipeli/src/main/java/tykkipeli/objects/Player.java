@@ -1,4 +1,6 @@
-package tykkipeli.domain;
+package tykkipeli.objects;
+
+import tykkipeli.objects.Cannon;
 
 public class Player {
 

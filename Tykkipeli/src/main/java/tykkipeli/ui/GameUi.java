@@ -1,5 +1,11 @@
 package tykkipeli.ui;
 
+import tykkipeli.objects.Player;
+import tykkipeli.objects.Cannon;
+import tykkipeli.objects.GraphicObject;
+import tykkipeli.objects.BasicShell;
+import tykkipeli.logic.GameLogic;
+import tykkipeli.logic.GameStatus;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,7 +24,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import tykkipeli.domain.*;
 
 public class GameUi extends Application {
 

@@ -1,7 +1,11 @@
-package tykkipeli.domain;
+package tykkipeli.logic;
 
+import tykkipeli.logic.GameStatus;
 import java.util.List;
 import java.util.Random;
+import tykkipeli.objects.Cannon;
+import tykkipeli.objects.GraphicObject;
+import tykkipeli.objects.Player;
 
 public class GameLogic {
 

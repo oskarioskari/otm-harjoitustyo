@@ -1,7 +1,9 @@
-package tykkipeli.domain;
+package tykkipeli.logic;
 
 import java.util.ArrayList;
 import java.util.List;
+import tykkipeli.objects.GraphicObject;
+import tykkipeli.objects.Player;
 
 public class GameStatus {
 

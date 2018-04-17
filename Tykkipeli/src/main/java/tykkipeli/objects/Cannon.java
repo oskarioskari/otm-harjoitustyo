@@ -1,4 +1,6 @@
-package tykkipeli.domain;
+package tykkipeli.objects;
+
+import tykkipeli.objects.GraphicObject;
 
 public class Cannon extends GraphicObject {
 

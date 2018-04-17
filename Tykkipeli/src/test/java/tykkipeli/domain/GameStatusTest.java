@@ -1,5 +1,10 @@
 package tykkipeli.domain;
 
+import tykkipeli.objects.Player;
+import tykkipeli.objects.Cannon;
+import tykkipeli.objects.GraphicObject;
+import tykkipeli.objects.BasicShell;
+import tykkipeli.logic.GameStatus;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.*;

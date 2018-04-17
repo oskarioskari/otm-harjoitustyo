@@ -1,5 +1,6 @@
-package tykkipeli.domain;
+package tykkipeli.logic;
 
+import tykkipeli.objects.GraphicObject;
 import java.util.ArrayList;
 
 public class ObjectPhysics {
