@@ -13,4 +13,4 @@ Päivä | Käytetty aika | Selite
 16.4  | 1             | Luotu luokat "Player" ja "GameLogic"
 17.4  | 5             | Siirretty metodeja käyttöliittymäluokasta GameLogic-luokkaan ja järkeistetty luokkien välistä tehtävänjakoa. Lisätty yksinkertainen tekoälyvastustaja.
 
-Summa: 20 tuntia
+Summa: 24 tuntia
