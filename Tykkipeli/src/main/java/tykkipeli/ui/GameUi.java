@@ -52,13 +52,41 @@ public class GameUi extends Application {
         stage.setScene(mainMenu);
         stage.show();
 
+        // Some important values at start:
+        // TODO: Maybe move into gameStatus?
+        double[] leftLoc = {100, 375};
+        double[] rightLoc = {675, 375};
+        double startAngle = Math.PI / 4.0;
+        double startPower = 10;
+        double[] gravity = {0, 0.5};
+
+        // Initialize playerList and ammoLists:
+        ArrayList<GraphicObject> ammoListP1 = new ArrayList<>();
+        BasicShell basicshellP1 = new BasicShell(-100.0, -100.0);
+        ammoListP1.add(0, basicshellP1);
+
+        ArrayList<GraphicObject> ammoListP2 = new ArrayList<>();
+        BasicShell basicshellP2 = new BasicShell(-100.0, -100.0);
+        ammoListP2.add(0, basicshellP2);
+
+        Cannon leftCannon = new Cannon(leftLoc[0], leftLoc[1], startAngle, startPower);
+        Cannon rightCannon = new Cannon(rightLoc[0], rightLoc[1], startAngle, startPower);
+
+        ArrayList<Player> playerList = new ArrayList<>();
+        playerList.add((new Player(0, leftCannon, true)));
+        playerList.add((new Player(1, rightCannon, true)));
+
+        // Initialize gameStatus and gameLogic:
+        GameStatus gameStatus = new GameStatus(playerList, ammoListP1, ammoListP2, gravity);
+        GameLogic gameLogic = new GameLogic();
+
         // EventHandlers for main menu buttons:
         startGame.setOnAction((ActionEvent event) -> {
-            gameScreen();                                   // Opens new window and starts game
+            gameScreen(gameStatus, gameLogic);              // Opens new window and starts game
         });
 
         settings.setOnAction((ActionEvent event) -> {
-            settingsScreen(stage, mainMenu);                // Sets scene to settings menu
+            settingsScreen(stage, mainMenu, gameStatus);    // Sets scene to settings menu
         });
 
         quitGame.setOnAction((ActionEvent event) -> {
@@ -66,30 +94,38 @@ public class GameUi extends Application {
         });
     }
 
-    public void settingsScreen(Stage stage, Scene mainMenu) {
-        Button select1 = new Button("Select 1");    // Placeholders
-        Button select2 = new Button("Select 2");    //
-        Button back = new Button("Back");           // Back to main menu
+    public void settingsScreen(Stage stage, Scene mainMenu, GameStatus gameStatus) {
 
-        select1.setPrefSize(200, 50);
-        select2.setPrefSize(200, 50);
+        Button selectPlVersusAI = new Button("Set player 2 = AI");       //
+        Button selectPlVersusPl = new Button("Set player 2 = Human");    //
+        Button back = new Button("Back");                                // Back to main menu
+
+        selectPlVersusAI.setPrefSize(200, 50);
+        selectPlVersusPl.setPrefSize(200, 50);
         back.setPrefSize(200, 50);
 
+        selectPlVersusAI.setOnAction((ActionEvent t) -> {
+            gameStatus.getPlayer(1).setPlayerHumanStatus(false);
+        });
+        selectPlVersusPl.setOnAction((ActionEvent t) -> {
+            gameStatus.getPlayer(1).setPlayerHumanStatus(true);
+        });
         back.setOnAction((ActionEvent t) -> {
             stage.setScene(mainMenu);
         });
 
         VBox menu2 = new VBox(30);
         menu2.setPadding(new Insets(80));
-        menu2.getChildren().add(select1);
-        menu2.getChildren().add(select2);
+        menu2.getChildren().add(selectPlVersusAI);
+        menu2.getChildren().add(selectPlVersusPl);
         menu2.getChildren().add(back);
 
         Scene settingsMenu = new Scene(menu2);
         stage.setScene(settingsMenu);
     }
 
-    public void gameScreen() {
+    public void gameScreen(GameStatus gameStatus, GameLogic gameLogic) {
+
         Stage stage = new Stage();
         Group root = new Group();
         Scene gameScene = new Scene(root);
@@ -103,32 +139,6 @@ public class GameUi extends Application {
         Image cannonRightImage = new Image("file:res/pictures/cannon_right.png");
         Image bulletImage = new Image("file:res/pictures/basicShell.png");
         Image explosionImage01 = new Image("file:res/pictures/explosion1.png");
-
-        // Some important values at start:
-        // TODO: Move into "gameStatus"
-        double[] leftLoc = {100, 375};
-        double[] rightLoc = {675, 375};
-        double startAngle = 1.0 * Math.PI / 4.0;
-        double startPower = 10;
-        double[] gravity = {0, 0.5};
-
-        ObjectPhysics physics = new ObjectPhysics();
-        BasicShell basicshell = new BasicShell(-100.0, -100.0);
-
-        // Initialize playerList and ammoList:
-        ArrayList<GraphicObject> ammoList = new ArrayList<>();
-        ammoList.add(0, basicshell);
-        
-        Cannon leftCannon = new Cannon(leftLoc[0], leftLoc[1], startAngle, startPower);
-        Cannon rightCannon = new Cannon(rightLoc[0], rightLoc[1], startAngle, startPower);
-
-        ArrayList<Player> playerList = new ArrayList<>();
-        playerList.add((new Player(0, leftCannon, true)));
-        playerList.add((new Player(1, rightCannon, true)));
-
-        // Initialize gameStatus and gameLogic:
-        GameStatus gameStatus = new GameStatus(playerList, ammoList, gravity);
-        GameLogic gameLogic = new GameLogic();
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -156,35 +166,36 @@ public class GameUi extends Application {
 
             // Draw text under players:
             gc.setFill(Color.BLACK);
-            gc.fillText("Player 1\n"
-                    + " Score: " + gameStatus.getPlayerScore(0) + "\n"
-                    + "Angle: " + Math.toDegrees(gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle()) + "\n"
-                    + "Power: " + gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(),
+            gc.fillText(getPlayerText(0, gameStatus),
                     gameStatus.getPlayer(0).getPlayerCannon().getXLocation(), gameStatus.getPlayer(0).getPlayerCannon().getYLocation() + 50);
-            gc.fillText("Player 2\n"
-                    + " Score: " + gameStatus.getPlayerScore(1) + "\n"
-                    + "Angle: " + Math.toDegrees(gameStatus.getPlayer(1).getPlayerCannon().getCannonAngle()) + "\n"
-                    + "Power: " + gameStatus.getPlayer(1).getPlayerCannon().getCannonPower(),
+            gc.fillText(getPlayerText(1, gameStatus),
                     gameStatus.getPlayer(1).getPlayerCannon().getXLocation(), gameStatus.getPlayer(1).getPlayerCannon().getYLocation() + 50);
 
             // Check if game is in "wait" mode and act accordingly:
             if (gameStatus.getWait() == 1) {
-                double x = gameStatus.getWeapon().getXLocation();
-                double y = gameStatus.getWeapon().getYLocation();
-                gc.drawImage(bulletImage, x, y);
+                // Draw player0 ammo
+                double x0 = gameStatus.getPlayerWeapon(0).getXLocation();
+                double y0 = gameStatus.getPlayerWeapon(0).getYLocation();
+                gc.drawImage(bulletImage, x0, y0);
+                // Draw player1 ammo
+                double x1 = gameStatus.getPlayerWeapon(1).getXLocation();
+                double y1 = gameStatus.getPlayerWeapon(1).getYLocation();
+                gc.drawImage(bulletImage, x1, y1);
                 gameLogic.moveAmmo(gameStatus);
-                if (y > 400) {
+                if (y0 > 400) {
+                    gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
+                    gameStatus.setWaitOver(0, 1);
+                }
+                if (y1 > 400) {
+                    gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
+                    gameStatus.setWaitOver(1, 1);
+                }
+                if (gameStatus.getWaitOver(0) == 1 && gameStatus.getWaitOver(1) == 1) {
+                    gameStatus.setWaitOver(0, 0);
+                    gameStatus.setWaitOver(1, 0);
                     gameStatus.setWait(0);
-                    if (gameStatus.getTurn() == 0) {
-                        gc.drawImage(explosionImage01, x - 25, y - 25);
-                        gameStatus.setTurn(1);
-                    } else {
-                        gc.drawImage(explosionImage01, x - 25, y - 25);
-                        gameStatus.setTurn(0);
-                    }
                 }
             }
-
             // Process keycommands:
             gameScene.setOnKeyPressed((KeyEvent keypressed) -> {
                 if (gameStatus.getWait() == 0) {
@@ -192,11 +203,27 @@ public class GameUi extends Application {
                     gameLogic.keyPressed(pressedKey, gameStatus);
                 }
             });
-        });
+        }
+        );
 
-        gameLoop.getKeyFrames().add(kf);
+        gameLoop.getKeyFrames()
+                .add(kf);
         gameLoop.play();
 
         stage.show();
+    }
+
+    public String getPlayerText(int player, GameStatus gameStatus) {
+        if (gameStatus.getPlayer(player).getPlayerHumanStatus()) {
+            return "Player " + (player + 1) + "\n"
+                    + "Score: " + gameStatus.getPlayerScore(player) + "\n"
+                    + "Angle: " + Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle()) + "\n"
+                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower();
+        } else {
+            return "Computer\n"
+                    + "Score: " + gameStatus.getPlayerScore(player) + "\n"
+                    + "Angle: " + Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle()) + "\n"
+                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower();
+        }
     }
 }
