@@ -10,3 +10,7 @@ Päivä | Käytetty aika | Selite
 26.3  | 2             | Jatkettu ohjelman kehittämistä. Lisätty pelivuoron vaihtuminen ja kohdattu vakava ongelma fysiikkamallinnuksessa.
 28.3  | 2             | Muutettu hieman fysiikkamallinnuksen toteutustapaa. Siistitty pelinäkymää.
 09.4  | 3             | Tehty ensimmäiset testit. Pieniä sekalaisia muokkauksia. Lisätty mahdollisuus tähdätä tykillä.
+16.4  | 1             | Luotu luokat "Player" ja "GameLogic"
+17.4  | 2             | Siirretty metodeja käyttöliittymäluokasta GameLogic-luokkaan ja järkeistetty luokkien välistä tehtävänjakoa.
+
+Summa | 20 tuntia
