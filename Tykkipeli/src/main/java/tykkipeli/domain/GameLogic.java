@@ -1,9 +1,10 @@
 package tykkipeli.domain;
 
 import java.util.List;
+import java.util.Random;
 
 public class GameLogic {
-    
+
     private final ObjectPhysics physics;
 
     public GameLogic() {
@@ -15,10 +16,23 @@ public class GameLogic {
         Cannon cannon = gameStatus.getPlayerList().get(turnNow).getPlayerCannon();
 
         if (keycode.equals("ENTER")) {
-            double selectedAngle = cannon.getCannonAngle();
-            double selectedPower = cannon.getCannonPower();
-            fireCannon(gameStatus.getAmmolist().get(gameStatus.getSelectedWeapon()), turnNow, gameStatus.getPlayerList().get(0).getPlayerCannon().getLocation(), gameStatus.getPlayerList().get(1).getPlayerCannon().getLocation(), selectedAngle, selectedPower, gameStatus.getGravity());
-            gameStatus.setWait(1);
+            if (turnNow == 0) {
+                fireCannon(turnNow,
+                        gameStatus.getPlayerList(),
+                        gameStatus.getPlayerWeapon(turnNow),
+                        gameStatus.getGravity());
+                gameStatus.setTurn(1);
+                if (!gameStatus.getPlayer(1).getPlayerHumanStatus()) {
+                    easyComputerPlays(1, gameStatus);
+                }
+            } else {
+                fireCannon(turnNow,
+                        gameStatus.getPlayerList(),
+                        gameStatus.getPlayerWeapon(turnNow),
+                        gameStatus.getGravity());
+                gameStatus.setTurn(0);
+                gameStatus.setWait(1);
+            }
 
         } else if (keycode.equals("UP")) {
             cannon.increaseCannonAngle(0.005);
@@ -42,20 +56,38 @@ public class GameLogic {
         }
     }
 
-    public void fireCannon(GraphicObject bullet, int player, double[] leftCannon, double[] rightCannon, double angle, double power, double[] gravity) {
+    public void easyComputerPlays(int aiPlayer, GameStatus gameStatus) {
+        Random random = new Random();
+        double randomAngle = random.nextGaussian() * (Math.PI / 8) + (Math.PI / 4);
+        double randomPower = random.nextGaussian() * 3 + 16;
+        gameStatus.getPlayer(aiPlayer).getPlayerCannon().setCannonAngle(randomAngle);
+        gameStatus.getPlayer(aiPlayer).getPlayerCannon().setCannonPower(randomPower);
+        fireCannon(aiPlayer,
+                gameStatus.getPlayerList(),
+                gameStatus.getPlayerWeapon(aiPlayer),
+                gameStatus.getGravity());
+        gameStatus.setTurn(0);
+        gameStatus.setWait(1);
+    }
+
+    public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, double[] gravity) {
         double[] loc = {0, 0};
 
+        double[] cannonLoc = playerList.get(player).getPlayerCannon().getLocation();
+
         if (player == 0) {
-            loc[0] = leftCannon[0] + 25;
-            loc[1] = leftCannon[1] - 7;
+            loc[0] = cannonLoc[0] + 25;
+            loc[1] = cannonLoc[1] - 7;
         } else if (player == 1) {
-            loc[0] = rightCannon[0] - 7;
-            loc[1] = rightCannon[1] - 7;
+            loc[0] = cannonLoc[0] - 7;
+            loc[1] = cannonLoc[1] - 7;
         }
 
         double x;
         double y;
-        bullet.setLocation(loc);
+        double angle = playerList.get(player).getPlayerCannon().getCannonAngle();
+        double power = playerList.get(player).getPlayerCannon().getCannonPower();
+        weapon.setLocation(loc);
         if (player == 0) {
             x = power * Math.cos(angle);
             y = -power * Math.sin(angle);
@@ -63,14 +95,18 @@ public class GameLogic {
             x = -power * Math.cos(angle);
             y = -power * Math.sin(angle);
         }
-        bullet.setSpeed(x, y);
-        bullet.setAcceleration(gravity[0], gravity[1]);
+        weapon.setSpeed(x, y);
+        weapon.setAcceleration(gravity[0], gravity[1]);
     }
 
     public void moveAmmo(GameStatus gameStatus) {
-        GraphicObject ammo = gameStatus.getWeapon();
-        double[] next = this.physics.nextStepOnlyGravity(ammo);
-        ammo.setLocation(next);
+        int i = 0;
+        while (i < gameStatus.getPlayerList().size()) {
+            GraphicObject ammo = gameStatus.getPlayerWeapon(i);
+            double[] next = this.physics.nextStepOnlyGravity(ammo);
+            ammo.setLocation(next);
+            i++;
+        }
     }
 
     public void checkPlayerParameters(GameStatus gameStatus) {
