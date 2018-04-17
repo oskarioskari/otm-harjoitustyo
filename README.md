@@ -5,7 +5,8 @@ Lisäksi kansiosta *laskarit* löytyy kurssin laskuharjoitusten vastaukset.
 
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)\
-[Tuntikirjanpito](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
+[Tuntikirjanpito](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)\
+[Arkkitehtuuri](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
 ## Komentorivitoiminnot
 ### Testaus
