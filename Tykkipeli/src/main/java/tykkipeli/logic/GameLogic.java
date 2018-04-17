@@ -62,8 +62,8 @@ public class GameLogic {
 
     public void easyComputerPlays(int aiPlayer, GameStatus gameStatus) {
         Random random = new Random();
-        double randomAngle = random.nextGaussian() * (Math.PI / 8) + (Math.PI / 4);
-        double randomPower = random.nextGaussian() * 3 + 16;
+        double randomAngle = random.nextGaussian() * (Math.PI / 16) + (Math.PI / 4);
+        double randomPower = random.nextGaussian() * 2 + 16;
         gameStatus.getPlayer(aiPlayer).getPlayerCannon().setCannonAngle(randomAngle);
         gameStatus.getPlayer(aiPlayer).getPlayerCannon().setCannonPower(randomPower);
         fireCannon(aiPlayer,
