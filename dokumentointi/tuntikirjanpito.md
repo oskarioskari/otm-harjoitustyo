@@ -11,6 +11,6 @@ Päivä | Käytetty aika | Selite
 28.3  | 2             | Muutettu hieman fysiikkamallinnuksen toteutustapaa. Siistitty pelinäkymää.
 09.4  | 3             | Tehty ensimmäiset testit. Pieniä sekalaisia muokkauksia. Lisätty mahdollisuus tähdätä tykillä.
 16.4  | 1             | Luotu luokat "Player" ja "GameLogic"
-17.4  | 5             | Siirretty metodeja käyttöliittymäluokasta GameLogic-luokkaan ja järkeistetty luokkien välistä tehtävänjakoa. Lisätty yksinkertainen tekoälyvastustaja.
+17.4  | 7             | Siirretty metodeja käyttöliittymäluokasta GameLogic-luokkaan ja järkeistetty luokkien välistä tehtävänjakoa. Muutettu pelivuorojen toimintaa. Lisätty yksinkertainen tekoälyvastustaja. Vastustajaan osuminen lisää nyt pisteitä. Kirjoitettu lisää testejä.
 
-Summa: 24 tuntia
+Summa: 26 tuntia
