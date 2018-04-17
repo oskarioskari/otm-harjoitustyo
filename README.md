@@ -18,3 +18,9 @@ Testauskattavuusraportti luodaan komennolla
 ```
 mvn test jacoco:report
 ```
+### Checkstyle
+Checkstyle tarkistukset suoritetaan komennolla
+```
+mvn jxr:jxr checkstyle:checkstyle
+```
+Mahdolliset virheilmoitukset löydät tiedostosta *target/site/checkstyle.html*
