@@ -10,7 +10,7 @@ public class ObjectPhysics {
 
     // Object behavior is calculated using Velocity Verlet algorithm.
     // For more info: https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet
-    // Unit of length is "pixels/frame update" and unit of time is "time between two frames".
+    // Unit of velocity is "pixels/frame update time" and unit of time is "time between two frames".
     public double[] nextLocation(GraphicObject object) {
         // Calculate object location during step i+1.
         double[] location = object.getLocation();
