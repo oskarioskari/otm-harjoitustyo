@@ -9,8 +9,8 @@ public class Cannon extends GraphicObject {
 
     public Cannon(double x, double y) {
         super(x, y);
-        this.angle = 1.0 * Math.PI / 2;
-        this.power = 2;
+        this.angle = Math.PI / 4;
+        this.power = 10;
     }
 
     public Cannon(double x, double y, double cannonAngle, double shootingPower) {
