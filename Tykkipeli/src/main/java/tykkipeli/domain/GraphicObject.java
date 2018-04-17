@@ -41,6 +41,14 @@ public class GraphicObject {
         double[] location = {this.x, this.y};
         return location;
     }
+    
+    public double getXLocation() {
+        return this.x;
+    }
+    
+    public double getYLocation() {
+        return this.y;
+    }
 
     public void setLocation(double[] newLocation) {
         this.x = newLocation[0];
