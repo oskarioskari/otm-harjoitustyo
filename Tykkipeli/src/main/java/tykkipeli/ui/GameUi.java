@@ -176,6 +176,17 @@ public class GameUi extends Application {
             gc.fillText(getPlayerText(1, gameStatus),
                     gameStatus.getPlayer(1).getPlayerCannon().getXLocation(), gameStatus.getPlayer(1).getPlayerCannon().getYLocation() + 50);
 
+            // Draw help text:
+            if (gameStatus.getTurn() == 0 && gameStatus.getWait() == 0) {
+                gc.fillText("Now in turn: PLAYER 1\n"
+                        + "Aim and fire!", 350, 50);
+            } else if (gameStatus.getTurn() == 1 && gameStatus.getWait() == 0) {
+                gc.fillText("Now in turn: PLAYER 2\n"
+                        + "Aim and fire!", 350, 50);
+            } else {
+                gc.fillText("Wait for next turn", 380, 50);
+            }
+            
             // Check if game is in "wait" mode and act accordingly:
             if (gameStatus.getWait() == 1) {
                 // Draw player0 ammo
@@ -190,10 +201,18 @@ public class GameUi extends Application {
                 if (y0 > 400) {
                     gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
                     gameStatus.setWaitOver(0, 1);
+                    if (x0 >= gameStatus.getPlayer(1).getPlayerCannon().getXLocation() - 20
+                            && x0 <= gameStatus.getPlayer(1).getPlayerCannon().getXLocation() + 70) {
+                        gameStatus.addPoint(0);
+                    }
                 }
                 if (y1 > 400) {
                     gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
                     gameStatus.setWaitOver(1, 1);
+                    if (x1 >= gameStatus.getPlayer(0).getPlayerCannon().getXLocation() - 20
+                            && x1 <= gameStatus.getPlayer(0).getPlayerCannon().getXLocation() + 70) {
+                        gameStatus.addPoint(1);
+                    }
                 }
                 if (gameStatus.getWaitOver(0) == 1 && gameStatus.getWaitOver(1) == 1) {
                     gameStatus.setWaitOver(0, 0);
