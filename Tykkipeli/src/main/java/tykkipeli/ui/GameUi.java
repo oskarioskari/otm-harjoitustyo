@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -20,6 +21,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -64,7 +66,6 @@ public class GameUi extends Application {
         Vector rightLoc = new Vector(675, 375);
         double startAngle = Math.PI / 4.0;
         double startPower = 10;
-        double[] gravity = {0, 0.5};
 
         // Initialize playerList and ammoLists:
         ArrayList<GraphicObject> ammoListP1 = new ArrayList<>();
@@ -79,11 +80,11 @@ public class GameUi extends Application {
         Cannon rightCannon = new Cannon(rightLoc, startAngle, startPower);
 
         ArrayList<Player> playerList = new ArrayList<>();
-        playerList.add((new Player(0, leftCannon, true)));
-        playerList.add((new Player(1, rightCannon, true)));
+        playerList.add(new Player(0, leftCannon));
+        playerList.add(new Player(1, rightCannon));
 
         // Initialize gameStatus and gameLogic:
-        GameStatus gameStatus = new GameStatus(playerList, ammoListP1, ammoListP2, gravity);
+        GameStatus gameStatus = new GameStatus(playerList, ammoListP1, ammoListP2);
         GameLogic gameLogic = new GameLogic(gameStatus);
 
         // EventHandlers for main menu buttons:
@@ -138,13 +139,20 @@ public class GameUi extends Application {
         stage.setScene(gameScene);
 
         Canvas canvas = new Canvas(800, 500);
-        root.getChildren().add(canvas);
 
         // Pictures:
-        Image cannonLeftImage = new Image("file:res/pictures/cannon_left.png");
-        Image cannonRightImage = new Image("file:res/pictures/cannon_right.png");
+//        Image cannonLeftImage = new Image("file:res/pictures/cannon_left.png");
+//        Image cannonRightImage = new Image("file:res/pictures/cannon_right.png");
+        Image cannonImage = new Image("file:res/pictures/new_cannon_01.png");
+        Image barrelImage = new Image("file:res/pictures/barrel_02.png");
         Image bulletImage = new Image("file:res/pictures/basicShell.png");
         Image explosionImage01 = new Image("file:res/pictures/explosion1.png");
+        ImageView cannonLeft = new ImageView(cannonImage);
+        ImageView cannonRight = new ImageView(cannonImage);
+        ImageView barrelLeft = new ImageView(barrelImage);
+        ImageView barrelRight = new ImageView(barrelImage);
+
+        root.getChildren().addAll(canvas, barrelLeft, barrelRight, cannonLeft, cannonRight);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -167,8 +175,26 @@ public class GameUi extends Application {
             gc.fillRect(0, 400, 800, 100);
 
             // Draw cannons:
-            gc.drawImage(cannonLeftImage, gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX(), gameStatus.getPlayer(0).getPlayerCannon().getLocation().getY());
-            gc.drawImage(cannonRightImage, gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX(), gameStatus.getPlayer(1).getPlayerCannon().getLocation().getY());
+            double leftX = gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX();
+            double leftY = gameStatus.getPlayer(0).getPlayerCannon().getLocation().getY();
+            double rightX = gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX();
+            double rightY = gameStatus.getPlayer(1).getPlayerCannon().getLocation().getY();
+            double leftRotate = gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle() - Math.PI / 2;
+            double rightRotate = gameStatus.getPlayer(1).getPlayerCannon().getCannonAngle() - Math.PI / 2;
+            cannonLeft.setX(leftX);
+            cannonLeft.setY(leftY);
+            cannonRight.setX(rightX);
+            cannonRight.setY(rightY);
+            barrelLeft.setX(leftX + 9);
+            barrelLeft.setY(leftY);
+            barrelLeft.setRotate(Math.toDegrees(-leftRotate));
+            barrelRight.setX(rightX + 9);
+            barrelRight.setY(rightY);
+            barrelRight.setRotate(Math.toDegrees(rightRotate));
+//            gc.drawImage(cannonLeftImage, leftX, leftY);
+//            gc.drawImage(cannonRightImage, rightX, rightY);
+//            gc.drawImage(leftBarrelImage, leftX + 13, leftY - 13);
+//            gc.drawImage(rightBarrelImage, rightX - 13, rightY - 13);
 
             // Draw text under players:
             gc.setFill(Color.BLACK);
