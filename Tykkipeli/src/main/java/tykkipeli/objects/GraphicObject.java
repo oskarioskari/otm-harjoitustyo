@@ -2,31 +2,30 @@ package tykkipeli.objects;
 
 public class GraphicObject {
 
-    private double mass, speedX, speedY, accelerationX, accelerationY;
-    private double x, y;
-    
+    private Vector location;
+    private Vector velocity;
+    private Vector acceleration;
+    private double mass;
+
     public GraphicObject() {
-        
+        this.location = new Vector();
+        this.velocity = new Vector();
+        this.acceleration = new Vector();
+        this.mass = 0;
     }
 
-    public GraphicObject(double x, double y) {
-        this.x = x;
-        this.y = y;
-        this.mass = 0.0;
-        this.speedX = 0.0;
-        this.speedY = 0.0;
-        this.accelerationX = 0.0;
-        this.accelerationY = 0.0;
+    public GraphicObject(Vector startLocation) {
+        this.location = startLocation;
+        this.velocity = new Vector();
+        this.acceleration = new Vector();
+        this.mass = 0;
     }
 
-    public GraphicObject(double x, double y, double mass, double velocityX, double velocityY, double accelerationX, double accelerationY) {
-        this.x = x;
-        this.y = y;
+    public GraphicObject(Vector startLocation, Vector startVelocity, Vector startAcceleration, double mass) {
+        this.location = startLocation;
+        this.velocity = startVelocity;
+        this.acceleration = startAcceleration;
         this.mass = mass;
-        this.speedX = velocityX;
-        this.speedY = velocityY;
-        this.accelerationX = accelerationX;
-        this.accelerationY = accelerationY;
     }
 
     public double getMass() {
@@ -37,42 +36,40 @@ public class GraphicObject {
         this.mass = newMass;
     }
 
-    public double[] getLocation() {
-        double[] location = {this.x, this.y};
-        return location;
-    }
-    
-    public double getXLocation() {
-        return this.x;
-    }
-    
-    public double getYLocation() {
-        return this.y;
+    public Vector getLocation() {
+        return this.location;
     }
 
-    public void setLocation(double[] newLocation) {
-        this.x = newLocation[0];
-        this.y = newLocation[1];
+    public void setLocationXY(double x, double y) {
+        this.location.setComponents(x, y);
     }
 
-    public double[] getSpeed() {
-        double[] ret = {this.speedX, this.speedY};
-        return ret;
+    public void setLocation(Vector newLocation) {
+        this.location = newLocation;
     }
 
-    public void setSpeed(double newXValue, double newYValue) {
-        this.speedX = newXValue;
-        this.speedY = newYValue;
+    public Vector getVelocity() {
+        return this.velocity;
     }
 
-    public double[] getAcceleration() {
-        double[] ret = {this.accelerationX, this.accelerationY};
-        return ret;
+    public void setVelocityXY(double x, double y) {
+        this.velocity.setComponents(x, y);
     }
 
-    public void setAcceleration(double newXValue, double newYValue) {
-        this.accelerationX = newXValue;
-        this.accelerationY = newYValue;
+    public void setVelocity(Vector newVelocity) {
+        this.velocity = newVelocity;
+    }
+
+    public Vector getAcceleration() {
+        return this.acceleration;
+    }
+
+    public void setAccelerationXY(double x, double y) {
+        this.acceleration.setComponents(x, y);
+    }
+
+    public void setAcceleration(Vector newAcceleration) {
+        this.acceleration = newAcceleration;
     }
 
 }

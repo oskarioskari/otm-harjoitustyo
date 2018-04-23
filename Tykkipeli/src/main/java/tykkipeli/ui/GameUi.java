@@ -24,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import tykkipeli.objects.Vector;
 
 public class GameUi extends Application {
 
@@ -59,23 +60,23 @@ public class GameUi extends Application {
 
         // Some important values at start:
         // TODO: Maybe move into gameStatus?
-        double[] leftLoc = {100, 375};
-        double[] rightLoc = {675, 375};
+        Vector leftLoc = new Vector(100, 375);
+        Vector rightLoc = new Vector(675, 375);
         double startAngle = Math.PI / 4.0;
         double startPower = 10;
         double[] gravity = {0, 0.5};
 
         // Initialize playerList and ammoLists:
         ArrayList<GraphicObject> ammoListP1 = new ArrayList<>();
-        BasicShell basicshellP1 = new BasicShell(-100.0, -100.0);
+        BasicShell basicshellP1 = new BasicShell();
         ammoListP1.add(0, basicshellP1);
 
         ArrayList<GraphicObject> ammoListP2 = new ArrayList<>();
-        BasicShell basicshellP2 = new BasicShell(-100.0, -100.0);
+        BasicShell basicshellP2 = new BasicShell();
         ammoListP2.add(0, basicshellP2);
 
-        Cannon leftCannon = new Cannon(leftLoc[0], leftLoc[1], startAngle, startPower);
-        Cannon rightCannon = new Cannon(rightLoc[0], rightLoc[1], startAngle, startPower);
+        Cannon leftCannon = new Cannon(leftLoc, startAngle, startPower);
+        Cannon rightCannon = new Cannon(rightLoc, startAngle, startPower);
 
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add((new Player(0, leftCannon, true)));
@@ -83,7 +84,7 @@ public class GameUi extends Application {
 
         // Initialize gameStatus and gameLogic:
         GameStatus gameStatus = new GameStatus(playerList, ammoListP1, ammoListP2, gravity);
-        GameLogic gameLogic = new GameLogic();
+        GameLogic gameLogic = new GameLogic(gameStatus);
 
         // EventHandlers for main menu buttons:
         startGame.setOnAction((ActionEvent event) -> {
@@ -157,7 +158,7 @@ public class GameUi extends Application {
         KeyFrame kf = new KeyFrame(Duration.seconds(spf), (ActionEvent event) -> {
 
             // Prevent stupidity:
-            gameLogic.checkPlayerParameters(gameStatus);
+            gameLogic.checkPlayerParameters();
 
             // Draw background:
             gc.setFill(Color.SKYBLUE);
@@ -166,15 +167,15 @@ public class GameUi extends Application {
             gc.fillRect(0, 400, 800, 100);
 
             // Draw cannons:
-            gc.drawImage(cannonLeftImage, gameStatus.getPlayer(0).getPlayerCannon().getXLocation(), gameStatus.getPlayer(0).getPlayerCannon().getYLocation());
-            gc.drawImage(cannonRightImage, gameStatus.getPlayer(1).getPlayerCannon().getXLocation(), gameStatus.getPlayer(1).getPlayerCannon().getYLocation());
+            gc.drawImage(cannonLeftImage, gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX(), gameStatus.getPlayer(0).getPlayerCannon().getLocation().getY());
+            gc.drawImage(cannonRightImage, gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX(), gameStatus.getPlayer(1).getPlayerCannon().getLocation().getY());
 
             // Draw text under players:
             gc.setFill(Color.BLACK);
             gc.fillText(getPlayerText(0, gameStatus),
-                    gameStatus.getPlayer(0).getPlayerCannon().getXLocation(), gameStatus.getPlayer(0).getPlayerCannon().getYLocation() + 50);
+                    gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX(), gameStatus.getPlayer(0).getPlayerCannon().getLocation().getY() + 50);
             gc.fillText(getPlayerText(1, gameStatus),
-                    gameStatus.getPlayer(1).getPlayerCannon().getXLocation(), gameStatus.getPlayer(1).getPlayerCannon().getYLocation() + 50);
+                    gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX(), gameStatus.getPlayer(1).getPlayerCannon().getLocation().getY() + 50);
 
             // Draw help text:
             if (gameStatus.getTurn() == 0 && gameStatus.getWait() == 0) {
@@ -186,31 +187,31 @@ public class GameUi extends Application {
             } else {
                 gc.fillText("Wait for next turn", 380, 50);
             }
-            
+
             // Check if game is in "wait" mode and act accordingly:
             if (gameStatus.getWait() == 1) {
                 // Draw player0 ammo
-                double x0 = gameStatus.getPlayerWeapon(0).getXLocation();
-                double y0 = gameStatus.getPlayerWeapon(0).getYLocation();
+                double x0 = gameStatus.getPlayerWeapon(0).getLocation().getX();
+                double y0 = gameStatus.getPlayerWeapon(0).getLocation().getY();
                 gc.drawImage(bulletImage, x0, y0);
                 // Draw player1 ammo
-                double x1 = gameStatus.getPlayerWeapon(1).getXLocation();
-                double y1 = gameStatus.getPlayerWeapon(1).getYLocation();
+                double x1 = gameStatus.getPlayerWeapon(1).getLocation().getX();
+                double y1 = gameStatus.getPlayerWeapon(1).getLocation().getY();
                 gc.drawImage(bulletImage, x1, y1);
-                gameLogic.moveAmmo(gameStatus);
+                gameLogic.moveAmmo();
                 if (y0 > 400) {
                     gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
                     gameStatus.setWaitOver(0, 1);
-                    if (x0 >= gameStatus.getPlayer(1).getPlayerCannon().getXLocation() - 20
-                            && x0 <= gameStatus.getPlayer(1).getPlayerCannon().getXLocation() + 70) {
+                    if (x0 >= gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX() - 20
+                            && x0 <= gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX() + 70) {
                         gameStatus.addPoint(0);
                     }
                 }
                 if (y1 > 400) {
                     gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
                     gameStatus.setWaitOver(1, 1);
-                    if (x1 >= gameStatus.getPlayer(0).getPlayerCannon().getXLocation() - 20
-                            && x1 <= gameStatus.getPlayer(0).getPlayerCannon().getXLocation() + 70) {
+                    if (x1 >= gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX() - 20
+                            && x1 <= gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX() + 70) {
                         gameStatus.addPoint(1);
                     }
                 }
@@ -224,7 +225,7 @@ public class GameUi extends Application {
             gameScene.setOnKeyPressed((KeyEvent keypressed) -> {
                 if (gameStatus.getWait() == 0) {
                     String pressedKey = keypressed.getCode().toString();
-                    gameLogic.keyPressed(pressedKey, gameStatus);
+                    gameLogic.keyPressed(pressedKey);
                 }
             });
         }

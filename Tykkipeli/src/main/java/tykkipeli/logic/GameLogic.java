@@ -1,6 +1,5 @@
 package tykkipeli.logic;
 
-import tykkipeli.logic.GameStatus;
 import java.util.List;
 import java.util.Random;
 import tykkipeli.objects.Cannon;
@@ -10,12 +9,14 @@ import tykkipeli.objects.Player;
 public class GameLogic {
 
     private final ObjectPhysics physics;
+    private final GameStatus gameStatus;
 
-    public GameLogic() {
+    public GameLogic(GameStatus gameStatus) {
         this.physics = new ObjectPhysics();
+        this.gameStatus = gameStatus;
     }
 
-    public void keyPressed(String keycode, GameStatus gameStatus) {
+    public void keyPressed(String keycode) {
         int turnNow = gameStatus.getTurn();
         Cannon cannon = gameStatus.getPlayerList().get(turnNow).getPlayerCannon();
 
@@ -27,7 +28,7 @@ public class GameLogic {
                         gameStatus.getGravity());
                 gameStatus.setTurn(1);
                 if (!gameStatus.getPlayer(1).getPlayerHumanStatus()) {
-                    easyComputerPlays(1, gameStatus);
+                    easyComputerPlays(1);
                 }
             } else {
                 fireCannon(turnNow,
@@ -60,7 +61,7 @@ public class GameLogic {
         }
     }
 
-    public void easyComputerPlays(int aiPlayer, GameStatus gameStatus) {
+    public void easyComputerPlays(int aiPlayer) {
         Random random = new Random();
         double randomAngle = random.nextGaussian() * (Math.PI / 16) + (Math.PI / 4);
         double randomPower = random.nextGaussian() * 2 + 16;
@@ -77,7 +78,7 @@ public class GameLogic {
     public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, double[] gravity) {
         double[] loc = {0, 0};
 
-        double[] cannonLoc = playerList.get(player).getPlayerCannon().getLocation();
+        double[] cannonLoc = playerList.get(player).getPlayerCannon().getLocation().getComponents();
 
         if (player == 0) {
             loc[0] = cannonLoc[0] + 25;
@@ -91,7 +92,7 @@ public class GameLogic {
         double y;
         double angle = playerList.get(player).getPlayerCannon().getCannonAngle();
         double power = playerList.get(player).getPlayerCannon().getCannonPower();
-        weapon.setLocation(loc);
+        weapon.setLocationXY(loc[0], loc[1]);
         if (player == 0) {
             x = power * Math.cos(angle);
             y = -power * Math.sin(angle);
@@ -99,21 +100,20 @@ public class GameLogic {
             x = -power * Math.cos(angle);
             y = -power * Math.sin(angle);
         }
-        weapon.setSpeed(x, y);
-        weapon.setAcceleration(gravity[0], gravity[1]);
+        weapon.setVelocityXY(x, y);
+        weapon.setAccelerationXY(gravity[0], gravity[1]);
     }
 
-    public void moveAmmo(GameStatus gameStatus) {
+    public void moveAmmo() {
         int i = 0;
         while (i < gameStatus.getPlayerList().size()) {
             GraphicObject ammo = gameStatus.getPlayerWeapon(i);
-            double[] next = this.physics.nextStepOnlyGravity(ammo);
-            ammo.setLocation(next);
+            this.physics.nextStepOnlyGravity(ammo);
             i++;
         }
     }
 
-    public void checkPlayerParameters(GameStatus gameStatus) {
+    public void checkPlayerParameters() {
         for (Player p : gameStatus.getPlayerList()) {
             if (p.getPlayerCannon().getCannonAngle() > (Math.PI / 2)) {
                 p.getPlayerCannon().setCannonAngle(Math.PI / 2);

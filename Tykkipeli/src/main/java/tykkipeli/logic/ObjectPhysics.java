@@ -2,6 +2,7 @@ package tykkipeli.logic;
 
 import tykkipeli.objects.GraphicObject;
 import java.util.ArrayList;
+import tykkipeli.objects.Vector;
 
 public class ObjectPhysics {
 
@@ -11,54 +12,51 @@ public class ObjectPhysics {
     // Object behavior is calculated using Velocity Verlet algorithm.
     // For more info: https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet
     // Unit of velocity is "pixels/frame update time" and unit of time is "time between two frames".
-    public double[] nextLocation(GraphicObject object) {
+    public Vector nextLocation(GraphicObject object) {
         // Calculate object location during step i+1.
-        double[] location = object.getLocation();
-        double[] speed = object.getSpeed();
-        double[] acc = object.getAcceleration();
-        double deltaX = speed[0] + 0.5 * acc[0];
-        double deltaY = speed[1] + 0.5 * acc[1];
-        location[0] += deltaX;
-        location[1] += deltaY;
+        Vector location = object.getLocation();
+        Vector velocity = object.getVelocity();
+        Vector acceleration = object.getAcceleration();
+        double deltaX = velocity.getX() + 0.5 * acceleration.getX();
+        double deltaY = velocity.getY() + 0.5 * acceleration.getY();
+        location.addX(deltaX);
+        location.addY(deltaY);
         return location;
     }
 
-    public double[] sumAcceleration(GraphicObject object, ArrayList<double[]> newAccelerations) {
+    public Vector sumAcceleration(GraphicObject object, ArrayList<Vector> newAccelerations) {
         // Method assumes that all accelerations are listed in "newAccelerations".
         // If "newAccelerations" is not empty the method will overwrite all old values.
-        double[] netAcceleration = object.getAcceleration();
+        Vector netAcceleration = object.getAcceleration();
         if (newAccelerations.isEmpty()) {           // Use old values.
             return netAcceleration;
         } else {                                    // Calculate new sum acceleration and discard old values.
-            double deltaX = 0.0;
-            double deltaY = 0.0;
-            for (double[] a : newAccelerations) {
-                deltaX += a[0];
-                deltaY += a[1];
+            double newX = 0.0;
+            double newY = 0.0;
+            for (Vector a : newAccelerations) {
+                newX += a.getX();
+                newY += a.getY();
             }
-            netAcceleration[0] = deltaX;
-            netAcceleration[1] = deltaY;
+            netAcceleration.setX(newX);
+            netAcceleration.setY(newY);
         }
         return netAcceleration;
     }
 
-    public double[] nextVelocity(GraphicObject object, double[] newAcceleration) {
+    public Vector nextVelocity(GraphicObject object, Vector newAcceleration) {
         // Calculate object velocity for step i+1.
-        double[] velocity = object.getSpeed();
-        double[] oldAcceleration = object.getAcceleration();
-        double deltaX = 0.5 * (oldAcceleration[0] + newAcceleration[0]);
-        double deltaY = 0.5 * (oldAcceleration[1] + newAcceleration[1]);
-        velocity[0] += deltaX;
-        velocity[1] += deltaY;
+        Vector velocity = object.getVelocity();
+        Vector oldAcceleration = object.getAcceleration();
+        double deltaX = 0.5 * (oldAcceleration.getX() + newAcceleration.getX());
+        double deltaY = 0.5 * (oldAcceleration.getY() + newAcceleration.getY());
+        velocity.addX(deltaX);
+        velocity.addY(deltaY);
         return velocity;
     }
 
-    public double[] nextStepOnlyGravity(GraphicObject object) {
-        double[] newLoc = nextLocation(object);
-        double[] newVel = nextVelocity(object, object.getAcceleration());
-        object.setLocation(newLoc);
-        object.setSpeed(newVel[0], newVel[1]);
-        return newLoc;
+    public void nextStepOnlyGravity(GraphicObject object) {
+        nextLocation(object);
+        nextVelocity(object, object.getAcceleration());
     }
 
 //    public double[] calculateDrag() {

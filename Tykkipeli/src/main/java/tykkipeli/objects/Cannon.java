@@ -1,22 +1,20 @@
 package tykkipeli.objects;
 
-import tykkipeli.objects.GraphicObject;
-
 public class Cannon extends GraphicObject {
 
     private double angle;
     private double power;
-
-    public Cannon(double x, double y) {
-        super(x, y);
+    
+    public Cannon(Vector startLocation) {
+        super(startLocation);
         this.angle = Math.PI / 4;
         this.power = 10;
     }
-
-    public Cannon(double x, double y, double cannonAngle, double shootingPower) {
-        super(x, y);
-        this.angle = cannonAngle;
-        this.power = shootingPower;
+    
+    public Cannon(Vector startLocation, double startAngle, double startPower) {
+        super(startLocation);
+        this.angle = startAngle;
+        this.power = startPower;
     }
 
     public double getCannonAngle() {

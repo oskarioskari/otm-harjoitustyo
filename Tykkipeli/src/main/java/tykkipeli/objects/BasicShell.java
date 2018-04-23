@@ -6,12 +6,12 @@ public class BasicShell extends GraphicObject {
 
     }
 
-    public BasicShell(double x, double y) {
-        super(x, y);
+    public BasicShell(Vector startLocation) {
+        super(startLocation);
     }
 
-    public BasicShell(double x, double y, double mass, double velocityX, double velocityY, double accelerationX, double accelerationY) {
-        super(x, y, mass, velocityX, velocityY, accelerationX, accelerationY);
+    public BasicShell(Vector startLocation, Vector startVelocity, Vector startAcceleration, double mass) {
+        super(startLocation, startVelocity, startAcceleration, mass);
     }
 
 }
