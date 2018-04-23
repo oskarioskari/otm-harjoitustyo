@@ -1,91 +1,78 @@
 package tykkipeli.logic;
 
 import java.util.List;
-import java.util.Random;
 import tykkipeli.objects.Cannon;
 import tykkipeli.objects.GraphicObject;
 import tykkipeli.objects.Player;
+import tykkipeli.objects.Vector;
 
 public class GameLogic {
 
     private final ObjectPhysics physics;
     private final GameStatus gameStatus;
+    private final GameAi gameAi;
 
     public GameLogic(GameStatus gameStatus) {
         this.physics = new ObjectPhysics();
         this.gameStatus = gameStatus;
+        this.gameAi = new GameAi(gameStatus);
     }
 
     public void keyPressed(String keycode) {
-        int turnNow = gameStatus.getTurn();
-        Cannon cannon = gameStatus.getPlayerList().get(turnNow).getPlayerCannon();
-
+        Cannon cannon = gameStatus.getPlayerList().get(gameStatus.getTurn()).getPlayerCannon();
         if (keycode.equals("ENTER")) {
-            if (turnNow == 0) {
-                fireCannon(turnNow,
-                        gameStatus.getPlayerList(),
-                        gameStatus.getPlayerWeapon(turnNow),
-                        gameStatus.getGravity());
-                gameStatus.setTurn(1);
-                if (!gameStatus.getPlayer(1).getPlayerHumanStatus()) {
-                    easyComputerPlays(1);
-                }
-            } else {
-                fireCannon(turnNow,
-                        gameStatus.getPlayerList(),
-                        gameStatus.getPlayerWeapon(turnNow),
-                        gameStatus.getGravity());
-                gameStatus.setTurn(0);
-                gameStatus.setWait(1);
-            }
-
+            keycodeEnter(gameStatus.getTurn());
         } else if (keycode.equals("UP")) {
             cannon.increaseCannonAngle(0.005);
-
         } else if (keycode.equals("DOWN")) {
             cannon.increaseCannonAngle(-0.005);
-
         } else if (keycode.equals("LEFT")) {
-            if (turnNow == 0) {
-                cannon.increaseCannonPower(-0.1);
+            if (gameStatus.getTurn() == 0) {
+                cannon.increaseCannonPower(-0.25);
             } else {
-                cannon.increaseCannonPower(0.1);
+                cannon.increaseCannonPower(0.25);
             }
-
         } else if (keycode.equals("RIGHT")) {
-            if (turnNow == 0) {
-                cannon.increaseCannonPower(0.1);
+            if (gameStatus.getTurn() == 0) {
+                cannon.increaseCannonPower(0.25);
             } else {
-                cannon.increaseCannonPower(-0.1);
+                cannon.increaseCannonPower(-0.25);
             }
         }
     }
 
-    public void easyComputerPlays(int aiPlayer) {
-        Random random = new Random();
-        double randomAngle = random.nextGaussian() * (Math.PI / 16) + (Math.PI / 4);
-        double randomPower = random.nextGaussian() * 2 + 16;
-        gameStatus.getPlayer(aiPlayer).getPlayerCannon().setCannonAngle(randomAngle);
-        gameStatus.getPlayer(aiPlayer).getPlayerCannon().setCannonPower(randomPower);
-        fireCannon(aiPlayer,
-                gameStatus.getPlayerList(),
-                gameStatus.getPlayerWeapon(aiPlayer),
-                gameStatus.getGravity());
+    public void keycodeEnter(int turnNow) {
+        if (turnNow == 0) {
+            fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
+            gameStatus.setTurn(1);
+            if (!gameStatus.getPlayer(1).getPlayerHumanStatus()) {
+                computerPlays(1);
+            }
+        } else {
+            fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
+            gameStatus.setTurn(0);
+            gameStatus.setWait(1);
+        }
+    }
+
+    public void computerPlays(int aiPlayer) {
+        gameAi.play(aiPlayer);
+        fireCannon(aiPlayer, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(aiPlayer), gameStatus.getGravity());
         gameStatus.setTurn(0);
         gameStatus.setWait(1);
     }
 
-    public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, double[] gravity) {
+    public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, Vector gravity) {
         double[] loc = {0, 0};
 
         double[] cannonLoc = playerList.get(player).getPlayerCannon().getLocation().getComponents();
 
         if (player == 0) {
-            loc[0] = cannonLoc[0] + 25;
-            loc[1] = cannonLoc[1] - 7;
+            loc[0] = cannonLoc[0] + 10;
+            loc[1] = cannonLoc[1] + 17;
         } else if (player == 1) {
-            loc[0] = cannonLoc[0] - 7;
-            loc[1] = cannonLoc[1] - 7;
+            loc[0] = cannonLoc[0] + 10;
+            loc[1] = cannonLoc[1] + 17;
         }
 
         double x;
@@ -101,7 +88,7 @@ public class GameLogic {
             y = -power * Math.sin(angle);
         }
         weapon.setVelocityXY(x, y);
-        weapon.setAccelerationXY(gravity[0], gravity[1]);
+        weapon.setAcceleration(gravity);
     }
 
     public void moveAmmo() {
@@ -120,8 +107,8 @@ public class GameLogic {
             } else if (p.getPlayerCannon().getCannonAngle() < 0) {
                 p.getPlayerCannon().setCannonAngle(0);
             }
-            if (p.getPlayerCannon().getCannonPower() > 200) {
-                p.getPlayerCannon().setCannonPower(200);
+            if (p.getPlayerCannon().getCannonPower() > 25) {
+                p.getPlayerCannon().setCannonPower(25);
             } else if (p.getPlayerCannon().getCannonPower() < 0) {
                 p.getPlayerCannon().setCannonPower(0);
             }
