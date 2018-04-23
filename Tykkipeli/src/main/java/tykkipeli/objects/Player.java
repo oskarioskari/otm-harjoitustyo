@@ -6,10 +6,10 @@ public class Player {
     private final Cannon cannon;
     private boolean human;
 
-    public Player(int playerNumber, Cannon playerCannon, boolean isPlayerHuman) {
+    public Player(int playerNumber, Cannon playerCannon) {
         this.num = playerNumber;
         this.cannon = playerCannon;
-        this.human = isPlayerHuman;
+        this.human = true;
     }
 
     public int getPlayerNum() {
