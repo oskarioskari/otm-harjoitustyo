@@ -1,7 +1,5 @@
 package tykkipeli.objects;
 
-import tykkipeli.objects.Cannon;
-
 public class Player {
 
     private final int num;
