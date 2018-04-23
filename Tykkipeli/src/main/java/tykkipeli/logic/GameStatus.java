@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tykkipeli.objects.GraphicObject;
 import tykkipeli.objects.Player;
+import tykkipeli.objects.Vector;
 
 public class GameStatus {
 
@@ -12,19 +13,19 @@ public class GameStatus {
     private int[] waitOver;
     private int[] playerScores;
     private int[] selectedWeapon;
-    private double[] gravity;
+    private Vector gravity;
     private final List<Player> playerList;
     private final List<GraphicObject> ammoListPlayer1;
     private final List<GraphicObject> ammoListPlayer2;
     private final List<List<GraphicObject>> ammoLists;
 
-    public GameStatus(List<Player> playerList, List<GraphicObject> ammolistPlayer1, List<GraphicObject> ammolistPlayer2, double[] worldGravity) {
+    public GameStatus(List<Player> playerList, List<GraphicObject> ammolistPlayer1, List<GraphicObject> ammolistPlayer2) {
         this.playerInTurn = 0;
         this.wait = 0;
         this.waitOver = new int[]{0, 0};
         this.playerScores = new int[]{0, 0};
         this.selectedWeapon = new int[]{0, 0};
-        this.gravity = worldGravity;
+        this.gravity = new Vector(0, 0.5); // Default gravity
         this.playerList = playerList;
         this.ammoListPlayer1 = ammolistPlayer1;
         this.ammoListPlayer2 = ammolistPlayer2;
@@ -87,11 +88,11 @@ public class GameStatus {
         return this.ammoLists.get(player).get(this.selectedWeapon[player]);
     }
 
-    public void setGravity(double[] newGravity) {
+    public void setGravity(Vector newGravity) {
         this.gravity = newGravity;
     }
 
-    public double[] getGravity() {
+    public Vector getGravity() {
         return gravity;
     }
 
