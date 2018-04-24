@@ -18,7 +18,9 @@ public class GameLogic {
         this.gameAi = new GameAi(gameStatus);
     }
 
+    // Figure out what to do when key is pressed
     public void keyPressed(String keycode) {
+        System.out.println(keycode);
         Cannon cannon = gameStatus.getPlayerList().get(gameStatus.getTurn()).getPlayerCannon();
         if (keycode.equals("ENTER")) {
             keycodeEnter(gameStatus.getTurn());
@@ -45,7 +47,8 @@ public class GameLogic {
         }
     }
 
-    public void keycodeEnter(int turnNow) {
+    // This is called when ENTER was pressed
+    private void keycodeEnter(int turnNow) {
         if (turnNow == 0) {
             fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
             gameStatus.setTurn(1);
@@ -59,31 +62,33 @@ public class GameLogic {
         }
     }
 
-    public void computerPlays(int aiPlayer) {
+    // Call gameAi.play and pass the turn
+    private void computerPlays(int aiPlayer) {
         gameAi.play(aiPlayer);
         fireCannon(aiPlayer, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(aiPlayer), gameStatus.getGravity());
         gameStatus.setTurn(0);
         gameStatus.setWait(1);
     }
 
+    // Prepare ammo for shooting
     public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, Vector gravity) {
-        double[] loc = {0, 0};
-
+        
+        // Set inital position
         double[] cannonLoc = playerList.get(player).getPlayerCannon().getLocation().getComponents();
-
-        if (player == 0) {
-            loc[0] = cannonLoc[0] + 10;
-            loc[1] = cannonLoc[1] + 17;
-        } else if (player == 1) {
-            loc[0] = cannonLoc[0] + 10;
-            loc[1] = cannonLoc[1] + 17;
-        }
-
         double x;
         double y;
+        if (player == 0) {
+            x = cannonLoc[0] + 10;
+            y = cannonLoc[1] + 17;
+        } else {
+            x = cannonLoc[0] + 10;
+            y = cannonLoc[1] + 17;
+        }
+        weapon.setLocationXY(x, y);
+        
+        // Calculate initial velocity
         double angle = playerList.get(player).getPlayerCannon().getCannonAngle();
         double power = playerList.get(player).getPlayerCannon().getCannonPower();
-        weapon.setLocationXY(loc[0], loc[1]);
         if (player == 0) {
             x = power * Math.cos(angle);
             y = -power * Math.sin(angle);
@@ -92,9 +97,12 @@ public class GameLogic {
             y = -power * Math.sin(angle);
         }
         weapon.setVelocityXY(x, y);
+        
+        // Set acceleration caused by gravity
         weapon.setAcceleration(gravity);
     }
 
+    // Move both ammos one step
     public void moveAmmo() {
         int i = 0;
         while (i < gameStatus.getPlayerList().size()) {
@@ -106,11 +114,13 @@ public class GameLogic {
 
     public void checkPlayerParameters() {
         for (Player p : gameStatus.getPlayerList()) {
+            // Barrel shouldn't be pointing back or underground
             if (p.getPlayerCannon().getCannonAngle() > (Math.PI / 2)) {
                 p.getPlayerCannon().setCannonAngle(Math.PI / 2);
             } else if (p.getPlayerCannon().getCannonAngle() < 0) {
                 p.getPlayerCannon().setCannonAngle(0);
             }
+            // Shooting power should be reasonable and not negative
             if (p.getPlayerCannon().getCannonPower() > 25) {
                 p.getPlayerCannon().setCannonPower(25);
             } else if (p.getPlayerCannon().getCannonPower() < 0) {
