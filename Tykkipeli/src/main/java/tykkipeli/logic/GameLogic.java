@@ -7,11 +7,11 @@ import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
 public class GameLogic {
-
+    
     private final ObjectPhysics physics;
     private final GameStatus gameStatus;
     private final GameAi gameAi;
-
+    
     public GameLogic(GameStatus gameStatus) {
         this.physics = new ObjectPhysics();
         this.gameStatus = gameStatus;
@@ -71,7 +71,7 @@ public class GameLogic {
 
     // Prepare ammo for shooting
     public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, Vector gravity) {
-        
+
         // Set inital position
         double[] cannonLoc = playerList.get(player).getPlayerCannon().getLocation().getComponents();
         double x;
@@ -84,7 +84,7 @@ public class GameLogic {
             y = cannonLoc[1] + 17;
         }
         weapon.setLocationXY(x, y);
-        
+
         // Calculate initial velocity
         double angle = playerList.get(player).getPlayerCannon().getCannonAngle();
         double power = playerList.get(player).getPlayerCannon().getCannonPower();
@@ -96,7 +96,7 @@ public class GameLogic {
             y = -power * Math.sin(angle);
         }
         weapon.setVelocityXY(x, y);
-        
+
         // Set acceleration caused by gravity
         weapon.setAcceleration(gravity);
     }
@@ -107,10 +107,11 @@ public class GameLogic {
         while (i < gameStatus.getPlayerList().size()) {
             GraphicObject ammo = gameStatus.getPlayerWeapon(i);
             this.physics.nextStepOnlyGravity(ammo);
+//            this.physics.nextStepWithDrag(ammo, gameStatus); // Just waiting here TODO
             i++;
         }
     }
-
+    
     public void checkPlayerParameters() {
         for (Player p : gameStatus.getPlayerList()) {
             // Barrel shouldn't be pointing back or underground
@@ -127,5 +128,5 @@ public class GameLogic {
             }
         }
     }
-
+    
 }

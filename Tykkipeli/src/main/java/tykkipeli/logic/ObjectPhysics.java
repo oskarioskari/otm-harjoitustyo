@@ -2,7 +2,9 @@ package tykkipeli.logic;
 
 import tykkipeli.physicobjects.GraphicObject;
 import java.util.ArrayList;
+import java.util.List;
 import tykkipeli.objects.Vector;
+import tykkipeli.physicobjects.Ammo;
 
 public class ObjectPhysics {
 
@@ -24,7 +26,7 @@ public class ObjectPhysics {
         return location;
     }
 
-    public Vector sumAcceleration(GraphicObject object, ArrayList<Vector> newAccelerations) {
+    public Vector sumAcceleration(GraphicObject object, List<Vector> newAccelerations) {
         // Method assumes that all accelerations are listed in "newAccelerations".
         // If "newAccelerations" is not empty the method will overwrite all old values.
         Vector netAcceleration = object.getAcceleration();
@@ -59,7 +61,21 @@ public class ObjectPhysics {
         nextVelocity(object, object.getAcceleration());
     }
 
-//    public double[] calculateDrag() {
-//        TODO
+    // TODO: Something is very wrong with this
+    // TODO: Fix this.
+//    public void nextStepWithDrag(GraphicObject object, GameStatus status) {
+//        List<Vector> accelerations = new ArrayList<>();
+//        accelerations.add(calculateDrag(object));
+//        accelerations.add(status.getGravity());
+//        nextLocation(object);
+//        Vector totalAcceleration = sumAcceleration(object, accelerations);
+//        object.setAcceleration(totalAcceleration);
+//        nextVelocity(object, totalAcceleration);
+//    }
+//
+//    public Vector calculateDrag(GraphicObject ammo) {
+//        double x = -(0.5 * ammo.getDragCoefficient() * (0.1 * 0.1) * Math.pow(ammo.getVelocity().getX(), 2)) / ammo.getMass();
+//        double y = -(0.5 * ammo.getDragCoefficient() * (0.1 * 0.1) * Math.pow(ammo.getVelocity().getY(), 2)) / ammo.getMass();
+//        return new Vector(x, y);
 //    }
 }
