@@ -1,8 +1,8 @@
 package tykkipeli.logic;
 
 import java.util.List;
-import tykkipeli.objects.Cannon;
-import tykkipeli.objects.GraphicObject;
+import tykkipeli.physicobjects.Cannon;
+import tykkipeli.physicobjects.GraphicObject;
 import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
@@ -38,6 +38,10 @@ public class GameLogic {
             } else {
                 cannon.increaseCannonPower(-0.25);
             }
+        } else if (keycode.equals("DIGIT1")) {
+            gameStatus.setSelectedWeapon(gameStatus.getTurn(), 0);
+        } else if (keycode.equals("DIGIT2")) {
+            gameStatus.setSelectedWeapon(gameStatus.getTurn(), 1);
         }
     }
 
