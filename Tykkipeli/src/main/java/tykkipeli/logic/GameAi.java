@@ -5,8 +5,8 @@ import java.util.Random;
 public class GameAi {
 
     private final GameStatus gameStatus;
+    private final Random random;
     private int difficutly;
-    private Random random;
 
     public GameAi(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
