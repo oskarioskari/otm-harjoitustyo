@@ -1,4 +1,7 @@
-package tykkipeli.objects;
+package tykkipeli.physicobjects;
+
+import tykkipeli.physicobjects.Ammo;
+import tykkipeli.objects.Vector;
 
 public class LargeShell extends Ammo {
     

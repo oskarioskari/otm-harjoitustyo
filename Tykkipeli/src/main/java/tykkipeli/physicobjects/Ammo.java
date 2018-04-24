@@ -1,4 +1,6 @@
-package tykkipeli.objects;
+package tykkipeli.physicobjects;
+
+import tykkipeli.objects.Vector;
 
 public class Ammo extends GraphicObject {
     
