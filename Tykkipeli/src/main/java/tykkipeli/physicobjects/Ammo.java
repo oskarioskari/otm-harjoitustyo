@@ -5,31 +5,24 @@ import tykkipeli.objects.Vector;
 public class Ammo extends GraphicObject {
 
     private final double damage;
-    private final double dragCoeff;
-
-    public Ammo(double damage, double dragCoeff) {
+    
+    public Ammo(double mass, double damage, double dragCoeff) {
+        super(mass, dragCoeff);
         this.damage = damage;
-        this.dragCoeff = dragCoeff;
     }
 
-    public Ammo(Vector startLocation, double damage, double dragCoeff) {
-        super(startLocation);
+    public Ammo(Vector startLocation, double mass, double damage, double dragCoeff) {
+        super(startLocation, dragCoeff);
         this.damage = damage;
-        this.dragCoeff = dragCoeff;
     }
 
     public Ammo(Vector startLocation, Vector startVelocity, Vector startAcceleration, double mass, double damage, double dragCoeff) {
-        super(startLocation, startVelocity, startAcceleration, mass);
+        super(startLocation, startVelocity, startAcceleration, mass, dragCoeff);
         this.damage = damage;
-        this.dragCoeff = dragCoeff;
     }
 
     public double getDamage() {
         return this.damage;
-    }
-
-    public double getDragCoefficient() {
-        return this.dragCoeff;
     }
 
 }

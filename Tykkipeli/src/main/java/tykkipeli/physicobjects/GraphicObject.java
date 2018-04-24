@@ -8,26 +8,38 @@ public class GraphicObject {
     private Vector velocity;
     private Vector acceleration;
     private double mass;
+    private final double dragCoeff;
 
     public GraphicObject() {
-        this.location = new Vector();
-        this.velocity = new Vector();
-        this.acceleration = new Vector();
-        this.mass = 0;
+        this(0);
+    }
+
+    public GraphicObject(double dragCoeff) {
+        this(new Vector(), new Vector(), new Vector(), 0, dragCoeff);
+    }
+    
+    public GraphicObject(double mass, double dragCoeff) {
+        this(new Vector(), new Vector(), new Vector(), mass, dragCoeff);
+    }
+
+    public GraphicObject(Vector startLocation, double dragCoeff) {
+        this(startLocation, new Vector(), new Vector(), 0, dragCoeff);
     }
 
     public GraphicObject(Vector startLocation) {
-        this.location = startLocation;
-        this.velocity = new Vector();
-        this.acceleration = new Vector();
-        this.mass = 0;
+        this(startLocation, 0);
     }
 
-    public GraphicObject(Vector startLocation, Vector startVelocity, Vector startAcceleration, double mass) {
+    public GraphicObject(Vector startLocation, Vector startVelocity, Vector startAcceleration, double mass, double dragCoeff) {
         this.location = startLocation;
         this.velocity = startVelocity;
         this.acceleration = startAcceleration;
         this.mass = mass;
+        this.dragCoeff = dragCoeff;
+    }
+
+    public GraphicObject(Vector startLocation, Vector startVelocity, Vector startAcceleration, double mass) {
+        this(startLocation, startVelocity, startAcceleration, mass, 0);
     }
 
     public double getMass() {
@@ -74,4 +86,7 @@ public class GraphicObject {
         this.acceleration = newAcceleration;
     }
 
+    public double getDragCoefficient() {
+        return this.dragCoeff;
+    }
 }
