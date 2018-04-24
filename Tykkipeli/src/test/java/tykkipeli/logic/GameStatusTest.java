@@ -1,10 +1,8 @@
 package tykkipeli.logic;
 
 import tykkipeli.objects.Player;
-import tykkipeli.objects.Cannon;
-import tykkipeli.objects.GraphicObject;
-import tykkipeli.objects.BasicShell;
-import tykkipeli.logic.GameStatus;
+import tykkipeli.physicobjects.Cannon;
+import tykkipeli.physicobjects.BasicShell;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
@@ -12,6 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tykkipeli.objects.Vector;
+import tykkipeli.physicobjects.Ammo;
+import tykkipeli.physicobjects.LargeShell;
 
 public class GameStatusTest {
 
@@ -23,16 +24,15 @@ public class GameStatusTest {
     @Before
     public void setUp() {
         List<Player> testPlayerlist = new ArrayList<>();
-        testPlayerlist.add(new Player(0, new Cannon(1, 1), true));
-        testPlayerlist.add(new Player(1, new Cannon(1, 1), false));
-        List<GraphicObject> testAmmolist1 = new ArrayList<>();
-        testAmmolist1.add(new BasicShell(1, 1));
-        testAmmolist1.add(new BasicShell(1, 2));
-        List<GraphicObject> testAmmolist2 = new ArrayList<>();
-        testAmmolist2.add(new BasicShell(2, 1));
-        testAmmolist2.add(new BasicShell(2, 2));
-        double[] testGravity = {0, 1};
-        status = new GameStatus(testPlayerlist, testAmmolist1, testAmmolist2, testGravity);
+        testPlayerlist.add(new Player(0, new Cannon(new Vector(1, 1))));
+        testPlayerlist.add(new Player(1, new Cannon(new Vector(2, 2))));
+        List<Ammo> testAmmolist1 = new ArrayList<>();
+        testAmmolist1.add(new BasicShell(new Vector(1, 1)));
+        testAmmolist1.add(new LargeShell(new Vector(1, 2)));
+        List<Ammo> testAmmolist2 = new ArrayList<>();
+        testAmmolist2.add(new BasicShell(new Vector(2, 1)));
+        testAmmolist2.add(new LargeShell(new Vector(2, 2)));
+        status = new GameStatus(testPlayerlist, testAmmolist1, testAmmolist2);
     }
 
     @After
@@ -134,28 +134,28 @@ public class GameStatusTest {
     // getPlayerWeapon
     @Test
     public void getPlayerWeaponReturnsRightObject() {
-        double[] cmp = {1.0, 1.0};
-        double[] ret = status.getPlayerWeapon(0).getLocation();
-        assertEquals(cmp[0], ret[0], 0.1);
-        assertEquals(cmp[1], ret[1], 0.1);
+        Vector cmp = new Vector(1, 1);
+        Vector ret = status.getPlayerWeapon(0).getLocation();
+        assertEquals(cmp.getX(), ret.getX(), 0.01);
+        assertEquals(cmp.getY(), ret.getY(), 0.01);
     }
 
     // setGravity
     @Test
     public void setGravityToZeroTen() {
-        status.setGravity(new double[]{0.0, 10.0});
-        double[] cmp = {0.0, 10.0};
-        assertEquals(cmp[0], status.getGravity()[0], 0.1);
-        assertEquals(cmp[1], status.getGravity()[1], 0.1);
+        status.setGravity(new Vector(0, 10));
+        Vector cmp = new Vector(0, 10);
+        assertEquals(cmp.getX(), status.getGravity().getX(), 0.01);
+        assertEquals(cmp.getY(), status.getGravity().getY(), 0.01);
     }
 
     // getGravity
     @Test
     public void getDefaultGravity() {
-        double[] cmp = {0, 1};
-        double[] ret = status.getGravity();
-        assertEquals(cmp[0], ret[0], 0.1);
-        assertEquals(cmp[1], ret[1], 0.1);
+        Vector cmp = new Vector(0, 0.5);
+        Vector ret = status.getGravity();
+        assertEquals(cmp.getX(), ret.getX(), 0.01);
+        assertEquals(cmp.getY(), ret.getY(), 0.01);
     }
 
     // getPlayerList
