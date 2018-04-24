@@ -2,7 +2,6 @@ package tykkipeli.ui;
 
 import tykkipeli.objects.Player;
 import tykkipeli.physicobjects.Cannon;
-import tykkipeli.physicobjects.GraphicObject;
 import tykkipeli.physicobjects.BasicShell;
 import tykkipeli.logic.GameLogic;
 import tykkipeli.logic.GameStatus;
@@ -13,7 +12,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -106,7 +104,7 @@ public class GameUi extends Application {
     }
 
     public void settingsScreen(Stage stage, Scene mainMenu, GameStatus gameStatus) {
-
+        // TODO: Remake settings menu
         Button selectPlVersusAI = new Button("Set player 2 = AI");       //
         Button selectPlVersusPl = new Button("Set player 2 = Human");    //
         Button back = new Button("Back");                                // Back to main menu
@@ -203,10 +201,14 @@ public class GameUi extends Application {
             // Draw power bar next to player:
             if (gameStatus.getTurn() == 0 && gameStatus.getWait() == 0) {
                 gc.setFill(Color.ORANGERED);
-                gc.fillRect(leftX - 13, leftY - 25, 8, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower());
+                gc.fillRect(leftX - 13, leftY + 30, 8, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower());
+                gc.setFill(Color.BLACK);
+                gc.strokeRect(leftX - 13, leftY + 30, 8, 25);
             } else if (gameStatus.getTurn() == 1 && gameStatus.getWait() == 0) {
                 gc.setFill(Color.ORANGERED);
-                gc.fillRect(rightX + 30, rightY - 25, 8, gameStatus.getPlayer(1).getPlayerCannon().getCannonPower());
+                gc.fillRect(rightX - 13, rightY + 30, 8, gameStatus.getPlayer(1).getPlayerCannon().getCannonPower());
+                gc.setFill(Color.BLACK);
+                gc.strokeRect(rightX - 13, rightY + 30, 8, 25);
             }
 
             // Draw text and health bar under players:
@@ -252,10 +254,14 @@ public class GameUi extends Application {
                             && x0 <= gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX() + 67
                             && gameStatus.getWaitOver(0) == 0) {
                         gameStatus.addPoint(0);
-                        gameStatus.subtractHealth(1, 10);
+                        gameStatus.subtractHealth(1, (int) gameStatus.getPlayerWeapon(1).getDamage());
+                        System.out.println(gameStatus.getSelectedWeaponNumber(1));
+                        System.out.println(gameStatus.getPlayerWeapon(1).getDamage());
                     }
-                    gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
                     gameStatus.setWaitOver(0, 1);
+                    if (y0 < 410) {
+                        gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
+                    }
                 }
                 // If player1 ammo hits ground:
                 if (y1 > 400) {
@@ -264,21 +270,43 @@ public class GameUi extends Application {
                             && gameStatus.getWaitOver(1) == 0) {
                         gameStatus.addPoint(1);
                         gameStatus.subtractHealth(0, (int) gameStatus.getPlayerWeapon(0).getDamage());
+                        System.out.println(gameStatus.getSelectedWeaponNumber(0));
+                        System.out.println(gameStatus.getPlayerWeapon(0).getDamage());
                     }
-                    gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
                     gameStatus.setWaitOver(1, 1);
+                    if (y1 < 410) {
+                        gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
+                    }
                 }
+                // If both ammos have hit ground:
                 if (gameStatus.getWaitOver(0) == 1 && gameStatus.getWaitOver(1) == 1) {
                     gameStatus.setWaitOver(0, 0);
                     gameStatus.setWaitOver(1, 0);
                     gameStatus.setWait(0);
                 }
             }
+
+            // Check if either player has zero health:
+            if (gameStatus.getPlayer(0).getHealth() <= 0 || gameStatus.getPlayer(1).getHealth() <= 0) {
+                String wintext;
+                if (gameStatus.getPlayer(0).getHealth() <= 0) {
+                    wintext = "!!! PLAYER 2 WINS !!!"
+                            + "Press ENTER to play again";
+                } else {
+                    wintext = "!!! PLAYER 1 WINS !!!"
+                            + "Press ENTER to play again";
+                }
+                gameStatus.setWait(2);
+                gc.fillText(wintext, 350, 200);
+            }
+
             // Process keycommands:
             gameScene.setOnKeyPressed((KeyEvent keypressed) -> {
                 if (gameStatus.getWait() == 0) {
                     String pressedKey = keypressed.getCode().toString();
                     gameLogic.keyPressed(pressedKey);
+                } else if (gameStatus.getWait() == 2 && keypressed.getCode().toString().equals("ENTER")) {
+                    gameStatus.startNewGame();
                 }
             });
         }
@@ -296,12 +324,14 @@ public class GameUi extends Application {
             return "Player " + (player + 1) + "\n"
                     + "Score: " + gameStatus.getPlayerScore(player) + "\n"
                     + "Angle: " + Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle()) + "\n"
-                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower();
+                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower() + "\n"
+                    + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
         } else {
             return "Computer\n"
                     + "Score: " + gameStatus.getPlayerScore(player) + "\n"
                     + "Angle: " + Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle()) + "\n"
-                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower();
+                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower() + "\n"
+                    + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
         }
     }
 }
