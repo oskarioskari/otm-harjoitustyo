@@ -1,6 +1,6 @@
 package tykkipeli.logic;
 
-import tykkipeli.objects.GraphicObject;
+import tykkipeli.physicobjects.GraphicObject;
 import java.util.ArrayList;
 import tykkipeli.objects.Vector;
 
