@@ -13,6 +13,7 @@ Päivä | Käytetty aika | Selite
 16.4  | 1             | Luotu luokat "Player" ja "GameLogic"
 17.4  | 7             | Siirretty metodeja käyttöliittymäluokasta GameLogic-luokkaan ja järkeistetty luokkien välistä tehtävänjakoa. Muutettu pelivuorojen toimintaa. Lisätty yksinkertainen tekoälyvastustaja. Vastustajaan osuminen lisää nyt pisteitä. Kirjoitettu lisää testejä.
 20.4  | 1             | Luotu luokka "Vector" ja muokattu hieman GameLogic:in toimintaa.
-23.4  | 4             | Siirrytty kaikissa luokissa käyttämään Vector objekteja double taulujen sijaan. Luotu luokka "GameAi". Yleistä koodin siivoamista. Hiottu pelin ulkoasua.
+23.4  | 4             | Siirrytty kaikissa luokissa käyttämään Vector objekteja double taulujen sijaan. Luotu luokka "GameAi". Yleistä koodin siivoamista. Hiottu pelin ulkoasua. Lisätty "Ammo".
+24.4  | 3             | Lisätty mahdollisuus voittaa peli. Siirretty GraphicObjectista periytyvät luokat pakettiin tykkipeli.physicobjects. Korjattu ammustyypin vaihtaminen. Suuri määrä pienempiä parannuksia/korjauksia.
 
-Summa: 31 tuntia
+Summa: 34 tuntia
