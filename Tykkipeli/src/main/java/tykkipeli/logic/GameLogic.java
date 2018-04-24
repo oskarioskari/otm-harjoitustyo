@@ -47,7 +47,7 @@ public class GameLogic {
     }
 
     // This is called when ENTER was pressed
-    private void keycodeEnter(int turnNow) {
+    public void keycodeEnter(int turnNow) {
         if (turnNow == 0) {
             fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
             gameStatus.setTurn(1);
@@ -62,7 +62,7 @@ public class GameLogic {
     }
 
     // Call gameAi.play and pass the turn
-    private void computerPlays(int aiPlayer) {
+    public void computerPlays(int aiPlayer) {
         gameAi.play(aiPlayer);
         fireCannon(aiPlayer, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(aiPlayer), gameStatus.getGravity());
         gameStatus.setTurn(0);

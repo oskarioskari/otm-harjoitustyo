@@ -225,12 +225,12 @@ public class GameUi extends Application {
             // Draw help text:
             if (gameStatus.getTurn() == 0 && gameStatus.getWait() == 0) {
                 gc.fillText("Now in turn: PLAYER 1\n"
-                        + "Aim and fire!", 350, 50);
+                        + "Aim and fire!", 325, 50);
             } else if (gameStatus.getTurn() == 1 && gameStatus.getWait() == 0) {
                 gc.fillText("Now in turn: PLAYER 2\n"
-                        + "Aim and fire!", 350, 50);
+                        + "Aim and fire!", 325, 50);
             } else {
-                gc.fillText("Wait for next turn", 380, 50);
+                gc.fillText("Wait for next turn", 350, 50);
             }
 
             // Check if game is in "wait" mode and act accordingly:
@@ -254,7 +254,7 @@ public class GameUi extends Application {
                             && x0 <= gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX() + 67
                             && gameStatus.getWaitOver(0) == 0) {
                         gameStatus.addPoint(0);
-                        gameStatus.subtractHealth(1, (int) gameStatus.getPlayerWeapon(1).getDamage());
+                        gameStatus.subtractHealth(1, (int) gameStatus.getPlayerWeapon(0).getDamage());
                     }
                     gameStatus.setWaitOver(0, 1);
                     if (y0 < 410) {
@@ -267,7 +267,7 @@ public class GameUi extends Application {
                             && x1 <= gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX() + 70
                             && gameStatus.getWaitOver(1) == 0) {
                         gameStatus.addPoint(1);
-                        gameStatus.subtractHealth(0, (int) gameStatus.getPlayerWeapon(0).getDamage());
+                        gameStatus.subtractHealth(0, (int) gameStatus.getPlayerWeapon(1).getDamage());
                     }
                     gameStatus.setWaitOver(1, 1);
                     if (y1 < 410) {
@@ -286,14 +286,14 @@ public class GameUi extends Application {
             if (gameStatus.getPlayer(0).getHealth() <= 0 || gameStatus.getPlayer(1).getHealth() <= 0) {
                 String wintext;
                 if (gameStatus.getPlayer(0).getHealth() <= 0) {
-                    wintext = "!!! PLAYER 2 WINS !!!"
+                    wintext = "!!! PLAYER 2 WINS !!!" + "\n"
                             + "Press ENTER to play again";
                 } else {
-                    wintext = "!!! PLAYER 1 WINS !!!"
+                    wintext = "!!! PLAYER 1 WINS !!!" + "\n"
                             + "Press ENTER to play again";
                 }
                 gameStatus.setWait(2);
-                gc.fillText(wintext, 350, 200);
+                gc.fillText(wintext, 300, 200);
             }
 
             // Process keycommands:
