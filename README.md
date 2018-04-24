@@ -4,7 +4,7 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät (kevät 2018).\
 Harjoitustyön aiheena on pienimuotoinen peli, nimeltä *Tykkipeli*. Pelissä kaksi pelaajaa antavat ensin tulikomentonsa tykeille (ampumiskulma ja voimakkuus), jonka jälkeen tykit ampuvat yhtäaikaa.\
 Pelin tavoitteena on tuhota toisen pelaajan tykki.\
 \
-[Linkki viikon 5 releaseen](https://github.com/oskarioskari/otm-harjoitustyo/releases/tag/v0.5)\
+[Linkki viikon 5 releaseen](https://github.com/oskarioskari/otm-harjoitustyo/releases/tag/v0.5)
 
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)\
