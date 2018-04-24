@@ -7,7 +7,7 @@ import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
 public class GameStatus {
-
+    
     private int playerInTurn;
     private int wait;
     private int[] waitOver;
@@ -18,7 +18,7 @@ public class GameStatus {
     private final List<Ammo> ammoListPlayer1;
     private final List<Ammo> ammoListPlayer2;
     private final List<List<Ammo>> ammoLists;
-
+    
     public GameStatus(List<Player> playerList, List<Ammo> ammolistPlayer1, List<Ammo> ammolistPlayer2) {
         this.playerInTurn = 0;
         this.wait = 0;
@@ -33,41 +33,54 @@ public class GameStatus {
         this.ammoLists.add(ammoListPlayer1);
         this.ammoLists.add(ammoListPlayer2);
     }
-
+    
+    public void startNewGame() {
+        this.playerInTurn = 0;
+        this.wait = 0;
+        this.waitOver = new int[]{0, 0};
+        this.playerScores = new int[]{0, 0};
+        this.selectedWeapon = new int[]{0, 0};
+        for (Player p : this.playerList) {
+            p.setHealth(100);
+            p.getPlayerCannon().setCannonPower(10);
+            p.getPlayerCannon().setCannonAngle(Math.PI / 4);
+        }
+    }
+    
     public void setTurn(int player) {
         this.playerInTurn = player;
     }
-
+    
     public int getTurn() {
         return this.playerInTurn;
     }
-
+    
     public void setWait(int wait) {
         this.wait = wait;
     }
-
+    
     public int getWait() {
         return this.wait;
     }
-
+    
     public void setWaitOver(int player, int value) {
         this.waitOver[player] = value;
     }
-
+    
     public int getWaitOver(int player) {
         return this.waitOver[player];
     }
-
+    
     public void addPoint(int player) {
         if (player == 0 || player == 1) {
             this.playerScores[player]++;
         }
     }
-
+    
     public int[] getPlayerScores() {
         return this.playerScores;
     }
-
+    
     public int getPlayerScore(int player) {
         if (player == 0 || player == 1) {
             return this.playerScores[player];
@@ -75,35 +88,35 @@ public class GameStatus {
             return 0;
         }
     }
-
+    
     public void setSelectedWeapon(int player, int weapon) {
         this.selectedWeapon[player] = weapon;
     }
-
+    
     public int getSelectedWeaponNumber(int player) {
         return this.selectedWeapon[player];
     }
-
+    
     public Ammo getPlayerWeapon(int player) {
         return this.ammoLists.get(player).get(this.selectedWeapon[player]);
     }
-
+    
     public void setGravity(Vector newGravity) {
         this.gravity = newGravity;
     }
-
+    
     public Vector getGravity() {
         return gravity;
     }
-
+    
     public List<Player> getPlayerList() {
         return this.playerList;
     }
-
+    
     public Player getPlayer(int player) {
         return this.playerList.get(player);
     }
-
+    
     public List<Ammo> getAmmolist() {
         return this.ammoListPlayer1;
     }
