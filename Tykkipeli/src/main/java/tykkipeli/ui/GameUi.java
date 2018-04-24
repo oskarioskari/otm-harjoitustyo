@@ -255,8 +255,6 @@ public class GameUi extends Application {
                             && gameStatus.getWaitOver(0) == 0) {
                         gameStatus.addPoint(0);
                         gameStatus.subtractHealth(1, (int) gameStatus.getPlayerWeapon(1).getDamage());
-                        System.out.println(gameStatus.getSelectedWeaponNumber(1));
-                        System.out.println(gameStatus.getPlayerWeapon(1).getDamage());
                     }
                     gameStatus.setWaitOver(0, 1);
                     if (y0 < 410) {
@@ -270,8 +268,6 @@ public class GameUi extends Application {
                             && gameStatus.getWaitOver(1) == 0) {
                         gameStatus.addPoint(1);
                         gameStatus.subtractHealth(0, (int) gameStatus.getPlayerWeapon(0).getDamage());
-                        System.out.println(gameStatus.getSelectedWeaponNumber(0));
-                        System.out.println(gameStatus.getPlayerWeapon(0).getDamage());
                     }
                     gameStatus.setWaitOver(1, 1);
                     if (y1 < 410) {

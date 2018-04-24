@@ -20,7 +20,6 @@ public class GameLogic {
 
     // Figure out what to do when key is pressed
     public void keyPressed(String keycode) {
-        System.out.println(keycode);
         Cannon cannon = gameStatus.getPlayerList().get(gameStatus.getTurn()).getPlayerCannon();
         if (keycode.equals("ENTER")) {
             keycodeEnter(gameStatus.getTurn());
