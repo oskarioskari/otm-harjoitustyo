@@ -1,5 +1,7 @@
 package tykkipeli.objects;
 
+import tykkipeli.physicobjects.Cannon;
+
 public class Player {
 
     private final int num;
@@ -22,8 +24,8 @@ public class Player {
         return this.cannon;
     }
 
-    public void setPlayerHumanStatus(boolean isPlayerHuman) {
-        this.human = isPlayerHuman;
+    public void setPlayerHumanStatus(boolean playerIsHuman) {
+        this.human = playerIsHuman;
     }
 
     public boolean getPlayerHumanStatus() {
