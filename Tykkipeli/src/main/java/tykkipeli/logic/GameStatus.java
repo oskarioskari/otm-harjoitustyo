@@ -2,7 +2,7 @@ package tykkipeli.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-import tykkipeli.objects.GraphicObject;
+import tykkipeli.physicobjects.Ammo;
 import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
@@ -15,11 +15,11 @@ public class GameStatus {
     private int[] selectedWeapon;
     private Vector gravity;
     private final List<Player> playerList;
-    private final List<GraphicObject> ammoListPlayer1;
-    private final List<GraphicObject> ammoListPlayer2;
-    private final List<List<GraphicObject>> ammoLists;
+    private final List<Ammo> ammoListPlayer1;
+    private final List<Ammo> ammoListPlayer2;
+    private final List<List<Ammo>> ammoLists;
 
-    public GameStatus(List<Player> playerList, List<GraphicObject> ammolistPlayer1, List<GraphicObject> ammolistPlayer2) {
+    public GameStatus(List<Player> playerList, List<Ammo> ammolistPlayer1, List<Ammo> ammolistPlayer2) {
         this.playerInTurn = 0;
         this.wait = 0;
         this.waitOver = new int[]{0, 0};
@@ -84,7 +84,7 @@ public class GameStatus {
         return this.selectedWeapon[player];
     }
 
-    public GraphicObject getPlayerWeapon(int player) {
+    public Ammo getPlayerWeapon(int player) {
         return this.ammoLists.get(player).get(this.selectedWeapon[player]);
     }
 
@@ -104,7 +104,11 @@ public class GameStatus {
         return this.playerList.get(player);
     }
 
-    public List<GraphicObject> getAmmolist() {
+    public List<Ammo> getAmmolist() {
         return this.ammoListPlayer1;
+    }
+    
+    public void subtractHealth(int player, int amount) {
+        this.playerList.get(player).addHealth(-amount);
     }
 }
