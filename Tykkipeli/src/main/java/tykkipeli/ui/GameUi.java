@@ -72,12 +72,12 @@ public class GameUi extends Application {
         // Initialize playerList and ammoLists:
         // TODO: Maybe move this also?
         ArrayList<Ammo> ammoListP1 = new ArrayList<>();
-        ammoListP1.add(0, new BasicShell());
-        ammoListP1.add(1, new LargeShell());
+        ammoListP1.add(new BasicShell());
+        ammoListP1.add(new LargeShell());
 
         ArrayList<Ammo> ammoListP2 = new ArrayList<>();
-        ammoListP2.add(0, new BasicShell());
-        ammoListP2.add(1, new LargeShell());
+        ammoListP2.add(new BasicShell());
+        ammoListP2.add(new LargeShell());
 
         Cannon leftCannon = new Cannon(leftLoc, startAngle, startPower);
         Cannon rightCannon = new Cannon(rightLoc, startAngle, startPower);
