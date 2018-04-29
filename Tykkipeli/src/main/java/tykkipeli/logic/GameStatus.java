@@ -11,7 +11,7 @@ public class GameStatus {
 
     private int playerInTurn;
     private int phase;
-    private int[] waitOver;
+    private boolean[] waitOver;
     private int[] playerScores;
     private int[] selectedWeapon;
     private Vector gravity;
@@ -25,7 +25,7 @@ public class GameStatus {
     public GameStatus(List<Player> playerList, List<Ammo> ammolistPlayer1, List<Ammo> ammolistPlayer2) {
         this.playerInTurn = 0;
         this.phase = 0;
-        this.waitOver = new int[]{0, 0};
+        this.waitOver = new boolean[]{false, false};
         this.playerScores = new int[]{0, 0};
         this.selectedWeapon = new int[]{0, 0};
         this.gravity = new Vector(0, 0.5); // Default gravity
@@ -42,7 +42,7 @@ public class GameStatus {
     public void startNewGame() {
         this.playerInTurn = 0;
         this.phase = 0;
-        this.waitOver = new int[]{0, 0};
+        this.waitOver = new boolean[]{false, false};
         this.playerScores = new int[]{0, 0};
         this.selectedWeapon = new int[]{0, 0};
         for (Player p : this.playerList) {
@@ -68,11 +68,11 @@ public class GameStatus {
         return this.phase;
     }
 
-    public void setWaitOver(int player, int value) {
+    public void setWaitOver(int player, boolean value) {
         this.waitOver[player] = value;
     }
 
-    public int getWaitOver(int player) {
+    public boolean getWaitOver(int player) {
         return this.waitOver[player];
     }
 
@@ -120,6 +120,10 @@ public class GameStatus {
 
     public Player getPlayer(int player) {
         return this.playerList.get(player);
+    }
+    
+    public Player getPlayerInTurn() {
+        return this.playerList.get(getTurn());
     }
 
     public List<Ammo> getAmmolist() {

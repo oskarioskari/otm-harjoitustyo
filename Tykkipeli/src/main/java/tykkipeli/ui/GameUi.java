@@ -45,11 +45,13 @@ public class GameUi extends Application {
 
         // Setting up main menu:
         Button startGame = new Button("Start Game");    // Start game
+        Button highScores = new Button("High Scores");   // Access high scores
         Button settings = new Button("Settings");       // Open settings menu
         Button quitGame = new Button("Quit Game");      // Quit game
 
         // Button sizes
         startGame.setPrefSize(200, 50);
+        highScores.setPrefSize(200, 50);
         settings.setPrefSize(200, 50);
         quitGame.setPrefSize(200, 50);
 
@@ -57,6 +59,7 @@ public class GameUi extends Application {
         menu1.setPadding(new Insets(80));
 
         menu1.getChildren().add(startGame);
+        menu1.getChildren().add(highScores);    // TODO: make button do something
         menu1.getChildren().add(settings);
         menu1.getChildren().add(quitGame);
 
@@ -209,28 +212,25 @@ public class GameUi extends Application {
             barrelRight.setRotate(Math.toDegrees(rightRotate));
 
             // Draw power bar next to player:
-            if (gameStatus.getTurn() == PLAYER0 && gameStatus.getPhase() == PLAYING_PHASE) {
+            if (gameStatus.getPhase() == PLAYING_PHASE) {
                 gc.setFill(Color.ORANGERED);
-                gc.fillRect(leftX - 13, leftY + 30, 8, player0.getPlayerCannon().getCannonPower());
+                gc.fillRect(gameStatus.getPlayerInTurn().getX() - 13,
+                        gameStatus.getPlayerInTurn().getY() + 30, 8,
+                        gameStatus.getPlayerInTurn().getPlayerCannon().getCannonPower());
                 gc.setFill(Color.BLACK);
-                gc.strokeRect(leftX - 13, leftY + 30, 8, 50);
-            } else if (gameStatus.getTurn() == PLAYER1 && gameStatus.getPhase() == PLAYING_PHASE) {
-                gc.setFill(Color.ORANGERED);
-                gc.fillRect(rightX - 13, rightY + 30, 8, player1.getPlayerCannon().getCannonPower());
-                gc.setFill(Color.BLACK);
-                gc.strokeRect(rightX - 13, rightY + 30, 8, 50);
+                gc.strokeRect(gameStatus.getPlayerInTurn().getX() - 13,
+                        gameStatus.getPlayerInTurn().getY() + 30, 8, 50);
             }
 
             // Draw text and health bar under players:
-            gc.setFill(Color.RED);
-            gc.fillRect(leftX, leftY + 30, 50, 8);
-            gc.fillRect(rightX, rightY + 30, 50, 8);
-            gc.setFill(Color.AQUA);
-            gc.fillRect(leftX, leftY + 30, player0.getHealth() / 2, 8);
-            gc.fillRect(rightX, rightY + 30, player1.getHealth() / 2, 8);
-            gc.setFill(Color.BLACK);
-            gc.fillText(getPlayerText(PLAYER0, gameStatus), leftX, leftY + 57);
-            gc.fillText(getPlayerText(PLAYER1, gameStatus), rightX, rightY + 57);
+            for (Player p : gameStatus.getPlayerList()) {
+                gc.setFill(Color.RED);
+                gc.fillRect(p.getX(), p.getY() + 30, 50, 8);
+                gc.setFill(Color.AQUA);
+                gc.fillRect(p.getX(), p.getY() + 30, p.getHealth() / 2, 8);
+                gc.setFill(Color.BLACK);
+                gc.fillText(getPlayerText(p.getPlayerNum(), gameStatus), p.getX(), p.getY() + 57);
+            }
 
             // Draw help text:
             if (gameStatus.getTurn() == PLAYER0 && gameStatus.getPhase() == PLAYING_PHASE) {
@@ -246,13 +246,13 @@ public class GameUi extends Application {
                 // Draw player0 ammo
                 double x0 = gameStatus.getPlayerWeapon(PLAYER0).getLocation().getX();
                 double y0 = gameStatus.getPlayerWeapon(PLAYER0).getLocation().getY();
-                if (gameStatus.getWaitOver(PLAYER0) == 0) {
+                if (!gameStatus.getWaitOver(PLAYER0)) {
                     gc.drawImage(bulletImage, x0, y0);
                 }
                 // Draw player1 ammo
                 double x1 = gameStatus.getPlayerWeapon(PLAYER1).getLocation().getX();
                 double y1 = gameStatus.getPlayerWeapon(PLAYER1).getLocation().getY();
-                if (gameStatus.getWaitOver(PLAYER1) == 0) {
+                if (!gameStatus.getWaitOver(PLAYER1)) {
                     gc.drawImage(bulletImage, x1, y1);
                 }
                 gameLogic.moveAmmo();
@@ -262,7 +262,7 @@ public class GameUi extends Application {
                         gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
                     }
                     checkIfHit(x0, PLAYER1, player1.getPlayerCannon().getLocation(), gameStatus);
-                    gameStatus.setWaitOver(PLAYER0, 1);
+                    gameStatus.setWaitOver(PLAYER0, true);
                 }
                 // If player1 ammo hits ground:
                 if (y1 > 400) {
@@ -270,12 +270,12 @@ public class GameUi extends Application {
                         gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
                     }
                     checkIfHit(x1, PLAYER0, player0.getPlayerCannon().getLocation(), gameStatus);
-                    gameStatus.setWaitOver(PLAYER1, 1);
+                    gameStatus.setWaitOver(PLAYER1, true);
                 }
                 // If both ammos have hit ground:
-                if (gameStatus.getWaitOver(PLAYER0) == 1 && gameStatus.getWaitOver(PLAYER1) == 1) {
-                    gameStatus.setWaitOver(0, 0);
-                    gameStatus.setWaitOver(1, 0);
+                if (gameStatus.getWaitOver(PLAYER0) && gameStatus.getWaitOver(PLAYER1)) {
+                    gameStatus.setWaitOver(0, false);
+                    gameStatus.setWaitOver(1, false);
                     gameStatus.setPhase(PLAYING_PHASE);
                     // Get new random wind:
                     gameStatus.randomWind();
@@ -313,11 +313,11 @@ public class GameUi extends Application {
 
     public void checkIfHit(double x, int targetedPlayer, Vector targetedLocation, GameStatus gameStatus) {
         if (targetedPlayer == 0) {
-            if (x >= targetedLocation.getX() - 20 && x <= targetedLocation.getX() + 70 && gameStatus.getWaitOver(PLAYER1) == 0) {
+            if (x >= targetedLocation.getX() - 20 && x <= targetedLocation.getX() + 70 && !gameStatus.getWaitOver(PLAYER1)) {
                 gameStatus.addPoint(PLAYER1);
                 gameStatus.subtractHealth(PLAYER0, (int) gameStatus.getPlayerWeapon(PLAYER1).getDamage());
             }
-        } else if (x >= targetedLocation.getX() - 23 && x <= targetedLocation.getX() + 67 && gameStatus.getWaitOver(PLAYER0) == 0) {
+        } else if (x >= targetedLocation.getX() - 23 && x <= targetedLocation.getX() + 67 && !gameStatus.getWaitOver(PLAYER0)) {
             gameStatus.addPoint(PLAYER0);
             gameStatus.subtractHealth(PLAYER1, (int) gameStatus.getPlayerWeapon(PLAYER0).getDamage());
         }

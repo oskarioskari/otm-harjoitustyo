@@ -1,6 +1,7 @@
 package tykkipeli.logic;
 
 import java.util.List;
+import tykkipeli.dao.HighScoresDao;
 import tykkipeli.physicobjects.Cannon;
 import tykkipeli.physicobjects.GraphicObject;
 import tykkipeli.objects.Player;
@@ -8,11 +9,14 @@ import tykkipeli.objects.Vector;
 
 public class GameLogic {
 
+    private HighScoresDao hsDao;
     private final ObjectPhysics physics;
     private final GameStatus gameStatus;
     private final GameAi gameAi;
 
     public GameLogic(GameStatus gameStatus) {
+        this.hsDao = new HighScoresDao();
+        hsDao.createNewDatabase();
         this.physics = new ObjectPhysics();
         this.gameStatus = gameStatus;
         this.gameAi = new GameAi(gameStatus);
@@ -127,6 +131,10 @@ public class GameLogic {
                 p.getPlayerCannon().setCannonPower(0);
             }
         }
+    }
+    
+    public void saveNewHighscore(String playerName, int score, int gameDifficulty) {
+        // TODO
     }
 
 }
