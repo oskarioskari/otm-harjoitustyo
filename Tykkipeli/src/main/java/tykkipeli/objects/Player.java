@@ -43,5 +43,13 @@ public class Player {
     public void addHealth(int amount) {
         this.health += amount;
     }
+    
+    public double getX() {
+        return this.cannon.getLocation().getX();
+    }
+    
+    public double getY() {
+        return this.cannon.getLocation().getY();
+    }
 
 }
