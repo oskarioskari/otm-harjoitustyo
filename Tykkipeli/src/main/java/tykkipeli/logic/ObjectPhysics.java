@@ -66,8 +66,6 @@ public class ObjectPhysics {
         nextVelocity(object, object.getAcceleration(), status);
     }
 
-    // TODO: Something is very wrong with this
-    // TODO: Fix this.
     public void nextStep(GraphicObject object, GameStatus status) {
         // Empty list for all accelerations in system
         List<Vector> accelerations = new ArrayList<>();
