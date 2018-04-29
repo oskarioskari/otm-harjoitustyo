@@ -127,6 +127,6 @@ public class GameLogicTest {
     @Test
     public void ComputerSetsWaitStatusToOne() {
         gameLogic.computerPlays(1);
-        assertEquals(1, gameStatus.getWait());
+        assertEquals(1, gameStatus.getPhase());
     }
 }

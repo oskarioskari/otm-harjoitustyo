@@ -9,7 +9,7 @@ import tykkipeli.objects.Vector;
 public class GameStatus {
     
     private int playerInTurn;
-    private int wait;
+    private int phase;
     private int[] waitOver;
     private int[] playerScores;
     private int[] selectedWeapon;
@@ -21,7 +21,7 @@ public class GameStatus {
     
     public GameStatus(List<Player> playerList, List<Ammo> ammolistPlayer1, List<Ammo> ammolistPlayer2) {
         this.playerInTurn = 0;
-        this.wait = 0;
+        this.phase = 0;
         this.waitOver = new int[]{0, 0};
         this.playerScores = new int[]{0, 0};
         this.selectedWeapon = new int[]{0, 0};
@@ -36,7 +36,7 @@ public class GameStatus {
     
     public void startNewGame() {
         this.playerInTurn = 0;
-        this.wait = 0;
+        this.phase = 0;
         this.waitOver = new int[]{0, 0};
         this.playerScores = new int[]{0, 0};
         this.selectedWeapon = new int[]{0, 0};
@@ -55,12 +55,12 @@ public class GameStatus {
         return this.playerInTurn;
     }
     
-    public void setWait(int wait) {
-        this.wait = wait;
+    public void setPhase(int phase) {
+        this.phase = phase;
     }
     
-    public int getWait() {
-        return this.wait;
+    public int getPhase() {
+        return this.phase;
     }
     
     public void setWaitOver(int player, int value) {

@@ -57,7 +57,7 @@ public class GameLogic {
         } else {
             fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
             gameStatus.setTurn(0);
-            gameStatus.setWait(1);
+            gameStatus.setPhase(1);
         }
     }
 
@@ -66,7 +66,7 @@ public class GameLogic {
         gameAi.play(aiPlayer);
         fireCannon(aiPlayer, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(aiPlayer), gameStatus.getGravity());
         gameStatus.setTurn(0);
-        gameStatus.setWait(1);
+        gameStatus.setPhase(1);
     }
 
     // Prepare ammo for shooting

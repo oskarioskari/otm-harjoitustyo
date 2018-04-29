@@ -57,14 +57,14 @@ public class GameStatusTest {
     // setWait
     @Test
     public void setWaitStatusToOne() {
-        status.setWait(1);
-        assertEquals(1, status.getWait());
+        status.setPhase(1);
+        assertEquals(1, status.getPhase());
     }
 
     // getWait
     @Test
     public void getWaitStatusAtStart() {
-        assertEquals(0, status.getWait());
+        assertEquals(0, status.getPhase());
     }
 
     // setWaitOver
