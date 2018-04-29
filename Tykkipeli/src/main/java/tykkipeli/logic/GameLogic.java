@@ -21,6 +21,10 @@ public class GameLogic {
         this.gameStatus = gameStatus;
         this.gameAi = new GameAi(gameStatus);
     }
+    
+    public GameAi getGameAi() {
+        return this.gameAi;
+    }
 
     // Figure out what to do when key is pressed
     public void keyPressed(String keycode) {
@@ -135,6 +139,10 @@ public class GameLogic {
     
     public void saveNewHighscore(String playerName, int score, int gameDifficulty) {
         this.hsDao.addScore(playerName, score, gameDifficulty);
+    }
+    
+    public List<String> getTopThree(int difficulty) {
+        return this.hsDao.getTopThree(difficulty);
     }
 
 }

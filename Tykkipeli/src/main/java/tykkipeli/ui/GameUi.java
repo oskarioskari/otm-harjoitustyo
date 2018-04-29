@@ -6,11 +6,13 @@ import tykkipeli.physicobjects.BasicShell;
 import tykkipeli.logic.GameLogic;
 import tykkipeli.logic.GameStatus;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,6 +20,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -59,7 +63,7 @@ public class GameUi extends Application {
         menu1.setPadding(new Insets(80));
 
         menu1.getChildren().add(startGame);
-        menu1.getChildren().add(highScores);    // TODO: make button do something
+        menu1.getChildren().add(highScores);
         menu1.getChildren().add(settings);
         menu1.getChildren().add(quitGame);
 
@@ -103,12 +107,80 @@ public class GameUi extends Application {
             gameScreen(gameStatus, gameLogic);              // Opens new window and starts game
         });
 
+        highScores.setOnAction((ActionEvent event) -> {
+            highscoreScreen(stage, mainMenu, gameLogic);    // Set scene to high score menu
+        });
+
         settings.setOnAction((ActionEvent event) -> {
             settingsScreen(stage, mainMenu, gameStatus);    // Sets scene to settings menu
         });
 
         quitGame.setOnAction((ActionEvent event) -> {
             Platform.exit();                                // Quits program
+        });
+    }
+
+    public void highscoreScreen(Stage stage, Scene mainMenu, GameLogic gameLogic) {
+        Button easyTop3 = new Button("TOP 3 (Easy)");
+        Button normTop3 = new Button("TOP 3 (Normal)");
+        Button hardTop3 = new Button("TOP 3 (Hard)");
+        Button back = new Button("Back");
+
+        easyTop3.setPrefSize(200, 50);
+        normTop3.setPrefSize(200, 50);
+        hardTop3.setPrefSize(200, 50);
+        back.setPrefSize(200, 50);
+
+        VBox hsMenu = new VBox(30);
+        hsMenu.setPadding(new Insets(80));
+        hsMenu.getChildren().add(easyTop3);
+        hsMenu.getChildren().add(normTop3);
+        hsMenu.getChildren().add(hardTop3);
+        hsMenu.getChildren().add(back);
+
+        Scene highScoreMenu = new Scene(hsMenu);
+        stage.setScene(highScoreMenu);
+
+        easyTop3.setOnAction((ActionEvent ae) -> {
+            topThreeScreen(stage, highScoreMenu, gameLogic.getTopThree(1));
+        });
+
+        normTop3.setOnAction((ActionEvent ae) -> {
+            topThreeScreen(stage, highScoreMenu, gameLogic.getTopThree(2));
+        });
+
+        hardTop3.setOnAction((ActionEvent ae) -> {
+            topThreeScreen(stage, highScoreMenu, gameLogic.getTopThree(3));
+        });
+
+        back.setOnAction((ActionEvent ae) -> {
+            stage.setScene(mainMenu);
+        });
+    }
+
+    public void topThreeScreen(Stage stage, Scene previous, List<String> scores) {
+        Label label = new Label("High Scores:");
+        Button back = new Button("Back");
+
+        back.setPrefSize(200, 50);
+
+        VBox ttScreen = new VBox(30);
+        ttScreen.setPadding(new Insets(80));
+        ttScreen.getChildren().add(label);
+        if (scores.isEmpty()) {
+            ttScreen.getChildren().add(new Label("No scores on the list!"));
+        } else {
+            for (String s : scores) {
+                ttScreen.getChildren().add(new Label(s));
+            }
+        }
+        ttScreen.getChildren().add(back);
+
+        Scene topThreeScene = new Scene(ttScreen);
+        stage.setScene(topThreeScene);
+
+        back.setOnAction((ActionEvent ae) -> {
+            stage.setScene(previous);
         });
     }
 
@@ -145,7 +217,7 @@ public class GameUi extends Application {
         stage.setScene(settingsMenu);
     }
 
-    public void gameScreen(GameStatus gameStatus, GameLogic gameLogic) {
+    public void gameScreen(GameStatus gameStatus, GameLogic gameLogic) {    // This is where the magic happens
 
         Stage stage = new Stage();
         Group root = new Group();
@@ -297,8 +369,12 @@ public class GameUi extends Application {
                 if (gameStatus.getPhase() == PLAYING_PHASE) {
                     String pressedKey = keypressed.getCode().toString();
                     gameLogic.keyPressed(pressedKey);
-                } else if (gameStatus.getPhase() == GAMEOVER && keypressed.getCode().toString().equals("ENTER")) {
-                    gameStatus.startNewGame();
+                } else if (gameStatus.getPhase() == GAMEOVER) {
+                    if (keypressed.getCode().toString().equals("ENTER")) {
+                        gameStatus.startNewGame();
+                    } else if (keypressed.getCode().toString().equals("H") && !player1.getPlayerHumanStatus()) {
+                        saveScore(gameStatus.getPlayerScore(PLAYER0), gameLogic);
+                    }
                 }
             });
         }
@@ -307,6 +383,33 @@ public class GameUi extends Application {
         gameLoop.getKeyFrames()
                 .add(kf);
         gameLoop.play();
+
+        stage.show();
+    }
+
+    public void saveScore(int score, GameLogic gameLogic) {
+        Label label = new Label("Enter your name:");
+        TextField field = new TextField();
+        field.setPromptText("Enter your name");
+        Button save = new Button("Save your score");
+
+        Stage stage = new Stage();
+        VBox saveMenu = new VBox(30);
+        saveMenu.setPadding(new Insets(80));
+        saveMenu.getChildren().addAll(label, field, save);
+
+        Scene saveScoreScene = new Scene(saveMenu);
+        stage.setScene(saveScoreScene);
+
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if (field.getText() != null && !field.getText().isEmpty()) {
+                    gameLogic.saveNewHighscore(field.getText(), score, gameLogic.getGameAi().getDifficulty());
+                    stage.close();
+                }
+            }
+        });
 
         stage.show();
     }
@@ -340,21 +443,26 @@ public class GameUi extends Application {
     }
 
     public String getTurnText(int player, GameStatus gameStatus) {
+        double windDouble = Math.abs(gameStatus.getWind()) * 10;
+        String wind = String.format("%.1f", windDouble);
         if (gameStatus.getWind() <= 0) {
             return "Now in turn: PLAYER " + (player + 1) + "\n"
                     + "Aim and fire!" + "\n"
                     + "\n"
-                    + "Wind: <-- " + gameStatus.getWind() + " <--";
+                    + "Wind: <-- " + wind + " <--";
         } else {
             return "Now in turn: PLAYER " + (player + 1) + "\n"
                     + "Aim and fire!" + "\n"
                     + "\n"
-                    + "Wind: --> " + gameStatus.getWind() + " -->";
+                    + "Wind: --> " + wind + " -->";
         }
     }
 
     public String getWinText(int player) {
         return "!!! PLAYER " + (player + 1) + " WINS !!!" + "\n"
-                + "Press ENTER to play again";
+                + "Press ENTER to play again" + "\n"
+                + "\n"
+                + "If you played against computer, you can save" + "\n"
+                + "your score by pressing 'H'";
     }
 }
