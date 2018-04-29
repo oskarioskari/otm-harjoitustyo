@@ -5,15 +5,15 @@ import tykkipeli.objects.Vector;
 public class LargeShell extends Ammo {
 
     public LargeShell() {
-        super(5, 25, 0.82);
+        super(2, 25, 1);
     }
 
     public LargeShell(Vector startLocation) {
-        super(startLocation, 5, 25, 0.82);
+        super(startLocation, 2, 25, 1);
     }
 
     public LargeShell(Vector startLocation, Vector startVelocity, Vector startAcceleration) {
-        super(startLocation, startVelocity, startAcceleration, 5, 25, 0.82);
+        super(startLocation, startVelocity, startAcceleration, 2, 25, 1);
     }
 
 }
