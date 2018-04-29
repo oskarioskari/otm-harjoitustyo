@@ -36,7 +36,7 @@ public class HighScoresDao {
         list.add("CREATE TABLE scoresHard (id nvarchar(255), score integer);");
         return list;
     }
-    
+
     public String getTableName(int difficulty) {
         String table;
         if (difficulty == 3) {
@@ -53,10 +53,7 @@ public class HighScoresDao {
         String table = getTableName(difficulty);
         try {
             Connection conn = getConnection();
-            PreparedStatement st = conn.prepareStatement("INSERT INTO ? (id, score) VALUES ('?', ?);");
-            st.setString(1, table);
-            st.setString(2, playerName);
-            st.setInt(3, score);
+            PreparedStatement st = conn.prepareStatement("INSERT INTO " + table + " (id, score) VALUES ('" + playerName + "', " + score + ");");
             st.executeUpdate();
             st.close();
             conn.close();
@@ -64,16 +61,15 @@ public class HighScoresDao {
             System.out.println(ex);
         }
     }
-    
+
     public List<String> getTopThree(int difficulty) {
         List<String> list = new ArrayList<>();
         String table = getTableName(difficulty);
         try {
             Connection conn = getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM ? ORDER BY score DESC LIMIT 3;");
-            st.setString(1, table);
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM " + table + " ORDER BY score DESC LIMIT 3;");
             ResultSet rs = st.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 String name = rs.getString("id");
                 int score = rs.getInt("score");
                 list.add(name + ": " + score + " points");
