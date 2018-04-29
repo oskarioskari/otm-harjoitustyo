@@ -70,16 +70,16 @@ public class GameStatusTest {
     // setWaitOver
     @Test
     public void setWaitOverPlayerOneValueOne() {
-        status.setWaitOver(0, 1);
-        assertEquals(1, status.getWaitOver(0));
-        assertEquals(0, status.getWaitOver(1));
+        status.setWaitOver(0, true);
+        assertEquals(true, status.getWaitOver(0));
+        assertEquals(false, status.getWaitOver(1));
     }
 
     // getWaitOver
     @Test
     public void getWaitOverStatusAtStart() {
-        assertEquals(0, status.getWaitOver(0));
-        assertEquals(0, status.getWaitOver(1));
+        assertEquals(false, status.getWaitOver(0));
+        assertEquals(false, status.getWaitOver(1));
     }
 
     // addPoint
