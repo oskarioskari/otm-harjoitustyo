@@ -15,6 +15,6 @@ Päivä | Käytetty aika | Selite
 20.4  | 1             | Luotu luokka "Vector" ja muokattu hieman GameLogic:in toimintaa.
 23.4  | 4             | Siirrytty kaikissa luokissa käyttämään Vector objekteja double taulujen sijaan. Luotu luokka "GameAi". Yleistä koodin siivoamista. Hiottu pelin ulkoasua. Lisätty "Ammo".
 24.4  | 5             | Lisätty mahdollisuus voittaa peli. Siirretty GraphicObjectista periytyvät luokat pakettiin tykkipeli.physicobjects. Korjattu ammustyypin vaihtaminen. Suuri määrä pienempiä parannuksia/korjauksia.
-29.4  | 3             | Lisätty peliin ilmanvastus sekä satunnaisesti muuttuva tuuli. Siistitty GameUi luokkaa.
+29.4  | 5             | Lisätty peliin ilmanvastus sekä satunnaisesti muuttuva tuuli. Siistitty GameUi luokkaa. Lisätty "HighScoresDao".
 
-Summa: 39 tuntia
+Summa: 41 tuntia
