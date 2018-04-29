@@ -25,7 +25,7 @@ public class GameAi {
 
     private void playEasy(int aiPlayerNum) {
         double randomAngle = random.nextGaussian() * (Math.PI / 16) + (Math.PI / 4);
-        double randomPower = random.nextGaussian() * 2 + 16;
+        double randomPower = random.nextGaussian() * 2 + 25;
         gameStatus.getPlayer(aiPlayerNum).getPlayerCannon().setCannonAngle(randomAngle);
         gameStatus.getPlayer(aiPlayerNum).getPlayerCannon().setCannonPower(randomPower);
     }
