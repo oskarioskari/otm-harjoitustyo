@@ -209,16 +209,16 @@ public class GameUi extends Application {
             barrelRight.setRotate(Math.toDegrees(rightRotate));
 
             // Draw power bar next to player:
-            if (gameStatus.getTurn() == 0 && gameStatus.getPhase() == PLAYING_PHASE) {
+            if (gameStatus.getTurn() == PLAYER0 && gameStatus.getPhase() == PLAYING_PHASE) {
                 gc.setFill(Color.ORANGERED);
                 gc.fillRect(leftX - 13, leftY + 30, 8, player0.getPlayerCannon().getCannonPower());
                 gc.setFill(Color.BLACK);
-                gc.strokeRect(leftX - 13, leftY + 30, 8, 25);
-            } else if (gameStatus.getTurn() == 1 && gameStatus.getPhase() == PLAYING_PHASE) {
+                gc.strokeRect(leftX - 13, leftY + 30, 8, 50);
+            } else if (gameStatus.getTurn() == PLAYER1 && gameStatus.getPhase() == PLAYING_PHASE) {
                 gc.setFill(Color.ORANGERED);
                 gc.fillRect(rightX - 13, rightY + 30, 8, player1.getPlayerCannon().getCannonPower());
                 gc.setFill(Color.BLACK);
-                gc.strokeRect(rightX - 13, rightY + 30, 8, 25);
+                gc.strokeRect(rightX - 13, rightY + 30, 8, 50);
             }
 
             // Draw text and health bar under players:
@@ -234,9 +234,9 @@ public class GameUi extends Application {
 
             // Draw help text:
             if (gameStatus.getTurn() == PLAYER0 && gameStatus.getPhase() == PLAYING_PHASE) {
-                gc.fillText(getTurnText(PLAYER0), 325, 50);
+                gc.fillText(getTurnText(PLAYER0, gameStatus), 325, 50);
             } else if (gameStatus.getTurn() == PLAYER1 && gameStatus.getPhase() == PLAYING_PHASE) {
-                gc.fillText(getTurnText(PLAYER1), 325, 50);
+                gc.fillText(getTurnText(PLAYER1, gameStatus), 325, 50);
             } else {
                 gc.fillText("Wait for next turn", 350, 50);
             }
@@ -277,6 +277,8 @@ public class GameUi extends Application {
                     gameStatus.setWaitOver(0, 0);
                     gameStatus.setWaitOver(1, 0);
                     gameStatus.setPhase(PLAYING_PHASE);
+                    // Get new random wind:
+                    gameStatus.randomWind();
                 }
             }
 
@@ -337,9 +339,18 @@ public class GameUi extends Application {
         }
     }
 
-    public String getTurnText(int player) {
-        return "Now in turn: PLAYER " + (player + 1) + "\n"
-                + "Aim and fire!";
+    public String getTurnText(int player, GameStatus gameStatus) {
+        if (gameStatus.getWind() <= 0) {
+            return "Now in turn: PLAYER " + (player + 1) + "\n"
+                    + "Aim and fire!" + "\n"
+                    + "\n"
+                    + "Wind: <-- " + gameStatus.getWind() + " <--";
+        } else {
+            return "Now in turn: PLAYER " + (player + 1) + "\n"
+                    + "Aim and fire!" + "\n"
+                    + "\n"
+                    + "Wind: --> " + gameStatus.getWind() + " -->";
+        }
     }
 
     public String getWinText(int player) {

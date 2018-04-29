@@ -7,11 +7,11 @@ import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
 public class GameLogic {
-    
+
     private final ObjectPhysics physics;
     private final GameStatus gameStatus;
     private final GameAi gameAi;
-    
+
     public GameLogic(GameStatus gameStatus) {
         this.physics = new ObjectPhysics();
         this.gameStatus = gameStatus;
@@ -106,12 +106,12 @@ public class GameLogic {
         int i = 0;
         while (i < gameStatus.getPlayerList().size()) {
             GraphicObject ammo = gameStatus.getPlayerWeapon(i);
-            this.physics.nextStepOnlyGravity(ammo);
-//            this.physics.nextStepWithDrag(ammo, gameStatus); // Just waiting here TODO
+//            this.physics.nextStepOnlyGravity(ammo);
+            this.physics.nextStep(ammo, gameStatus); // Just waiting here TODO
             i++;
         }
     }
-    
+
     public void checkPlayerParameters() {
         for (Player p : gameStatus.getPlayerList()) {
             // Barrel shouldn't be pointing back or underground
@@ -121,12 +121,12 @@ public class GameLogic {
                 p.getPlayerCannon().setCannonAngle(0);
             }
             // Shooting power should be reasonable and not negative
-            if (p.getPlayerCannon().getCannonPower() > 25) {
-                p.getPlayerCannon().setCannonPower(25);
+            if (p.getPlayerCannon().getCannonPower() > 50) {
+                p.getPlayerCannon().setCannonPower(50);
             } else if (p.getPlayerCannon().getCannonPower() < 0) {
                 p.getPlayerCannon().setCannonPower(0);
             }
         }
     }
-    
+
 }
