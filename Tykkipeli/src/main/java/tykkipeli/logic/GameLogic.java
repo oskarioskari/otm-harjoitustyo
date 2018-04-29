@@ -134,7 +134,7 @@ public class GameLogic {
     }
     
     public void saveNewHighscore(String playerName, int score, int gameDifficulty) {
-        // TODO
+        this.hsDao.addScore(playerName, score, gameDifficulty);
     }
 
 }
