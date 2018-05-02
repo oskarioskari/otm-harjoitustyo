@@ -78,7 +78,27 @@ public class ObjectPhysicsTest {
     public void nextVelocityTest() {
         status.setWind(0);
         Vector ret = phys.nextVelocity(testAmmo, new Vector(1, 1), status);
-        assertEquals();
+        assertEquals(2.0, ret.getX(), 0.0001);
+        assertEquals(2.0, ret.getY(), 0.0001);
+    }
+
+    @Test
+    public void calculateDragOnStart() {
+        Vector ret = phys.calculateDrag(testAmmo);
+        double cmp = -6.5 * Math.pow(10, -3);
+        assertEquals(cmp, ret.getX(), 0.000001);
+        assertEquals(cmp, ret.getY(), 0.000001);
+    }
+
+    @Test
+    public void nextStepTest() {
+        phys.nextStep(testAmmo, status);
+        double cmpAccX = -6.5 * Math.pow(10, -3);
+        double cmpAccY = 1.0 - 6.5 * Math.pow(10, -3);
+        assertEquals(2.5, testAmmo.getLocation().getX(), 0.00001);
+        assertEquals(2.5, testAmmo.getLocation().getY(), 0.00001);
+        assertEquals(cmpAccX, testAmmo.getAcceleration().getX(), 0.00001);
+        assertEquals(cmpAccY, testAmmo.getAcceleration().getY(), 0.00001);
     }
 
 }
