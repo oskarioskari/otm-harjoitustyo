@@ -129,4 +129,62 @@ public class GameLogicTest {
         gameLogic.computerPlays(1);
         assertEquals(1, gameStatus.getPhase());
     }
+
+    // CheckPlayerParameters
+    @Test
+    public void checkPlayerParametersDefaultSituation() {
+        gameLogic.checkPlayerParameters();
+        double expAngle = Math.PI / 4;
+        double expPower = 10;
+        assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
+        assertEquals(expPower, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(), 0.00001);
+    }
+
+    @Test
+    public void checkPlayerParametersAngleTooHighPowerTooLow() {
+        gameStatus.getPlayer(0).getPlayerCannon().setCannonAngle(Math.PI / 2 + 1);
+        gameStatus.getPlayer(0).getPlayerCannon().setCannonPower(-10);
+        gameLogic.checkPlayerParameters();
+        double expAngle = Math.PI / 2;
+        double expPower = 0;
+        assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
+        assertEquals(expPower, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(), 0.00001);
+    }
+
+    @Test
+    public void checkPlayerParametersAngleTooLowPowerTooHigh() {
+        gameStatus.getPlayer(0).getPlayerCannon().setCannonAngle(-Math.PI / 4);
+        gameStatus.getPlayer(0).getPlayerCannon().setCannonPower(10000);
+        gameLogic.checkPlayerParameters();
+        double expAngle = 0;
+        double expPower = 50;
+        assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
+        assertEquals(expPower, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(), 0.00001);
+    }
+
+    // GetGameAi
+    @Test
+    public void getGameAiReturnsNotNull() {
+        assertNotNull(gameLogic.getGameAi());
+    }
+
+    // keyCodeENTER
+    @Test
+    public void keyCodeEnterWhenTurnIsZeroAndPlayerOneIsHuman() {
+        gameLogic.keycodeEnter(0);
+        assertEquals(1, gameStatus.getTurn());
+    }
+
+    public void keyCodeEnterWhenTurnIsZeroAndPlayerOneIsComputer() {
+        gameStatus.getPlayer(1).setPlayerHumanStatus(false);
+        gameLogic.keycodeEnter(0);
+        assertEquals(0, gameStatus.getTurn());
+    }
+
+    public void keyCodeEnterWhenTurnIsOne() {
+        gameLogic.keycodeEnter(1);
+        assertEquals(0, gameStatus.getTurn());
+        assertEquals(1, gameStatus.getPhase());
+    }
+
 }
