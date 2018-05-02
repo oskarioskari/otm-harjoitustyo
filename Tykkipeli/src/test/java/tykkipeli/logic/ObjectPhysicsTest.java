@@ -1,104 +1,84 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tykkipeli.logic;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
-import tykkipeli.physicobjects.GraphicObject;
+import org.junit.Before;
+import org.junit.Test;
+import tykkipeli.objects.Player;
+import tykkipeli.objects.Vector;
+import tykkipeli.physicobjects.Ammo;
+import tykkipeli.physicobjects.BasicShell;
+import tykkipeli.physicobjects.Cannon;
+import tykkipeli.physicobjects.LargeShell;
 
-/**
- *
- * @author oskari
- */
 public class ObjectPhysicsTest {
-    
+
+    private ObjectPhysics phys;
+    private Ammo testAmmo;
+    private GameStatus status;
+
     public ObjectPhysicsTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
+        phys = new ObjectPhysics();
+        testAmmo = new Ammo(new Vector(1, 1), new Vector(1, 1), new Vector(1, 1), 1, 1, 1);
+        List<Player> testPlayerlist = new ArrayList<>();
+        testPlayerlist.add(new Player(0, new Cannon(new Vector(1, 1))));
+        testPlayerlist.add(new Player(1, new Cannon(new Vector(2, 2))));
+        List<Ammo> testAmmolist1 = new ArrayList<>();
+        testAmmolist1.add(new BasicShell(new Vector(1, 1)));
+        testAmmolist1.add(new LargeShell(new Vector(1, 2)));
+        List<Ammo> testAmmolist2 = new ArrayList<>();
+        testAmmolist2.add(new BasicShell(new Vector(2, 1)));
+        testAmmolist2.add(new LargeShell(new Vector(2, 2)));
+        status = new GameStatus(testPlayerlist, testAmmolist1, testAmmolist2);
+        status.setGravity(new Vector(0, 1));
     }
-    
+
     @After
     public void tearDown() {
     }
 
-//    /**
-//     * Test of nextLocation method, of class ObjectPhysics.
-//     */
-//    @Test
-//    public void testNextLocation() {
-//        System.out.println("nextLocation");
-//        GraphicObject object = null;
-//        ObjectPhysics instance = new ObjectPhysics();
-//        double[] expResult = null;
-//        double[] result = instance.nextLocation(object);
-//        assertArrayEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of sumAcceleration method, of class ObjectPhysics.
-//     */
-//    @Test
-//    public void testSumAcceleration() {
-//        System.out.println("sumAcceleration");
-//        GraphicObject object = null;
-//        ArrayList newAccelerations = null;
-//        ObjectPhysics instance = new ObjectPhysics();
-//        double[] expResult = null;
-//        double[] result = instance.sumAcceleration(object, newAccelerations);
-//        assertArrayEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of nextVelocity method, of class ObjectPhysics.
-//     */
-//    @Test
-//    public void testNextVelocity() {
-//        System.out.println("nextVelocity");
-//        GraphicObject object = null;
-//        double[] newAcceleration = null;
-//        ObjectPhysics instance = new ObjectPhysics();
-//        double[] expResult = null;
-//        double[] result = instance.nextVelocity(object, newAcceleration);
-//        assertArrayEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of nextStepOnlyGravity method, of class ObjectPhysics.
-//     */
-//    @Test
-//    public void testNextStepOnlyGravity() {
-//        System.out.println("nextStepOnlyGravity");
-//        GraphicObject object = null;
-//        ObjectPhysics instance = new ObjectPhysics();
-//        double[] expResult = null;
-//        double[] result = instance.nextStepOnlyGravity(object);
-//        assertArrayEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-    
+    @Test
+    public void nextLocationForDefaultTestAmmo() {
+        Vector ret = phys.nextLocation(testAmmo);
+        assertEquals(2.5, ret.getX(), 0.0001);
+        assertEquals(2.5, ret.getY(), 0.0001);
+    }
+
+    @Test
+    public void sumAccelerationEmptyList() {
+        Vector ret = phys.sumAcceleration(testAmmo, new ArrayList<>());
+        assertEquals(1.0, ret.getX(), 0.0001);
+        assertEquals(1.0, ret.getY(), 0.0001);
+    }
+
+    @Test
+    public void sumAccelerationNullList() {
+        Vector ret = phys.sumAcceleration(testAmmo, null);
+        assertEquals(1.0, ret.getX(), 0.0001);
+        assertEquals(1.0, ret.getY(), 0.0001);
+    }
+
+    @Test
+    public void sumAccelerationNewList() {
+        ArrayList<Vector> accList = new ArrayList<>();
+        accList.add(new Vector(0, 1));
+        accList.add(new Vector(0, 2.5));
+        Vector ret = phys.sumAcceleration(testAmmo, accList);
+        assertEquals(0.0, ret.getX(), 0.0001);
+        assertEquals(3.5, ret.getY(), 0.0001);
+    }
+
+    @Test
+    public void nextVelocityTest() {
+        status.setWind(0);
+        Vector ret = phys.nextVelocity(testAmmo, new Vector(1, 1), status);
+        assertEquals();
+    }
+
 }
