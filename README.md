@@ -33,3 +33,9 @@ Suoritettavan .jar-tiedoston generointi tapahtuu komennolla
 ```
 mvn package
 ```
+### JavaDoc
+JavaDoc generoidaan komennolla
+```
+mvn javadoc:javadoc
+```
+JavaDoc löytyy hakemistosta *target/site/apidocs/index.html*
