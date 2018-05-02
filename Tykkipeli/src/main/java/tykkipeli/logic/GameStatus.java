@@ -7,6 +7,12 @@ import tykkipeli.physicobjects.Ammo;
 import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
+/**
+ * Class for holding info about current state of the game, such as who's turn is
+ * it or how much points each player has.
+ *
+ * @author oskari
+ */
 public class GameStatus {
 
     private int playerInTurn;
@@ -22,6 +28,13 @@ public class GameStatus {
     private final List<List<Ammo>> ammoLists;
     private final Random random;
 
+    /**
+     * Constructor for class GameStatus.
+     *
+     * @param playerList List of all players
+     * @param ammolistPlayer1 List of first player's weapons/ammos
+     * @param ammolistPlayer2 List of second player's weapons/ammos
+     */
     public GameStatus(List<Player> playerList, List<Ammo> ammolistPlayer1, List<Ammo> ammolistPlayer2) {
         this.playerInTurn = 0;
         this.phase = 0;
@@ -39,6 +52,10 @@ public class GameStatus {
         this.random = new Random();
     }
 
+    /**
+     * Set current turn and game phase to 0. Reset each player's health, aiming,
+     * weapon selection, scores and wait status.
+     */
     public void startNewGame() {
         this.playerInTurn = 0;
         this.phase = 0;
@@ -52,6 +69,11 @@ public class GameStatus {
         }
     }
 
+    /**
+     * Set which player's turn it is.
+     *
+     * @param player Player in turn
+     */
     public void setTurn(int player) {
         this.playerInTurn = player;
     }
@@ -68,24 +90,52 @@ public class GameStatus {
         return this.phase;
     }
 
+    /**
+     * Set waiting status for selected player.
+     * 
+     * @param player    Selected player's number
+     * @param value     Is wait over?
+     */
     public void setWaitOver(int player, boolean value) {
         this.waitOver[player] = value;
     }
 
+    /**
+     * Return waiting status of selected player.
+     * 
+     * @param player Selected player's number
+     * @return Is wait over?
+     */
     public boolean getWaitOver(int player) {
         return this.waitOver[player];
     }
 
+    /**
+     * Add one point to selected player.
+     * 
+     * @param player Selected player's number
+     */
     public void addPoint(int player) {
         if (player == 0 || player == 1) {
             this.playerScores[player]++;
         }
     }
 
+    /**
+     * Get both player's current score.
+     * 
+     * @return int[] of both player's scores
+     */
     public int[] getPlayerScores() {
         return this.playerScores;
     }
 
+    /**
+     * Get score of selected player.
+     * 
+     * @param player Selected player's number
+     * @return int score
+     */
     public int getPlayerScore(int player) {
         if (player == 0 || player == 1) {
             return this.playerScores[player];
@@ -121,7 +171,7 @@ public class GameStatus {
     public Player getPlayer(int player) {
         return this.playerList.get(player);
     }
-    
+
     public Player getPlayerInTurn() {
         return this.playerList.get(getTurn());
     }

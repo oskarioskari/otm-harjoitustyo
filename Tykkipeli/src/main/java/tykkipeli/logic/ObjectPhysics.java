@@ -5,14 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 import tykkipeli.objects.Vector;
 
+/**
+ * Class for real-time calculation of object trajectories. Object behavior is
+ * calculated using Velocity Verlet algorithm. For more info:
+ * https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet. Unit of
+ * length is "pixels", unit of velocity is "pixels/frame update time" and unit
+ * of time is "time between two frames".
+ *
+ * @author oskari
+ */
 public class ObjectPhysics {
 
     public ObjectPhysics() {
     }
 
-    // Object behavior is calculated using Velocity Verlet algorithm.
-    // For more info: https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet
-    // Unit of velocity is "pixels/frame update time" and unit of time is "time between two frames".
+    /**
+     * Method for calculating object's new location.
+     *
+     * @param object Type GraphicObject object
+     * @return Location of object during step i+1
+     */
     public Vector nextLocation(GraphicObject object) {
         // Calculate object location during step i+1.
         Vector location = object.getLocation();
@@ -25,6 +37,15 @@ public class ObjectPhysics {
         return location;
     }
 
+    /**
+     * Method for calculating new total acceleration of an object. Method
+     * returns old acceleration unchanged if parameter newAccelerations is empty
+     * list or null.
+     *
+     * @param object Type GraphicObject object
+     * @param newAccelerations List of all accelerations affecting to object
+     * @return Acceleration of object during step i+1
+     */
     public Vector sumAcceleration(GraphicObject object, List<Vector> newAccelerations) {
         // Method assumes that all accelerations are listed in "newAccelerations".
         // If "newAccelerations" is not empty the method will overwrite all old values.
@@ -45,6 +66,14 @@ public class ObjectPhysics {
         return netAcceleration;
     }
 
+    /**
+     * Method for calculating object's velocity during next iteration step.
+     *
+     * @param object Type GraphicObject object
+     * @param newAcceleration Acceleration during step i+1
+     * @param status GameStatus of the game
+     * @return Velocity of object during step i+1
+     */
     public Vector nextVelocity(GraphicObject object, Vector newAcceleration, GameStatus status) {
         // Calculate object velocity for step i+1.
         Vector velocity = object.getVelocity();
@@ -57,6 +86,12 @@ public class ObjectPhysics {
         return velocity;
     }
 
+    /**
+     * Method for calculating one full iteration step.
+     *
+     * @param object Type GraphicObject object
+     * @param status GameStatus of the game
+     */
     public void nextStep(GraphicObject object, GameStatus status) {
         // Empty list for all accelerations in system
         List<Vector> accelerations = new ArrayList<>();
@@ -73,6 +108,12 @@ public class ObjectPhysics {
         nextVelocity(object, totalAcceleration, status);
     }
 
+    /**
+     * Method for calculating acceleration caused by air resistance.
+     *
+     * @param ammo Type GraphicObject object
+     * @return Acceleration caused by air resistance
+     */
     public Vector calculateDrag(GraphicObject ammo) {
         double x = -(ammo.getVelocity().getX() / Math.abs(ammo.getVelocity().getX())) * (0.5 * ammo.getDragCoefficient() * 1.3 * (0.1 * 0.1) * Math.pow(ammo.getVelocity().getX(), 2)) / ammo.getMass();
         double y = -(ammo.getVelocity().getY() / Math.abs(ammo.getVelocity().getY())) * (0.5 * ammo.getDragCoefficient() * 1.3 * (0.1 * 0.1) * Math.pow(ammo.getVelocity().getY(), 2)) / ammo.getMass();

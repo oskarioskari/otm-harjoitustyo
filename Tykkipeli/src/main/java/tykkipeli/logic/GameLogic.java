@@ -7,6 +7,11 @@ import tykkipeli.physicobjects.GraphicObject;
 import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
+/**
+ * Class for main game logic.
+ *
+ * @author oskari
+ */
 public class GameLogic {
 
     private HighScoresDao hsDao;
@@ -14,6 +19,11 @@ public class GameLogic {
     private final GameStatus gameStatus;
     private final GameAi gameAi;
 
+    /**
+     * Constructor for class GameLogic.
+     *
+     * @param gameStatus GameStatus of the game
+     */
     public GameLogic(GameStatus gameStatus) {
         this.hsDao = new HighScoresDao();
         hsDao.createNewDatabase();
@@ -22,6 +32,14 @@ public class GameLogic {
         this.gameAi = new GameAi(gameStatus);
     }
 
+    /**
+     * Change the address of high score database. Exist purely for testing
+     * purposes.
+     *
+     * @param address Address relative to current directory e.g.
+     * "res/highscores.db"
+     * @return Old HighScoresDao
+     */
     public HighScoresDao setDatabaseAddress(String address) {
         HighScoresDao old = this.hsDao;
         this.hsDao = new HighScoresDao(address);
@@ -29,11 +47,20 @@ public class GameLogic {
         return old;
     }
 
+    /**
+     * Gain access to GameAi used in the game.
+     *
+     * @return GameAi
+     */
     public GameAi getGameAi() {
         return this.gameAi;
     }
 
-    // Figure out what to do when key is pressed
+    /**
+     * Method for handling key commands.
+     *
+     * @param keycode Keycode as string
+     */
     public void keyPressed(String keycode) {
         Cannon cannon = gameStatus.getPlayerList().get(gameStatus.getTurn()).getPlayerCannon();
         if (keycode.equals("ENTER")) {
@@ -61,7 +88,11 @@ public class GameLogic {
         }
     }
 
-    // This is called when ENTER was pressed
+    /**
+     * Method is called if keycode equals "ENTER"
+     *
+     * @param turnNow Player currently in turn
+     */
     public void keycodeEnter(int turnNow) {
         if (turnNow == 0) {
             fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
@@ -76,7 +107,11 @@ public class GameLogic {
         }
     }
 
-    // Call gameAi.play and pass the turn
+    /**
+     * Method for calling GameAi to play one turn.
+     *
+     * @param aiPlayer GameAi's player number
+     */
     public void computerPlays(int aiPlayer) {
         gameAi.play(aiPlayer);
         fireCannon(aiPlayer, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(aiPlayer), gameStatus.getGravity());
@@ -84,7 +119,14 @@ public class GameLogic {
         gameStatus.setPhase(1);
     }
 
-    // Prepare ammo for shooting
+    /**
+     * Method for calculating initial position of ammo
+     *
+     * @param player Player who's ammo is being fired
+     * @param playerList List of players
+     * @param weapon Ammo that is being shot
+     * @param gravity Current gravity of game world
+     */
     public void fireCannon(int player, List<Player> playerList, GraphicObject weapon, Vector gravity) {
 
         // Set inital position
@@ -116,7 +158,9 @@ public class GameLogic {
         weapon.setAcceleration(gravity);
     }
 
-    // Move both ammos one step
+    /**
+     * Method moves both players' ammos one step.
+     */
     public void moveAmmo() {
         int i = 0;
         while (i < gameStatus.getPlayerList().size()) {
@@ -126,6 +170,9 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Method for checking that players are aiming in reasonable manner.
+     */
     public void checkPlayerParameters() {
         for (Player p : gameStatus.getPlayerList()) {
             // Barrel shouldn't be pointing back or underground
@@ -143,14 +190,32 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Get current HighScoreDao.
+     *
+     * @return HighScoreDao
+     */
     public HighScoresDao getHighScoresDao() {
         return this.hsDao;
     }
 
+    /**
+     * Save high score into database.
+     *
+     * @param playerName Name of the player
+     * @param score Score to save into database
+     * @param gameDifficulty What was the difficulty of game?
+     */
     public void saveNewHighscore(String playerName, int score, int gameDifficulty) {
         this.hsDao.addScore(playerName, score, gameDifficulty);
     }
 
+    /**
+     * Get three best scores from database for certaing difficulty.
+     *
+     * @param difficulty Selected difficulty.
+     * @return List containing three best scores.
+     */
     public List<String> getTopThree(int difficulty) {
         return this.hsDao.getTopThree(difficulty);
     }
