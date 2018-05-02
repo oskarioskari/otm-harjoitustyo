@@ -21,7 +21,14 @@ public class GameLogic {
         this.gameStatus = gameStatus;
         this.gameAi = new GameAi(gameStatus);
     }
-    
+
+    public HighScoresDao setDatabaseAddress(String address) {
+        HighScoresDao old = this.hsDao;
+        this.hsDao = new HighScoresDao(address);
+        hsDao.createNewDatabase();
+        return old;
+    }
+
     public GameAi getGameAi() {
         return this.gameAi;
     }
@@ -114,8 +121,7 @@ public class GameLogic {
         int i = 0;
         while (i < gameStatus.getPlayerList().size()) {
             GraphicObject ammo = gameStatus.getPlayerWeapon(i);
-//            this.physics.nextStepOnlyGravity(ammo);
-            this.physics.nextStep(ammo, gameStatus); // Just waiting here TODO
+            this.physics.nextStep(ammo, gameStatus);
             i++;
         }
     }
@@ -136,11 +142,15 @@ public class GameLogic {
             }
         }
     }
-    
+
+    public HighScoresDao getHighScoresDao() {
+        return this.hsDao;
+    }
+
     public void saveNewHighscore(String playerName, int score, int gameDifficulty) {
         this.hsDao.addScore(playerName, score, gameDifficulty);
     }
-    
+
     public List<String> getTopThree(int difficulty) {
         return this.hsDao.getTopThree(difficulty);
     }
