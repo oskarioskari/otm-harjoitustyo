@@ -9,7 +9,11 @@ public class HighScoresDao {
     public String databaseAddress;
 
     public HighScoresDao() {
-        this.databaseAddress = "jdbc:sqlite:res/highscores.db";
+        this("jdbc:sqlite:res/highscores.db");
+    }
+
+    public HighScoresDao(String databaseAddress) {
+        this.databaseAddress = databaseAddress;
     }
 
     public Connection getConnection() throws SQLException {
