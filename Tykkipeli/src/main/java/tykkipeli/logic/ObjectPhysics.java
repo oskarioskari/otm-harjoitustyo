@@ -57,15 +57,6 @@ public class ObjectPhysics {
         return velocity;
     }
 
-    public void nextStepOnlyGravity(GraphicObject object, GameStatus status) {
-        // Iteration in two steps:
-        // 1) Calculate next location of object
-        nextLocation(object);
-        // (Constant acceleration, so no need to calculate new)
-        // 2) Calculate the velocity of object
-        nextVelocity(object, object.getAcceleration(), status);
-    }
-
     public void nextStep(GraphicObject object, GameStatus status) {
         // Empty list for all accelerations in system
         List<Vector> accelerations = new ArrayList<>();
