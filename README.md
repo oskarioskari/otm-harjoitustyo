@@ -9,7 +9,8 @@ Pelin tavoitteena on tuhota toisen pelaajan tykki.\
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)\
 [Tuntikirjanpito](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)\
-[Arkkitehtuuri](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
+[Arkkitehtuuri](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)\
+[Käyttöohje](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
 
 ## Komentorivitoiminnot
 ### Testaus
