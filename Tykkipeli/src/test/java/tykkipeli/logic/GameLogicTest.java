@@ -115,7 +115,7 @@ public class GameLogicTest {
     public void playerOneValuesAreOkAfterComputerPlaysOnce() {
         gameLogic.computerPlays(1);
         assertEquals((Math.PI / 4), gameStatus.getPlayer(1).getPlayerCannon().getCannonAngle(), (Math.PI / 4));
-        assertEquals(25.0, gameStatus.getPlayer(1).getPlayerCannon().getCannonPower(), 2.1);
+        assertEquals(25.0, gameStatus.getPlayer(1).getPlayerCannon().getCannonPower(), 5);
     }
 
     @Test
