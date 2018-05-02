@@ -126,8 +126,8 @@ public class GameStatus {
         return this.playerList.get(getTurn());
     }
 
-    public List<Ammo> getAmmolist() {
-        return this.ammoListPlayer1;
+    public List<Ammo> getAmmolist(int player) {
+        return this.ammoLists.get(player);
     }
 
     public void subtractHealth(int player, int amount) {
