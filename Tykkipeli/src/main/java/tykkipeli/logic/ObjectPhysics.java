@@ -29,7 +29,7 @@ public class ObjectPhysics {
         // Method assumes that all accelerations are listed in "newAccelerations".
         // If "newAccelerations" is not empty the method will overwrite all old values.
         Vector netAcceleration = new Vector();
-        if (newAccelerations.isEmpty()) {           // Use old values.
+        if (newAccelerations == null || newAccelerations.isEmpty()) {           // Use old values.
             netAcceleration = object.getAcceleration();
             return netAcceleration;
         } else {                                    // Calculate new sum acceleration and discard old values.
