@@ -25,7 +25,7 @@ public class HighScoresDao {
      * Constructor for class HighScoresDao. Used for using custom database
      * address.
      *
-     * @param databaseAddress
+     * @param databaseAddress Address as string
      */
     public HighScoresDao(String databaseAddress) {
         this.databaseAddress = databaseAddress;
