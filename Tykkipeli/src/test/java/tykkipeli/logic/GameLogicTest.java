@@ -1,8 +1,15 @@
 package tykkipeli.logic;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,6 +26,16 @@ public class GameLogicTest {
     GameStatus gameStatus;
 
     public GameLogicTest() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        Path path = FileSystems.getDefault().getPath("res", "testdatabase.db");
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Before
@@ -110,6 +127,25 @@ public class GameLogicTest {
         assertEquals(cmp, ret, 0.001);
     }
 
+    @Test
+    public void enterKeyPressed() {
+        gameStatus.setTurn(0);
+        gameLogic.keyPressed("ENTER");
+        assertEquals(1, gameStatus.getTurn());
+    }
+
+    @Test
+    public void digitOnePressed() {
+        gameLogic.keyPressed("DIGIT1");
+        assertEquals(0, gameStatus.getSelectedWeaponNumber(0));
+    }
+
+    @Test
+    public void digitTwoPressed() {
+        gameLogic.keyPressed("DIGIT2");
+        assertEquals(1, gameStatus.getSelectedWeaponNumber(0));
+    }
+
     // ComputerPlays
     @Test
     public void playerOneValuesAreOkAfterComputerPlaysOnce() {
@@ -173,18 +209,55 @@ public class GameLogicTest {
     public void keyCodeEnterWhenTurnIsZeroAndPlayerOneIsHuman() {
         gameLogic.keycodeEnter(0);
         assertEquals(1, gameStatus.getTurn());
+        assertEquals(0, gameStatus.getPhase());
     }
 
     public void keyCodeEnterWhenTurnIsZeroAndPlayerOneIsComputer() {
         gameStatus.getPlayer(1).setPlayerHumanStatus(false);
         gameLogic.keycodeEnter(0);
+        assertFalse(gameStatus.getPlayer(1).getPlayerHumanStatus());
         assertEquals(0, gameStatus.getTurn());
+        assertEquals(1, gameStatus.getPhase());
     }
 
     public void keyCodeEnterWhenTurnIsOne() {
         gameLogic.keycodeEnter(1);
         assertEquals(0, gameStatus.getTurn());
         assertEquals(1, gameStatus.getPhase());
+    }
+
+    // moveAmmo
+    @Test
+    public void testMoveAmmo() {
+        gameStatus.getAmmolist(0).add(new Ammo(1, 1, 0.0));
+        gameStatus.getAmmolist(0).get(0).setVelocityXY(1, 0);
+        gameStatus.getAmmolist(0).get(0).setAccelerationXY(0, 0);
+        gameStatus.getAmmolist(0).get(0).setLocationXY(0, 0);
+        gameLogic.moveAmmo();
+        assertEquals(1.0, gameStatus.getAmmolist(0).get(0).getLocation().getX(), 0.00001);
+    }
+
+    // getHighScoresDao
+    @Test
+    public void getHighScoresDaoReturnsNotNull() {
+        assertNotNull(gameLogic.getHighScoresDao());
+    }
+
+    // getTopThree
+    @Test
+    public void getTopThreeReturnsNotNull() {
+        gameLogic.setDatabaseAddress("jdbc:sqlite:res/testdatabase.db");
+        List<String> res = gameLogic.getTopThree(1);
+        assertNotNull(res);
+    }
+
+    // saveNewHighScore
+    @Test
+    public void testSaveNewHighScore() {
+        gameLogic.setDatabaseAddress("jdbc:sqlite:res/testdatabase.db");
+        gameLogic.saveNewHighscore("testPlayer", 999, 2);
+        List<String> res = gameLogic.getTopThree(2);
+        assertNotNull(res);
     }
 
 }

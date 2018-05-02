@@ -183,12 +183,12 @@ public class GameStatusTest {
     // getAmmolist
     @Test
     public void getAmmolistReturnsSomethingNotNull() {
-        assertNotNull(status.getAmmolist());
+        assertNotNull(status.getAmmolist(0));
     }
 
     @Test
     public void getAmmolistReturnsList() {
-        assertThat(status.getAmmolist(), isA(List.class));
+        assertThat(status.getAmmolist(0), isA(List.class));
     }
 
 }
