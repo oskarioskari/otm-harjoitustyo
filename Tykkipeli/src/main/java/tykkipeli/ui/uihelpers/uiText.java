@@ -1,5 +1,6 @@
 package tykkipeli.ui.uihelpers;
 
+import tykkipeli.logic.GameLogic;
 import tykkipeli.logic.GameStatus;
 
 /**
@@ -19,12 +20,24 @@ public class uiText {
         this.gameStatus = status;
     }
 
-    public String getSettingsLabel() {
+    public String getSettingsLabelAI() {
         String labelText;
         if (gameStatus.getPlayer(PLAYER1).getPlayerHumanStatus()) {
             labelText = "Player 2 is human.";
         } else {
             labelText = "Player 2 is AI";
+        }
+        return labelText;
+    }
+
+    public String getSettingsLabelDifficulty(GameLogic gameLogic) {
+        String labelText;
+        if (gameLogic.getGameAi().getDifficulty() == 1) {
+            labelText = "Selected difficulty = Easy";
+        } else if (gameLogic.getGameAi().getDifficulty() == 2) {
+            labelText = "Selected difficulty = Normal";
+        } else {
+            labelText = "Selected difficulty = Hard";
         }
         return labelText;
     }
