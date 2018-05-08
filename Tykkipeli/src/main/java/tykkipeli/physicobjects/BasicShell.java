@@ -1,6 +1,5 @@
 package tykkipeli.physicobjects;
 
-import tykkipeli.physicobjects.Ammo;
 import tykkipeli.objects.Vector;
 
 public class BasicShell extends Ammo {
