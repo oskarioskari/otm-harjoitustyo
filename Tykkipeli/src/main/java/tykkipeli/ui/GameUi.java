@@ -25,7 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import tykkipeli.objects.Vector;
 import tykkipeli.ui.uihelpers.uiDraw;
 import tykkipeli.ui.uihelpers.uiText;
 
