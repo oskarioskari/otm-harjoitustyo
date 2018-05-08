@@ -175,15 +175,39 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Method to check if ammo has hit player.
+     *
+     * @param x Ammo's x-coordinate where it hit ground
+     * @param targetedPlayer Targeted player's number
+     * @param targetedLocation Targeted player's location vector
+     * @param gameStatus GameStatus object
+     */
     public void checkIfHit(double x, int targetedPlayer, Vector targetedLocation, GameStatus gameStatus) {
         if (targetedPlayer == 0) {
-            if (x >= targetedLocation.getX() - 20 && x <= targetedLocation.getX() + 70 && !gameStatus.getWaitOver(PLAYER1)) {
+            if (x >= targetedLocation.getX() - 20
+                    && x <= targetedLocation.getX() + 70
+                    && !gameStatus.getWaitOver(PLAYER1)) {
                 gameStatus.addPoint(PLAYER1);
                 gameStatus.subtractHealth(PLAYER0, (int) gameStatus.getPlayerWeapon(PLAYER1).getDamage());
             }
-        } else if (x >= targetedLocation.getX() - 23 && x <= targetedLocation.getX() + 67 && !gameStatus.getWaitOver(PLAYER0)) {
+        } else if (x >= targetedLocation.getX() - 23
+                && x <= targetedLocation.getX() + 67
+                && !gameStatus.getWaitOver(PLAYER0)) {
             gameStatus.addPoint(PLAYER0);
             gameStatus.subtractHealth(PLAYER1, (int) gameStatus.getPlayerWeapon(PLAYER0).getDamage());
+        }
+    }
+
+    /**
+     * Method to check if both of players' ammos have hit ground.
+     */
+    public void checkIfWaitOver() {
+        if (gameStatus.getWaitOver(PLAYER0) && gameStatus.getWaitOver(PLAYER1)) {
+            gameStatus.setWaitOver(0, false);
+            gameStatus.setWaitOver(1, false);
+            gameStatus.setPhase(PLAYING_PHASE);
+            gameStatus.randomWind();
         }
     }
 
