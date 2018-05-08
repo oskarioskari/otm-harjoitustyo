@@ -6,6 +6,9 @@ import java.util.Random;
 import tykkipeli.physicobjects.Ammo;
 import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
+import tykkipeli.physicobjects.BasicShell;
+import tykkipeli.physicobjects.Cannon;
+import tykkipeli.physicobjects.LargeShell;
 
 /**
  * Class for holding info about current state of the game, such as who's turn is
@@ -22,39 +25,25 @@ public class GameStatus {
     private int[] selectedWeapon;
     private Vector gravity;
     private Vector wind;
-    private final List<Player> playerList;
-    private final List<Ammo> ammoListPlayer1;
-    private final List<Ammo> ammoListPlayer2;
-    private final List<List<Ammo>> ammoLists;
+    private List<Player> playerList;
+    private List<Ammo> ammoListPlayer1;
+    private List<Ammo> ammoListPlayer2;
+    private List<List<Ammo>> ammoLists;
     private final Random random;
 
     /**
      * Constructor for class GameStatus.
      *
-     * @param playerList List of all players
-     * @param ammolistPlayer1 List of first player's weapons/ammos
-     * @param ammolistPlayer2 List of second player's weapons/ammos
      */
-    public GameStatus(List<Player> playerList, List<Ammo> ammolistPlayer1, List<Ammo> ammolistPlayer2) {
-        this.playerInTurn = 0;
-        this.phase = 0;
-        this.waitOver = new boolean[]{false, false};
-        this.playerScores = new int[]{0, 0};
-        this.selectedWeapon = new int[]{0, 0};
-        this.gravity = new Vector(0, 0.5); // Default gravity
-        this.wind = new Vector(0, 0);
-        this.playerList = playerList;
-        this.ammoListPlayer1 = ammolistPlayer1;
-        this.ammoListPlayer2 = ammolistPlayer2;
-        this.ammoLists = new ArrayList<>();
-        this.ammoLists.add(ammoListPlayer1);
-        this.ammoLists.add(ammoListPlayer2);
+    public GameStatus() {
+        initLists();
+        startNewGame();
         this.random = new Random();
     }
 
     /**
      * Set current turn and game phase to 0. Reset each player's health, aiming,
-     * weapon selection, scores and wait status.
+     * weapon selection, scores and wait status. Reset gravity and wind.
      */
     public void startNewGame() {
         this.playerInTurn = 0;
@@ -62,11 +51,48 @@ public class GameStatus {
         this.waitOver = new boolean[]{false, false};
         this.playerScores = new int[]{0, 0};
         this.selectedWeapon = new int[]{0, 0};
+        this.gravity = new Vector(0, 0.5);
+        this.wind = new Vector(0, 0);
         for (Player p : this.playerList) {
             p.setHealth(100);
             p.getPlayerCannon().setCannonPower(10);
             p.getPlayerCannon().setCannonAngle(Math.PI / 4);
         }
+    }
+
+    /**
+     * Initialize lists of players and player ammos.
+     */
+    private void initLists() {
+        // Default starting values for cannons
+        Vector leftLoc = new Vector(100, 375);
+        Vector rightLoc = new Vector(675, 375);
+        double startAngle = Math.PI / 4.0;
+        double startPower = 10;
+
+        // Ammolists
+        ArrayList<Ammo> ammoListP1 = new ArrayList<>();
+        ammoListP1.add(new BasicShell());
+        ammoListP1.add(new LargeShell());
+
+        ArrayList<Ammo> ammoListP2 = new ArrayList<>();
+        ammoListP2.add(new BasicShell());
+        ammoListP2.add(new LargeShell());
+
+        this.ammoListPlayer1 = ammoListP1;
+        this.ammoListPlayer2 = ammoListP2;
+        this.ammoLists = new ArrayList<>();
+        this.ammoLists.add(ammoListPlayer1);
+        this.ammoLists.add(ammoListPlayer2);
+
+        // Playerlist
+        ArrayList<Player> playerList = new ArrayList<>();
+        Cannon leftCannon = new Cannon(leftLoc, startAngle, startPower);
+        Cannon rightCannon = new Cannon(rightLoc, startAngle, startPower);
+        playerList.add(new Player(0, leftCannon));
+        playerList.add(new Player(1, rightCannon));
+
+        this.playerList = playerList;
     }
 
     /**
@@ -92,9 +118,9 @@ public class GameStatus {
 
     /**
      * Set waiting status for selected player.
-     * 
-     * @param player    Selected player's number
-     * @param value     Is wait over?
+     *
+     * @param player Selected player's number
+     * @param value Is wait over?
      */
     public void setWaitOver(int player, boolean value) {
         this.waitOver[player] = value;
@@ -102,7 +128,7 @@ public class GameStatus {
 
     /**
      * Return waiting status of selected player.
-     * 
+     *
      * @param player Selected player's number
      * @return Is wait over?
      */
@@ -112,7 +138,7 @@ public class GameStatus {
 
     /**
      * Add one point to selected player.
-     * 
+     *
      * @param player Selected player's number
      */
     public void addPoint(int player) {
@@ -123,7 +149,7 @@ public class GameStatus {
 
     /**
      * Get both player's current score.
-     * 
+     *
      * @return int[] of both player's scores
      */
     public int[] getPlayerScores() {
@@ -132,7 +158,7 @@ public class GameStatus {
 
     /**
      * Get score of selected player.
-     * 
+     *
      * @param player Selected player's number
      * @return int score
      */
