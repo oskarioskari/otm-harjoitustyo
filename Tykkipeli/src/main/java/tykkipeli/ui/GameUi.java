@@ -151,36 +151,50 @@ public class GameUi extends Application {
     }
 
     public void settingsScreen(Stage stage, Scene mainMenu) {
-        Label label = new Label(text.getSettingsLabel());
-
+        Label labelAI = new Label(text.getSettingsLabelAI());
+        Label labelDif = new Label(text.getSettingsLabelDifficulty(gameLogic));
         Button selectPlVersusAI = new Button("Set player 2 = AI");
         Button selectPlVersusPl = new Button("Set player 2 = Human");
+        Button selectEasy = new Button("Difficulty = Easy");
+        Button selectNorm = new Button("Difficulty = Normal");
+        Button selectHard = new Button("Difficulty = Hard");
         Button back = new Button("Back");
 
-        selectPlVersusAI.setPrefSize(200, 50);
-        selectPlVersusPl.setPrefSize(200, 50);
+        selectPlVersusAI.setPrefSize(200, 30);
+        selectPlVersusPl.setPrefSize(200, 30);
+        selectEasy.setPrefSize(200, 30);
+        selectNorm.setPrefSize(200, 30);
+        selectHard.setPrefSize(200, 30);
         back.setPrefSize(200, 50);
 
-        // Set player1 to AI
-        selectPlVersusAI.setOnAction((ActionEvent t) -> {
+        selectPlVersusAI.setOnAction(ae -> {
             gameStatus.getPlayer(PLAYER1).setPlayerHumanStatus(false);
-            label.setText(text.getSettingsLabel());
+            labelAI.setText(text.getSettingsLabelAI());
         });
-        // Set player 1 to human
-        selectPlVersusPl.setOnAction((ActionEvent t) -> {
+        selectPlVersusPl.setOnAction(ae -> {
             gameStatus.getPlayer(PLAYER1).setPlayerHumanStatus(true);
-            label.setText(text.getSettingsLabel());
+            labelAI.setText(text.getSettingsLabelAI());
         });
-        // Go back to main menu
-        back.setOnAction((ActionEvent t) -> {
+        selectEasy.setOnAction(ae -> {
+            gameLogic.getGameAi().setDifficulty(1);
+            labelDif.setText(text.getSettingsLabelDifficulty(gameLogic));
+        });
+        selectNorm.setOnAction(ae -> {
+            gameLogic.getGameAi().setDifficulty(2);
+            labelDif.setText(text.getSettingsLabelDifficulty(gameLogic));
+        });
+        selectHard.setOnAction(ae -> {
+            gameLogic.getGameAi().setDifficulty(3);
+            labelDif.setText(text.getSettingsLabelDifficulty(gameLogic));
+        });
+        back.setOnAction(ae -> {
             stage.setScene(mainMenu);
         });
 
         VBox settingsBox = new VBox(30);
         settingsBox.setPadding(new Insets(80));
-        settingsBox.getChildren().add(label);
-        settingsBox.getChildren().add(selectPlVersusAI);
-        settingsBox.getChildren().add(selectPlVersusPl);
+        settingsBox.getChildren().addAll(labelAI, selectPlVersusAI,
+                selectPlVersusPl, labelDif, selectEasy, selectNorm, selectHard);
         settingsBox.getChildren().add(back);
 
         Scene settingsMenu = new Scene(settingsBox);
@@ -199,7 +213,6 @@ public class GameUi extends Application {
         // Players:
         Player player0 = gameStatus.getPlayer(PLAYER0);
         Player player1 = gameStatus.getPlayer(PLAYER1);
-
         // Pictures:
         Image cannonImage = new Image("file:res/pictures/new_cannon_01.png");
         Image barrelImage = new Image("file:res/pictures/barrel_02.png");
@@ -215,14 +228,12 @@ public class GameUi extends Application {
         imageList.add(cannonRight);
         imageList.add(barrelLeft);
         imageList.add(barrelRight);
-
         // Add all to root
         root.getChildren().addAll(canvas, barrelLeft, barrelRight, cannonLeft, cannonRight);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         draw = new uiDraw(gc, gameStatus, text);
 
-        // Initialize gameLoop and set it to cycle indefinitely:
         Timeline gameLoop = new Timeline();
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -274,14 +285,7 @@ public class GameUi extends Application {
                     gameLogic.checkIfHit(x1, PLAYER0, player0.getPlayerCannon().getLocation(), gameStatus);
                     gameStatus.setWaitOver(PLAYER1, true);
                 }
-                // If both ammos have hit ground:
-                if (gameStatus.getWaitOver(PLAYER0) && gameStatus.getWaitOver(PLAYER1)) {
-                    gameStatus.setWaitOver(0, false);
-                    gameStatus.setWaitOver(1, false);
-                    gameStatus.setPhase(PLAYING_PHASE);
-                    // Get new random wind:
-                    gameStatus.randomWind();
-                }
+                gameLogic.checkIfWaitOver();
             }
 
             // Check if either player has zero health:
@@ -327,13 +331,10 @@ public class GameUi extends Application {
         Scene saveScoreScene = new Scene(saveMenu);
         stage.setScene(saveScoreScene);
 
-        save.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (field.getText() != null && !field.getText().isEmpty()) {
-                    gameLogic.saveNewHighscore(field.getText(), score, gameLogic.getGameAi().getDifficulty());
-                    stage.close();
-                }
+        save.setOnAction(ae -> {
+            if (field.getText() != null && !field.getText().isEmpty()) {
+                gameLogic.saveNewHighscore(field.getText(), score, gameLogic.getGameAi().getDifficulty());
+                stage.close();
             }
         });
 
