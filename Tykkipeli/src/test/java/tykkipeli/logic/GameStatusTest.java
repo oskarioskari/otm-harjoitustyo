@@ -23,16 +23,15 @@ public class GameStatusTest {
 
     @Before
     public void setUp() {
-        List<Player> testPlayerlist = new ArrayList<>();
-        testPlayerlist.add(new Player(0, new Cannon(new Vector(1, 1))));
-        testPlayerlist.add(new Player(1, new Cannon(new Vector(2, 2))));
-        List<Ammo> testAmmolist1 = new ArrayList<>();
-        testAmmolist1.add(new BasicShell(new Vector(1, 1)));
-        testAmmolist1.add(new LargeShell(new Vector(1, 2)));
-        List<Ammo> testAmmolist2 = new ArrayList<>();
-        testAmmolist2.add(new BasicShell(new Vector(2, 1)));
-        testAmmolist2.add(new LargeShell(new Vector(2, 2)));
-        status = new GameStatus(testPlayerlist, testAmmolist1, testAmmolist2);
+        status = new GameStatus();
+        status.getPlayer(0).getPlayerCannon().setLocationXY(1, 1);
+        status.getPlayer(1).getPlayerCannon().setLocationXY(2, 2);
+        List<Ammo> p0List = status.getAmmolist(0);
+        p0List.get(0).setLocationXY(1, 1);
+        p0List.get(1).setLocationXY(1, 2);
+        List<Ammo> p1List = status.getAmmolist(1);
+        p1List.get(0).setLocationXY(2, 1);
+        p1List.get(1).setLocationXY(2, 2);
     }
 
     @After
