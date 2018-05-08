@@ -14,6 +14,11 @@ import tykkipeli.objects.Vector;
  */
 public class GameLogic {
 
+    static final int PLAYER0 = 0;
+    static final int PLAYER1 = 1;
+    static final int PLAYING_PHASE = 0;
+    static final int FIRING_PHASE = 1;
+    static final int GAMEOVER = 2;
     private HighScoresDao hsDao;
     private final ObjectPhysics physics;
     private final GameStatus gameStatus;
@@ -94,16 +99,16 @@ public class GameLogic {
      * @param turnNow Player currently in turn
      */
     public void keycodeEnter(int turnNow) {
-        if (turnNow == 0) {
+        if (turnNow == PLAYER0) {
             fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
-            gameStatus.setTurn(1);
-            if (!gameStatus.getPlayer(1).getPlayerHumanStatus()) {
-                computerPlays(1);
+            gameStatus.setTurn(PLAYER1);
+            if (!gameStatus.getPlayer(PLAYER1).getPlayerHumanStatus()) {
+                computerPlays(PLAYER1);
             }
         } else {
             fireCannon(turnNow, gameStatus.getPlayerList(), gameStatus.getPlayerWeapon(turnNow), gameStatus.getGravity());
-            gameStatus.setTurn(0);
-            gameStatus.setPhase(1);
+            gameStatus.setTurn(PLAYER0);
+            gameStatus.setPhase(PLAYER1);
         }
     }
 
@@ -167,6 +172,18 @@ public class GameLogic {
             GraphicObject ammo = gameStatus.getPlayerWeapon(i);
             this.physics.nextStep(ammo, gameStatus);
             i++;
+        }
+    }
+
+    public void checkIfHit(double x, int targetedPlayer, Vector targetedLocation, GameStatus gameStatus) {
+        if (targetedPlayer == 0) {
+            if (x >= targetedLocation.getX() - 20 && x <= targetedLocation.getX() + 70 && !gameStatus.getWaitOver(PLAYER1)) {
+                gameStatus.addPoint(PLAYER1);
+                gameStatus.subtractHealth(PLAYER0, (int) gameStatus.getPlayerWeapon(PLAYER1).getDamage());
+            }
+        } else if (x >= targetedLocation.getX() - 23 && x <= targetedLocation.getX() + 67 && !gameStatus.getWaitOver(PLAYER0)) {
+            gameStatus.addPoint(PLAYER0);
+            gameStatus.subtractHealth(PLAYER1, (int) gameStatus.getPlayerWeapon(PLAYER0).getDamage());
         }
     }
 
