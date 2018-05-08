@@ -6,4 +6,6 @@
 
 <suppressions>
     <suppress files="tykkipeli.ui.GameUi.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="tykkipeli.ui.uihelpers.uiDraw.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="tykkipeli.ui.uihelpers.uiText.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

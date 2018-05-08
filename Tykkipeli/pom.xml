@@ -32,6 +32,7 @@
                 <configuration>
 			        <excludes>
 			            <exclude>tykkipeli/ui/*</exclude>
+			            <exclude>tykkipeli/ui/uihelpers/*</exclude>
 			        </excludes>
 			    </configuration>
                 <executions>
