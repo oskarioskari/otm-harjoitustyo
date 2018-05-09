@@ -20,6 +20,7 @@ public class GameStatus {
 
     private int playerInTurn;
     private int phase;
+    private int finalScore;
     private boolean[] waitOver;
     private int[] playerScores;
     private int[] selectedWeapon;
@@ -151,6 +152,14 @@ public class GameStatus {
         if (player == 0 || player == 1) {
             this.playerScores[player] = score;
         }
+    }
+
+    public void setFinalScore(int score) {
+        this.finalScore = score;
+    }
+
+    public int getFinalScore() {
+        return this.finalScore;
     }
 
     /**
