@@ -1,9 +1,6 @@
 package tykkipeli.logic;
 
 import tykkipeli.objects.Player;
-import tykkipeli.physicobjects.Cannon;
-import tykkipeli.physicobjects.BasicShell;
-import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import org.junit.After;
@@ -12,7 +9,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import tykkipeli.objects.Vector;
 import tykkipeli.physicobjects.Ammo;
-import tykkipeli.physicobjects.LargeShell;
 
 public class GameStatusTest {
 
