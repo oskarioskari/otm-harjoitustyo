@@ -214,7 +214,7 @@ public class GameLogic {
     /**
      * Method for checking that players are aiming in reasonable manner.
      */
-    public void checkPlayerParameters() {
+    public void checkGameParameters() {
         for (Player p : gameStatus.getPlayerList()) {
             // Barrel shouldn't be pointing back or underground
             if (p.getPlayerCannon().getCannonAngle() > (Math.PI / 2)) {
@@ -232,7 +232,7 @@ public class GameLogic {
     }
 
     public boolean checkAmmoCollision(double x, double y) {
-        if (y >= 400 && y <= 410) {
+        if (y >= 400 && y <= 415) {
             return true;
         } else if (x >= 250 && x <= 550) {
             double x0 = 400;
@@ -244,6 +244,10 @@ public class GameLogic {
             if (y >= outerBound && y <= innerBound) {
                 return true;
             }
+        } else if (y > 500) {
+            return true;
+        } else if (x < -100 || x > 900) {
+            return true;
         }
         return false;
     }
@@ -268,7 +272,7 @@ public class GameLogic {
         int score = 0;
         score += gameStatus.getPlayerScore(PLAYER0);
         score += (int) ((1.0 * gameStatus.getPlayer(PLAYER0).getHealth()) / 10.0);
-        gameStatus.setScore(PLAYER0, score);
+        gameStatus.setFinalScore(score);
         return score;
     }
 
