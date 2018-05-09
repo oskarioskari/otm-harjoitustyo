@@ -87,6 +87,14 @@ public class GameStatusTest {
     }
 
     @Test
+    public void addOnePointToPlayer1() {
+        status.addPoint(1);
+        int[] ret = status.getPlayerScores();
+        int[] cmp = {0, 1};
+        assertArrayEquals(cmp, ret);
+    }
+
+    @Test
     public void addOnePointToNonexistingPlayer() {
         status.addPoint(-1);
         int[] ret = status.getPlayerScores();
@@ -106,6 +114,19 @@ public class GameStatusTest {
     @Test
     public void NonExistingPlayerReturnsZeroPoints() {
         assertEquals(0, status.getPlayerScore(2));
+    }
+
+    @Test
+    public void getPlayerScoreForPlayer0() {
+        status.setScore(0, 10);
+        int ret = status.getPlayerScore(0);
+        assertEquals(10, ret);
+    }
+
+    public void getPlayerScoreForPlayer1() {
+        status.setScore(1, 11);
+        int ret = status.getPlayerScore(1);
+        assertEquals(11, ret);
     }
 
     // setSelectedWeapon
@@ -184,6 +205,28 @@ public class GameStatusTest {
     @Test
     public void getAmmolistReturnsList() {
         assertThat(status.getAmmolist(0), isA(List.class));
+    }
+
+    // Other tests:
+    @Test
+    public void randomWindChangesWind() {
+        status.setWind(0);
+        status.randomWind();
+        assertThat(0, is(not(status.getWind())));
+    }
+
+    @Test
+    public void setFinalScoreToZero() {
+        status.setFinalScore(0);
+        int ret = status.getFinalScore();
+        assertEquals(0, ret);
+    }
+
+    @Test
+    public void setFinalScoreToTen() {
+        status.setFinalScore(10);
+        int ret = status.getFinalScore();
+        assertEquals(10, ret);
     }
 
 }

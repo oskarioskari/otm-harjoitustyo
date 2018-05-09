@@ -251,4 +251,40 @@ public class GameLogicTest {
         assertNotNull(res);
     }
 
+    // checkAmmoCollision
+    @Test
+    public void noCollisionInSky() {
+        assertFalse(gameLogic.checkAmmoCollision(300, 200));
+    }
+
+    @Test
+    public void collisionWhenInGround() {
+        assertTrue(gameLogic.checkAmmoCollision(0, 405));
+    }
+
+    @Test
+    public void collisionWhenInHill() {
+        assertTrue(gameLogic.checkAmmoCollision(400, 355));
+    }
+
+    @Test
+    public void noCollisionAfterPastHitZone() {
+        assertFalse(gameLogic.checkAmmoCollision(400, 380));
+    }
+
+    @Test
+    public void collisionWhenTooFarLeft() {
+        assertTrue(gameLogic.checkAmmoCollision(-200, 0));
+    }
+
+    @Test
+    public void collisionWhenTooFarRight() {
+        assertTrue(gameLogic.checkAmmoCollision(1000, 0));
+    }
+
+    @Test
+    public void collisionWhenTooFarUnderground() {
+        assertTrue(gameLogic.checkAmmoCollision(0, 600));
+    }
+
 }
