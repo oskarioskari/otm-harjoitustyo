@@ -55,7 +55,7 @@ public class GameStatus {
         this.wind = new Vector(0, 0);
         for (Player p : this.playerList) {
             p.setHealth(100);
-            p.getPlayerCannon().setCannonPower(10);
+            p.getPlayerCannon().setCannonPower(20);
             p.getPlayerCannon().setCannonAngle(Math.PI / 4);
         }
     }
@@ -68,7 +68,7 @@ public class GameStatus {
         Vector leftLoc = new Vector(100, 375);
         Vector rightLoc = new Vector(675, 375);
         double startAngle = Math.PI / 4.0;
-        double startPower = 10;
+        double startPower = 20;
 
         // Ammolists
         ArrayList<Ammo> ammoListP1 = new ArrayList<>();
@@ -86,13 +86,13 @@ public class GameStatus {
         this.ammoLists.add(ammoListPlayer2);
 
         // Playerlist
-        ArrayList<Player> playerList = new ArrayList<>();
+        ArrayList<Player> playersList = new ArrayList<>();
         Cannon leftCannon = new Cannon(leftLoc, startAngle, startPower);
         Cannon rightCannon = new Cannon(rightLoc, startAngle, startPower);
-        playerList.add(new Player(0, leftCannon));
-        playerList.add(new Player(1, rightCannon));
+        playersList.add(new Player(0, leftCannon));
+        playersList.add(new Player(1, rightCannon));
 
-        this.playerList = playerList;
+        this.playerList = playersList;
     }
 
     /**
@@ -144,6 +144,12 @@ public class GameStatus {
     public void addPoint(int player) {
         if (player == 0 || player == 1) {
             this.playerScores[player]++;
+        }
+    }
+
+    public void setScore(int player, int score) {
+        if (player == 0 || player == 1) {
+            this.playerScores[player] = score;
         }
     }
 
