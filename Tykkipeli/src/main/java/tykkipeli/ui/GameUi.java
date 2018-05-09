@@ -10,7 +10,6 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -253,8 +252,9 @@ public class GameUi extends Application {
             }
 
             draw.drawHelpText();
+            draw.drawWindMeter();
 
-            // Check if game is in "wait == 1" mode and act accordingly:
+            // Check if game is in "phase == 1" mode and act accordingly:
             if (gameStatus.getPhase() == FIRING_PHASE) {
                 // Draw player0 ammo
                 double x0 = gameStatus.getPlayerWeapon(PLAYER0).getLocation().getX();
@@ -286,6 +286,7 @@ public class GameUi extends Application {
                     gameStatus.setWaitOver(PLAYER1, true);
                 }
                 gameLogic.checkIfWaitOver();
+                gameLogic.resetAim();
             }
 
             // Check if either player has zero health:
