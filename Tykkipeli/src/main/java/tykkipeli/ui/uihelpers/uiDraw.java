@@ -4,7 +4,6 @@ import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import tykkipeli.logic.GameStatus;
 import tykkipeli.objects.Player;
@@ -54,7 +53,6 @@ public class uiDraw {
         double x = gameStatus.getPlayerInTurn().getX() + 16;
         double y = gameStatus.getPlayerInTurn().getY() + 25;
         rotate(rotationAngle, x, y);
-//        gc.rotate(Math.toDegrees(gameStatus.getPlayerInTurn().getPlayerCannon().getCannonAngle()));
         double deltaX;
         double deltaY;
         if (gameStatus.getTurn() == PLAYER0) {
@@ -69,13 +67,6 @@ public class uiDraw {
         gc.setFill(Color.LIGHTGRAY);
         gc.strokeRect(x + deltaX, y + deltaY, 8, 50);
         gc.restore();
-
-//        Rectangle r = new Rectangle();
-//        r.setX(450);
-//        r.setY(100);
-//        r.setWidth(9);
-//        r.setHeight(gameStatus.getPlayerInTurn().getPlayerCannon().getCannonPower());
-//        
     }
 
     public void drawHealthBars() {
