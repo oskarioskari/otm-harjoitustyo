@@ -20,13 +20,12 @@ public class ObjectPhysics {
     }
 
     /**
-     * Method for calculating object's new location.
+     * Method for calculating object's new location (step i+1).
      *
      * @param object Type GraphicObject object
      * @return Location of object during step i+1
      */
     public Vector nextLocation(GraphicObject object) {
-        // Calculate object location during step i+1.
         Vector location = object.getLocation();
         Vector velocity = object.getVelocity();
         Vector acceleration = object.getAcceleration();
@@ -67,7 +66,7 @@ public class ObjectPhysics {
     }
 
     /**
-     * Method for calculating object's velocity during next iteration step.
+     * Method for calculating object's velocity during next step (i+1).
      *
      * @param object Type GraphicObject object
      * @param newAcceleration Acceleration during step i+1
@@ -75,7 +74,6 @@ public class ObjectPhysics {
      * @return Velocity of object during step i+1
      */
     public Vector nextVelocity(GraphicObject object, Vector newAcceleration, GameStatus status) {
-        // Calculate object velocity for step i+1.
         Vector velocity = object.getVelocity();
         Vector oldAcceleration = object.getAcceleration();
         double deltaX = 0.5 * (oldAcceleration.getX() + newAcceleration.getX());

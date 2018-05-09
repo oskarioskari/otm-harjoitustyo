@@ -96,11 +96,6 @@ public class GameStatus {
         this.playerList = playersList;
     }
 
-    /**
-     * Set which player's turn it is.
-     *
-     * @param player Player in turn
-     */
     public void setTurn(int player) {
         this.playerInTurn = player;
     }
@@ -117,22 +112,10 @@ public class GameStatus {
         return this.phase;
     }
 
-    /**
-     * Set waiting status for selected player.
-     *
-     * @param player Selected player's number
-     * @param value Is wait over?
-     */
     public void setWaitOver(int player, boolean value) {
         this.waitOver[player] = value;
     }
 
-    /**
-     * Return waiting status of selected player.
-     *
-     * @param player Selected player's number
-     * @return Is wait over?
-     */
     public boolean getWaitOver(int player) {
         return this.waitOver[player];
     }
@@ -162,21 +145,10 @@ public class GameStatus {
         return this.finalScore;
     }
 
-    /**
-     * Get both player's current score.
-     *
-     * @return int[] of both player's scores
-     */
     public int[] getPlayerScores() {
         return this.playerScores;
     }
 
-    /**
-     * Get score of selected player.
-     *
-     * @param player Selected player's number
-     * @return int score
-     */
     public int getPlayerScore(int player) {
         if (player == 0 || player == 1) {
             return this.playerScores[player];
@@ -229,6 +201,9 @@ public class GameStatus {
         this.wind.setX(wind);
     }
 
+    /**
+     * Method sets wind to random value between -0.25 and 0.25.
+     */
     public void randomWind() {
         int direction = random.nextInt(2);
         double newWind = random.nextDouble() * 0.25;
