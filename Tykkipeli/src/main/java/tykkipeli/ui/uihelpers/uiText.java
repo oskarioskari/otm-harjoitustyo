@@ -49,8 +49,8 @@ public class uiText {
         } else {
             ret = "Computer\n";
         }
-        ret += "Score: " + gameStatus.getPlayerScore(player) + "\n"
-                + "Angle: " + String.format("%.2f", Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle())) + "\n"
+        ret += "\nAngle: " + String.format("%.2f",
+                Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle())) + "\n"
                 + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
         return ret;
     }
@@ -63,11 +63,13 @@ public class uiText {
         }
     }
 
-    public String getWinText(int player) {
+    public String getWinText(int player, GameLogic gameLogic) {
         String ret = "!!! PLAYER " + (player + 1) + " WINS !!!" + "\n"
                 + "Press ENTER to play again" + "\n"
                 + "\n";
         if (!gameStatus.getPlayer(PLAYER1).getPlayerHumanStatus()) {
+            int score = gameLogic.calculateFinalScore();
+            ret += "Your final score is: " + score + "\n";
             ret += "Press S to save score!";
         }
         return ret;
