@@ -291,7 +291,7 @@ public class GameUi extends Application {
 
             // Check if either player has zero health:
             if (player0.getHealth() <= 0 || player1.getHealth() <= 0) {
-                draw.drawWinText();
+                draw.drawWinText(gameLogic);
                 gameStatus.setPhase(GAMEOVER);
             }
 
