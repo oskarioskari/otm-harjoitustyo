@@ -4,6 +4,8 @@ import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import tykkipeli.logic.GameStatus;
 import tykkipeli.objects.Player;
 
@@ -35,14 +37,45 @@ public class uiDraw {
         gc.fillRect(0, 400, 800, 100);
     }
 
+    private void rotate(double angle, double x, double y) {
+        Rotate rotate = new Rotate(angle, x, y);
+        gc.setTransform(rotate.getMxx(), rotate.getMyx(), rotate.getMxy(),
+                rotate.getMyy(), rotate.getTx(), rotate.getTy());
+    }
+
     public void drawPowerBar() {
+        gc.save();
+        double rotationAngle;
+        if (gameStatus.getTurn() == PLAYER0) {
+            rotationAngle = Math.toDegrees(-gameStatus.getPlayerInTurn().getPlayerCannon().getCannonAngle() - Math.PI / 2);
+        } else {
+            rotationAngle = Math.toDegrees(gameStatus.getPlayerInTurn().getPlayerCannon().getCannonAngle() + Math.PI / 2);
+        }
+        double x = gameStatus.getPlayerInTurn().getX() + 16;
+        double y = gameStatus.getPlayerInTurn().getY() + 25;
+        rotate(rotationAngle, x, y);
+//        gc.rotate(Math.toDegrees(gameStatus.getPlayerInTurn().getPlayerCannon().getCannonAngle()));
+        double deltaX;
+        double deltaY;
+        if (gameStatus.getTurn() == PLAYER0) {
+            deltaX = 0;
+            deltaY = 24;
+        } else {
+            deltaX = -3;
+            deltaY = 28;
+        }
         gc.setFill(Color.ORANGERED);
-        gc.fillRect(gameStatus.getPlayerInTurn().getX() - 13,
-                gameStatus.getPlayerInTurn().getY() + 30, 8,
-                gameStatus.getPlayerInTurn().getPlayerCannon().getCannonPower());
-        gc.setFill(Color.BLACK);
-        gc.strokeRect(gameStatus.getPlayerInTurn().getX() - 13,
-                gameStatus.getPlayerInTurn().getY() + 30, 8, 50);
+        gc.fillRect(x + deltaX, y + deltaY, 8, gameStatus.getPlayerInTurn().getPlayerCannon().getCannonPower());
+        gc.setFill(Color.LIGHTGRAY);
+        gc.strokeRect(x + deltaX, y + deltaY, 8, 50);
+        gc.restore();
+
+//        Rectangle r = new Rectangle();
+//        r.setX(450);
+//        r.setY(100);
+//        r.setWidth(9);
+//        r.setHeight(gameStatus.getPlayerInTurn().getPlayerCannon().getCannonPower());
+//        
     }
 
     public void drawHealthBars() {
@@ -71,7 +104,20 @@ public class uiDraw {
         }
     }
 
+    public void drawWindMeter() {
+        double wind = gameStatus.getWind() * 200;
+        gc.fillText("Wind:", 380, 95);
+        gc.strokeRect(350, 100, 100, 10);
+        gc.setFill(Color.ORANGERED);
+        if (wind >= 0) {
+            gc.fillRect(400, 100, wind, 10);
+        } else {
+            gc.fillRect(400 + wind, 100, -wind, 10);
+        }
+    }
+
     public void drawWinText() {
+        gc.setFill(Color.BLACK);
         if (gameStatus.getPlayer(PLAYER0).getHealth() <= 0) {
             gc.fillText(text.getWinText(PLAYER1), 300, 200);
         } else {
@@ -79,7 +125,7 @@ public class uiDraw {
         }
     }
 
-    public void drawCannons(List<ImageView> list) {
+    public void drawCannons(List<ImageView> cannonPartsList) {
         double leftX = gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX();
         double leftY = gameStatus.getPlayer(0).getPlayerCannon().getLocation().getY();
         double rightX = gameStatus.getPlayer(1).getPlayerCannon().getLocation().getX();
@@ -87,10 +133,10 @@ public class uiDraw {
         double leftRotate = gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle() - Math.PI / 2;
         double rightRotate = gameStatus.getPlayer(1).getPlayerCannon().getCannonAngle() - Math.PI / 2;
 
-        ImageView cannonLeft = list.get(0);
-        ImageView cannonRight = list.get(1);
-        ImageView barrelLeft = list.get(2);
-        ImageView barrelRight = list.get(3);
+        ImageView cannonLeft = cannonPartsList.get(0);
+        ImageView cannonRight = cannonPartsList.get(1);
+        ImageView barrelLeft = cannonPartsList.get(2);
+        ImageView barrelRight = cannonPartsList.get(3);
 
         cannonLeft.setX(leftX);
         cannonLeft.setY(leftY);
