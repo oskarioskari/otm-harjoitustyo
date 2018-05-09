@@ -35,6 +35,7 @@ public class uiDraw {
         gc.fillRect(0, 0, 800, 500);
         gc.setFill(Color.GREEN);
         gc.fillRect(0, 400, 800, 100);
+        gc.fillOval(250, 350, 300, 200);
     }
 
     private void rotate(double angle, double x, double y) {
