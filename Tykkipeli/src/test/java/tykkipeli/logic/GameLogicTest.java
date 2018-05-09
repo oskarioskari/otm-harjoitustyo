@@ -159,8 +159,8 @@ public class GameLogicTest {
 
     // CheckPlayerParameters
     @Test
-    public void checkPlayerParametersDefaultSituation() {
-        gameLogic.checkPlayerParameters();
+    public void checkGameParametersDefaultSituation() {
+        gameLogic.checkGameParameters();
         double expAngle = Math.PI / 4;
         double expPower = 20;
         assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
@@ -168,10 +168,10 @@ public class GameLogicTest {
     }
 
     @Test
-    public void checkPlayerParametersAngleTooHighPowerTooLow() {
+    public void checkGameParametersAngleTooHighPowerTooLow() {
         gameStatus.getPlayer(0).getPlayerCannon().setCannonAngle(Math.PI / 2 + 1);
         gameStatus.getPlayer(0).getPlayerCannon().setCannonPower(-10);
-        gameLogic.checkPlayerParameters();
+        gameLogic.checkGameParameters();
         double expAngle = Math.PI / 2;
         double expPower = 0;
         assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
@@ -179,10 +179,10 @@ public class GameLogicTest {
     }
 
     @Test
-    public void checkPlayerParametersAngleTooLowPowerTooHigh() {
+    public void checkGameParametersAngleTooLowPowerTooHigh() {
         gameStatus.getPlayer(0).getPlayerCannon().setCannonAngle(-Math.PI / 4);
         gameStatus.getPlayer(0).getPlayerCannon().setCannonPower(10000);
-        gameLogic.checkPlayerParameters();
+        gameLogic.checkGameParameters();
         double expAngle = 0.00007;
         double expPower = 50;
         assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.0000001);
