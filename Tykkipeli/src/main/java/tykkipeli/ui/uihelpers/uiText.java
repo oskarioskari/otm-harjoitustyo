@@ -43,34 +43,24 @@ public class uiText {
     }
 
     public String getPlayerText(int player, GameStatus gameStatus) {
+        String ret;
         if (gameStatus.getPlayer(player).getPlayerHumanStatus()) {
-            return "Player " + (player + 1) + "\n"
-                    + "Score: " + gameStatus.getPlayerScore(player) + "\n"
-                    + "Angle: " + Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle()) + "\n"
-                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower() + "\n"
-                    + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
+            ret = "Player " + (player + 1) + "\n";
         } else {
-            return "Computer\n"
-                    + "Score: " + gameStatus.getPlayerScore(player) + "\n"
-                    + "Angle: " + Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle()) + "\n"
-                    + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower() + "\n"
-                    + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
+            ret = "Computer\n";
         }
+        ret += "Score: " + gameStatus.getPlayerScore(player) + "\n"
+                + "Angle: " + String.format("%.2f", Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle())) + "\n"
+                + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower() + "\n"
+                + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
+        return ret;
     }
 
     public String getTurnText(int player, GameStatus gameStatus) {
-        double windDouble = Math.abs(gameStatus.getWind()) * 10;
-        String wind = String.format("%.1f", windDouble);
         if (gameStatus.getWind() <= 0) {
-            return "Now in turn: PLAYER " + (player + 1) + "\n"
-                    + "Aim and fire!" + "\n"
-                    + "\n"
-                    + "Wind: <-- " + wind + " <--";
+            return "Now in turn: PLAYER " + (player + 1);
         } else {
-            return "Now in turn: PLAYER " + (player + 1) + "\n"
-                    + "Aim and fire!" + "\n"
-                    + "\n"
-                    + "Wind: --> " + wind + " -->";
+            return "Now in turn: PLAYER " + (player + 1);
         }
     }
 
