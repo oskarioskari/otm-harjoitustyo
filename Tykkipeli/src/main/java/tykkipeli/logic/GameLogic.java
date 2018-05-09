@@ -231,6 +231,23 @@ public class GameLogic {
         }
     }
 
+    public boolean checkAmmoCollision(double x, double y) {
+        if (y >= 400 && y <= 410) {
+            return true;
+        } else if (x >= 250 && x <= 550) {
+            double x0 = 400;
+            double y0 = 450;
+            double a = 150;
+            double b = 100;
+            double outerBound = y0 - (b / a * Math.sqrt(Math.pow(a, 2) - Math.pow((x - x0), 2)));
+            double innerBound = y0 - ((b - 10) / (a - 10) * Math.sqrt(Math.pow((a - 10), 2) - Math.pow((x - x0), 2)));
+            if (y >= outerBound && y <= innerBound) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Method for reseting players' aim to default values.
      */
