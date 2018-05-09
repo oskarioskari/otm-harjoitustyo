@@ -216,7 +216,7 @@ public class GameStatus {
 
     public void randomWind() {
         int direction = random.nextInt(2);
-        double newWind = random.nextDouble() * 0.15;
+        double newWind = random.nextDouble() * 0.25;
         if (direction == 0) {
             this.wind.setX(newWind);
         } else {
