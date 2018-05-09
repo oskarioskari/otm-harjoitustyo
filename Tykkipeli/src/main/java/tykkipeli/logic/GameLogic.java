@@ -219,8 +219,8 @@ public class GameLogic {
             // Barrel shouldn't be pointing back or underground
             if (p.getPlayerCannon().getCannonAngle() > (Math.PI / 2)) {
                 p.getPlayerCannon().setCannonAngle(Math.PI / 2);
-            } else if (p.getPlayerCannon().getCannonAngle() < 0) {
-                p.getPlayerCannon().setCannonAngle(0);
+            } else if (p.getPlayerCannon().getCannonAngle() < 0.00007) {
+                p.getPlayerCannon().setCannonAngle(0.00007);
             }
             // Shooting power should be reasonable and not negative
             if (p.getPlayerCannon().getCannonPower() > 50) {
