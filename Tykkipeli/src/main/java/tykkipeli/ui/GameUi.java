@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import tykkipeli.ui.uihelpers.uiDraw;
 import tykkipeli.ui.uihelpers.uiText;
@@ -221,7 +222,7 @@ public class GameUi extends Application {
         ImageView cannonRight = new ImageView(cannonImage);
         ImageView barrelLeft = new ImageView(barrelImage);
         ImageView barrelRight = new ImageView(barrelImage);
-        // Pack pictures into list:
+        // Pack cannon elements into list:
         List<ImageView> imageList = new ArrayList<>();
         imageList.add(cannonLeft);
         imageList.add(cannonRight);
@@ -270,18 +271,14 @@ public class GameUi extends Application {
                 }
                 gameLogic.moveAmmo();
                 // If player0 ammo hits ground:
-                if (y0 > 400) {
-                    if (y0 < 410) {
-                        gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
-                    }
+                if (gameLogic.checkAmmoCollision(x0, y0)) {
+                    gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
                     gameLogic.checkIfHit(x0, PLAYER1, player1.getPlayerCannon().getLocation(), gameStatus);
                     gameStatus.setWaitOver(PLAYER0, true);
                 }
                 // If player1 ammo hits ground:
-                if (y1 > 400) {
-                    if (y1 < 410) {
-                        gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
-                    }
+                if (gameLogic.checkAmmoCollision(x1, y1)) {
+                    gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
                     gameLogic.checkIfHit(x1, PLAYER0, player0.getPlayerCannon().getLocation(), gameStatus);
                     gameStatus.setWaitOver(PLAYER1, true);
                 }
