@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
+import tykkipeli.logic.GameLogic;
 import tykkipeli.logic.GameStatus;
 import tykkipeli.objects.Player;
 
@@ -107,12 +108,12 @@ public class uiDraw {
         }
     }
 
-    public void drawWinText() {
+    public void drawWinText(GameLogic gameLogic) {
         gc.setFill(Color.BLACK);
         if (gameStatus.getPlayer(PLAYER0).getHealth() <= 0) {
-            gc.fillText(text.getWinText(PLAYER1), 300, 200);
+            gc.fillText(text.getWinText(PLAYER1, gameLogic), 300, 200);
         } else {
-            gc.fillText(text.getWinText(PLAYER0), 300, 200);
+            gc.fillText(text.getWinText(PLAYER0, gameLogic), 300, 200);
         }
     }
 
