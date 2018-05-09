@@ -20,9 +20,9 @@ public class uiDraw {
     static final int PLAYING_PHASE = 0;
     static final int FIRING_PHASE = 1;
     static final int GAMEOVER = 2;
-    private GraphicsContext gc;
-    private GameStatus gameStatus;
-    private uiText text;
+    private final GraphicsContext gc;
+    private final GameStatus gameStatus;
+    private final uiText text;
 
     public uiDraw(GraphicsContext gc, GameStatus gameStatus, uiText text) {
         this.gc = gc;
