@@ -303,7 +303,7 @@ public class GameUi extends Application {
                 } else if (gameStatus.getPhase() == GAMEOVER) {
                     if (keypressed.getCode().toString().equals("ENTER")) {
                         gameStatus.startNewGame();
-                    } else if (keypressed.getCode().toString().equals("H") && !player1.getPlayerHumanStatus()) {
+                    } else if (keypressed.getCode().toString().equals("S") && !player1.getPlayerHumanStatus()) {
                         saveScore(gameStatus.getPlayerScore(PLAYER0), gameLogic);
                     }
                 }
