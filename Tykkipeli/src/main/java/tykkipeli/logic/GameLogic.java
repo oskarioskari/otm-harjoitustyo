@@ -71,20 +71,20 @@ public class GameLogic {
         if (keycode.equals("ENTER")) {
             keycodeEnter(gameStatus.getTurn());
         } else if (keycode.equals("UP")) {
-            cannon.increaseCannonAngle(0.005);
+            cannon.increaseCannonAngle(0.0087);
         } else if (keycode.equals("DOWN")) {
-            cannon.increaseCannonAngle(-0.005);
+            cannon.increaseCannonAngle(-0.0087);
         } else if (keycode.equals("LEFT")) {
             if (gameStatus.getTurn() == 0) {
-                cannon.increaseCannonPower(-0.25);
+                cannon.increaseCannonPower(-0.50);
             } else {
-                cannon.increaseCannonPower(0.25);
+                cannon.increaseCannonPower(0.50);
             }
         } else if (keycode.equals("RIGHT")) {
             if (gameStatus.getTurn() == 0) {
-                cannon.increaseCannonPower(0.25);
+                cannon.increaseCannonPower(0.50);
             } else {
-                cannon.increaseCannonPower(-0.25);
+                cannon.increaseCannonPower(-0.50);
             }
         } else if (keycode.equals("DIGIT1")) {
             gameStatus.setSelectedWeapon(gameStatus.getTurn(), 0);
@@ -237,8 +237,22 @@ public class GameLogic {
     public void resetAim() {
         for (Player p : gameStatus.getPlayerList()) {
             p.getPlayerCannon().setCannonAngle(Math.PI / 4);
-            p.getPlayerCannon().setCannonPower(10);
+            p.getPlayerCannon().setCannonPower(20);
         }
+    }
+
+    /**
+     * Method for calculating final score for player0 when game is played
+     * against AI. After method player0's score is same as final score.
+     *
+     * @return Score of player0
+     */
+    public int calculateFinalScore() {
+        int score = 0;
+        score += gameStatus.getPlayerScore(PLAYER0);
+        score += (int) ((1.0 * gameStatus.getPlayer(PLAYER0).getHealth()) / 10.0);
+        gameStatus.setScore(PLAYER0, score);
+        return score;
     }
 
     /**
