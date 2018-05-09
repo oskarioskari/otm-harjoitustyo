@@ -17,5 +17,7 @@ Päivä | Käytetty aika | Selite
 24.4  | 5             | Lisätty mahdollisuus voittaa peli. Siirretty GraphicObjectista periytyvät luokat pakettiin tykkipeli.physicobjects. Korjattu ammustyypin vaihtaminen. Suuri määrä pienempiä parannuksia/korjauksia.
 29.4  | 7             | Lisätty peliin ilmanvastus sekä satunnaisesti muuttuva tuuli. Siistitty GameUi luokkaa. Lisätty "HighScoresDao". Lisätty mahdollisuus tallentaa pisteet tekoälyä vastaan pelatun pelin jälkeen ja päävalikkoon lisätty osio "High Scores".
 05.5  | 5             | Kirjoitettu testejä ja tehty alustava arkkitehtuurikuvaus. Tehty runsaasti pienempiä korjauksia sovellukseen.
+08.05 | 4             | Luotu uihelper-paketti ja luokat uiText ja uiDraw. Siistitty GameUi luokkaa rankalla kädellä. Useita pienempiä muutoksia.
+09.05 | 6             | Jatkettu GameUi luokan siistimistä. Siistitty pelin graafista ilmettä. Lisätty uusia tekoälyvastustajia. Suuri määrä bugikorjauksia sekä pieniä parannuksia. Kirjoitettu lisää testejä.
 
-Summa: 48 tuntia
+Summa: 58 tuntia
