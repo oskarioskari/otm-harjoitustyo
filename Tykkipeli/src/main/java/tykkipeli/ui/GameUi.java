@@ -241,7 +241,7 @@ public class GameUi extends Application {
         double spf = 0.033; // How many seconds one frame is being shown (0.017 ~ 60 fps, 0.033 ~ 30 fps)
 
         KeyFrame kf = new KeyFrame(Duration.seconds(spf), (ActionEvent event) -> {
-            gameLogic.checkPlayerParameters();
+            gameLogic.checkGameParameters();
 
             draw.drawBackground();
             draw.drawCannons(imageList);
@@ -255,32 +255,23 @@ public class GameUi extends Application {
             draw.drawHelpText();
             draw.drawWindMeter();
 
-            // Check if game is in "phase == 1" mode and act accordingly:
             if (gameStatus.getPhase() == FIRING_PHASE) {
-                // Draw player0 ammo
-                double x0 = gameStatus.getPlayerWeapon(PLAYER0).getLocation().getX();
-                double y0 = gameStatus.getPlayerWeapon(PLAYER0).getLocation().getY();
-                if (!gameStatus.getWaitOver(PLAYER0)) {
-                    gc.drawImage(bulletImage, x0, y0);
-                }
-                // Draw player1 ammo
-                double x1 = gameStatus.getPlayerWeapon(PLAYER1).getLocation().getX();
-                double y1 = gameStatus.getPlayerWeapon(PLAYER1).getLocation().getY();
-                if (!gameStatus.getWaitOver(PLAYER1)) {
-                    gc.drawImage(bulletImage, x1, y1);
-                }
                 gameLogic.moveAmmo();
-                // If player0 ammo hits ground:
-                if (gameLogic.checkAmmoCollision(x0, y0)) {
-                    gc.drawImage(explosionImage01, x0 - 25, y0 - 25);
-                    gameLogic.checkIfHit(x0, PLAYER1, player1.getPlayerCannon().getLocation(), gameStatus);
-                    gameStatus.setWaitOver(PLAYER0, true);
-                }
-                // If player1 ammo hits ground:
-                if (gameLogic.checkAmmoCollision(x1, y1)) {
-                    gc.drawImage(explosionImage01, x1 - 25, y1 - 25);
-                    gameLogic.checkIfHit(x1, PLAYER0, player0.getPlayerCannon().getLocation(), gameStatus);
-                    gameStatus.setWaitOver(PLAYER1, true);
+                for (Player p : gameStatus.getPlayerList()) {
+                    double ax = gameStatus.getPlayerWeapon(p.getPlayerNum()).getLocation().getX();
+                    double ay = gameStatus.getPlayerWeapon(p.getPlayerNum()).getLocation().getY();
+                    if (!gameStatus.getWaitOver(p.getPlayerNum())) {
+                        gc.drawImage(bulletImage, ax, ay);
+                    }
+                    if (gameLogic.checkAmmoCollision(ax, ay)) {
+                        gc.drawImage(explosionImage01, ax - 25, ay - 25);
+                        if (p.getPlayerNum() == PLAYER0) {
+                            gameLogic.checkIfHit(ax, PLAYER1, player1.getPlayerCannon().getLocation(), gameStatus);
+                        } else {
+                            gameLogic.checkIfHit(ax, PLAYER0, player0.getPlayerCannon().getLocation(), gameStatus);
+                        }
+                        gameStatus.setWaitOver(p.getPlayerNum(), true);
+                    }
                 }
                 gameLogic.checkIfWaitOver();
                 gameLogic.resetAim();
@@ -301,7 +292,7 @@ public class GameUi extends Application {
                     if (keypressed.getCode().toString().equals("ENTER")) {
                         gameStatus.startNewGame();
                     } else if (keypressed.getCode().toString().equals("S") && !player1.getPlayerHumanStatus()) {
-                        saveScore(gameStatus.getPlayerScore(PLAYER0), gameLogic);
+                        saveScore(gameStatus.getFinalScore(), gameLogic);
                     }
                 }
             });
@@ -337,5 +328,21 @@ public class GameUi extends Application {
         });
 
         stage.show();
+    }
+
+    public void collisionDebugMonster(GraphicsContext gc) {
+        int xx = 0;
+        int yy = 0;
+        while (xx < 800) {
+            yy = 0;
+            while (yy < 500) {
+                if (gameLogic.checkAmmoCollision(xx, yy)) {
+                    gc.setFill(Color.RED);
+                    gc.fillRect(xx, yy, 1, 1);
+                }
+                yy++;
+            }
+            xx++;
+        }
     }
 }
