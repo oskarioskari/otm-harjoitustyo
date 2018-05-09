@@ -4,19 +4,13 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import tykkipeli.physicobjects.BasicShell;
-import tykkipeli.physicobjects.Cannon;
-import tykkipeli.objects.Player;
-import tykkipeli.objects.Vector;
 import tykkipeli.physicobjects.Ammo;
-import tykkipeli.physicobjects.LargeShell;
 
 public class GameLogicTest {
 
@@ -59,7 +53,7 @@ public class GameLogicTest {
     @Test
     public void upKeyPressedPlayerZeroChangesAngle() {
         gameLogic.keyPressed("UP");
-        double cmp = Math.PI / 4 + 0.005;
+        double cmp = Math.PI / 4 + 0.0087;
         double ret = gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle();
         assertEquals(cmp, ret, 0.0001);
     }
@@ -68,7 +62,7 @@ public class GameLogicTest {
     public void upKeyPressedPlayerOneChangesAngle() {
         gameStatus.setTurn(1);
         gameLogic.keyPressed("UP");
-        double cmp = Math.PI / 4 + 0.005;
+        double cmp = Math.PI / 4 + 0.0087;
         double ret = gameStatus.getPlayer(1).getPlayerCannon().getCannonAngle();
         assertEquals(cmp, ret, 0.0001);
     }
@@ -76,7 +70,7 @@ public class GameLogicTest {
     @Test
     public void downKeyPressedPlayerZeroChangesAngle() {
         gameLogic.keyPressed("DOWN");
-        double cmp = Math.PI / 4 - 0.005;
+        double cmp = Math.PI / 4 - 0.0087;
         double ret = gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle();
         assertEquals(cmp, ret, 0.0001);
     }
@@ -85,7 +79,7 @@ public class GameLogicTest {
     public void downKeyPressedPlayerOneChangesAngle() {
         gameStatus.setTurn(1);
         gameLogic.keyPressed("DOWN");
-        double cmp = Math.PI / 4 - 0.005;
+        double cmp = Math.PI / 4 - 0.0087;
         double ret = gameStatus.getPlayer(1).getPlayerCannon().getCannonAngle();
         assertEquals(cmp, ret, 0.0001);
     }
@@ -93,7 +87,7 @@ public class GameLogicTest {
     @Test
     public void rightKeyPressedPlayerZeroChangesPower() {
         gameLogic.keyPressed("RIGHT");
-        double cmp = 10.25;
+        double cmp = 20.50;
         double ret = gameStatus.getPlayer(0).getPlayerCannon().getCannonPower();
         assertEquals(cmp, ret, 0.001);
     }
@@ -102,7 +96,7 @@ public class GameLogicTest {
     public void rightKeyPressedPlayerOneChangesPower() {
         gameStatus.setTurn(1);
         gameLogic.keyPressed("RIGHT");
-        double cmp = 9.75;
+        double cmp = 19.50;
         double ret = gameStatus.getPlayer(1).getPlayerCannon().getCannonPower();
         assertEquals(cmp, ret, 0.001);
     }
@@ -110,7 +104,7 @@ public class GameLogicTest {
     @Test
     public void leftKeyPressedPlayerZeroChangesPower() {
         gameLogic.keyPressed("LEFT");
-        double cmp = 9.75;
+        double cmp = 19.50;
         double ret = gameStatus.getPlayer(0).getPlayerCannon().getCannonPower();
         assertEquals(cmp, ret, 0.001);
     }
@@ -119,7 +113,7 @@ public class GameLogicTest {
     public void leftKeyPressedPlayerOneChangesPower() {
         gameStatus.setTurn(1);
         gameLogic.keyPressed("LEFT");
-        double cmp = 10.25;
+        double cmp = 20.50;
         double ret = gameStatus.getPlayer(1).getPlayerCannon().getCannonPower();
         assertEquals(cmp, ret, 0.001);
     }
@@ -168,7 +162,7 @@ public class GameLogicTest {
     public void checkPlayerParametersDefaultSituation() {
         gameLogic.checkPlayerParameters();
         double expAngle = Math.PI / 4;
-        double expPower = 10;
+        double expPower = 20;
         assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
         assertEquals(expPower, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(), 0.00001);
     }
@@ -189,10 +183,10 @@ public class GameLogicTest {
         gameStatus.getPlayer(0).getPlayerCannon().setCannonAngle(-Math.PI / 4);
         gameStatus.getPlayer(0).getPlayerCannon().setCannonPower(10000);
         gameLogic.checkPlayerParameters();
-        double expAngle = 0;
+        double expAngle = 0.00007;
         double expPower = 50;
-        assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.00001);
-        assertEquals(expPower, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(), 0.00001);
+        assertEquals(expAngle, gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle(), 0.0000001);
+        assertEquals(expPower, gameStatus.getPlayer(0).getPlayerCannon().getCannonPower(), 0.0000001);
     }
 
     // GetGameAi
