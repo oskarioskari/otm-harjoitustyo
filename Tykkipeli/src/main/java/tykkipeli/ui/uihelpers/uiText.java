@@ -51,7 +51,6 @@ public class uiText {
         }
         ret += "Score: " + gameStatus.getPlayerScore(player) + "\n"
                 + "Angle: " + String.format("%.2f", Math.toDegrees(gameStatus.getPlayer(player).getPlayerCannon().getCannonAngle())) + "\n"
-                + "Power: " + gameStatus.getPlayer(player).getPlayerCannon().getCannonPower() + "\n"
                 + "Weapon: " + (gameStatus.getSelectedWeaponNumber(player) + 1);
         return ret;
     }
@@ -65,11 +64,13 @@ public class uiText {
     }
 
     public String getWinText(int player) {
-        return "!!! PLAYER " + (player + 1) + " WINS !!!" + "\n"
+        String ret = "!!! PLAYER " + (player + 1) + " WINS !!!" + "\n"
                 + "Press ENTER to play again" + "\n"
-                + "\n"
-                + "If you played against computer, you can save" + "\n"
-                + "your score by pressing 'H'";
+                + "\n";
+        if (!gameStatus.getPlayer(PLAYER1).getPlayerHumanStatus()) {
+            ret += "Press S to save score!";
+        }
+        return ret;
     }
 
 }
