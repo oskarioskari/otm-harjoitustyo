@@ -232,6 +232,16 @@ public class GameLogic {
     }
 
     /**
+     * Method for reseting players' aim to default values.
+     */
+    public void resetAim() {
+        for (Player p : gameStatus.getPlayerList()) {
+            p.getPlayerCannon().setCannonAngle(Math.PI / 4);
+            p.getPlayerCannon().setCannonPower(10);
+        }
+    }
+
+    /**
      * Get current HighScoreDao.
      *
      * @return HighScoreDao
