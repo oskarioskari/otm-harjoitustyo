@@ -244,7 +244,7 @@ public class GameLogic {
             if (y >= outerBound && y <= innerBound) {
                 return true;
             }
-        } else if (y > 500) {
+        } else if (y > 550) {
             return true;
         } else if (x < -100 || x > 900) {
             return true;
