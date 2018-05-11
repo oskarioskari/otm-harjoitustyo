@@ -27,9 +27,9 @@ Jokainen näkymä on totetutettu omana Stage-olionaan, eli ne avataan eri ruutui
 ### Fysiikkamallinnus
 Pelissä ammusten lentoradat lasketaan reaaliajassa käyttäen hyväksi Velocity Verlet -algoritmia. Pelissä käytetään algoritmin lyhyempää versiota, jossa ei käytetä puoliaskeleen nopeutta.
 Algoritmi etenee karkeasti seuraavalla tavalla:
-l. Laske kappaleen sijainti ajan &#916 t kuluttua käyttäen nykyistä nopeutta ja kiihtyvyyttä.
-l. Laske kappaleen uusi kokonaiskiihtyvyys uudessa sijainnissa.
-l. Laske kappaleen uusi nopeus käyttäen sekä vanhaa että uutta kokonaiskiihtyvyyttä.
+1. Laske kappaleen sijainti ajan &#916;t kuluttua käyttäen nykyistä nopeutta ja kiihtyvyyttä.
+2. Laske kappaleen uusi kokonaiskiihtyvyys uudessa sijainnissa.
+3. Laske kappaleen uusi nopeus käyttäen sekä vanhaa että uutta kokonaiskiihtyvyyttä.
 Yksityiskohtainen kuvaus algoritmin toiminnasta löytyy [Wikipediasta](https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet)
 
 Sekvenssikaavio tilanteesta, jossa ammusta liikutetaan yksi askel:\
