@@ -31,7 +31,7 @@ Algoritmi etenee karkeasti seuraavalla tavalla:
 2. Laske kappaleen uusi kokonaiskiihtyvyys uudessa sijainnissa.
 3. Laske kappaleen uusi nopeus käyttäen sekä vanhaa että uutta kokonaiskiihtyvyyttä.
 
-Yksityiskohtainen kuvaus algoritmin toiminnasta löytyy [Wikipediasta](https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet)
+Yksityiskohtainen kuvaus algoritmin toiminnasta löytyy [Wikipediasta](https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet).
 
 Sekvenssikaavio tilanteesta, jossa ammusta liikutetaan yksi askel:\
 <img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio-moveAmmo.png" width="732">
