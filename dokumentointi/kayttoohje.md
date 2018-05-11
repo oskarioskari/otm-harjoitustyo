@@ -11,7 +11,7 @@ Ohjelma olettaa, että sen käynnistyshakemistossa on hakemisto *res/pictures* j
 
 Ohjelma käynnistetään komennolla
 ```
-java -jar tykkipeli.jar
+java -jar Tykkipeli-1.0.jar
 ```
 
 ## Pelaaminen
