@@ -35,3 +35,23 @@ Yksityiskohtainen kuvaus algoritmin toiminnasta löytyy [Wikipediasta](https://e
 
 Sekvenssikaavio tilanteesta, jossa ammusta liikutetaan yksi askel:\
 <img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio-moveAmmo_new.png" width="732">
+
+### Tietojen pysyväistallennus
+Pakkauksen *tykkipeli.dao* luokka *HighScoresDao* vastaa tietojen pysyväistallennuksesta. Luokka käyttää *sqlite-jdbc* pakettia. Pelissä pysyvästi tallennetaan pelaajien saavuttamia huippupisteitä ja niihin liittyviä nimimerkkejä.
+
+Tiedot tallennetaan hakemistossa *res/* sijaitsevaan tiedostoon *highscores.db*. Kyseinen tiedosto sisältää SQL-tietokannan, jossa on kolme tietokantataulua:
+* scoresEasy
+* scoresNormal
+* scoresHard
+
+Kaikki tietokantataulut sisältävät kaksi saraketta:
+* id - Pelaajan nimimerkki (merkkijono)
+* score - Pelaajan saavuttama pistemäärä (kokonaisluku)
+
+## Ohjelman rakenteeseen jääneet heikkoudet
+### Käyttöliittymä
+* Pelissä eri päänäkymät avataan aina omiin ikkunoihinsa, jolloin päävalikko jää taustalle auki, kun peli alkaa. Tämä mahdollistaa ei haluttujan toimintoja, kuten esimerkiksi tekoälyn vaikeusasteen vaihtamisen kesken pelin.
+* Pelinäkymän sulkeminen ei sulje itse peliä, vaan valitsemalla päävalikosta "Start Game" peli jatkaa tilanteesta johon oltiin jääty.
+
+### Sovelluslogiikka
+* GameLogic luokka jäi melko laajaksi ja monia sen toimintoja olisi voinut mahdollisesti jakaa useammalle luokalle.
