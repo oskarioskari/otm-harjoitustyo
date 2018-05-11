@@ -29,10 +29,11 @@ Sovelluksessa on kaksi eri näkymää: *päävalikkonäkymä* ja *pelinäkymä*.
 
 ## Perusversion tarjoama toiminnallisuus
 
-* Peliä voi pelata 1v1 tilassa, ihminen ihmistä vastaan.
-* Yksinkertainen tekoälyvastustaja, jota vastaan harjoitella.
-* Pelissä on käytettävissä kaksi keskenään erilaista asetta.
-* Pelin perusversiossa on yksi pelattava kartta.
+* Peliä voi pelata 1v1 tilassa, ihminen ihmistä vastaan
+* Peliä voi pelata yksin tietokonetta vastaan
+* Pelissä on kolme eritasoista tekoälyvastustajaa, joista voi valita haluamansa
+* Pelissä on käytettävissä kaksi keskenään erilaista asetta
+* Pelin perusversiossa on yksi pelattava kartta
 * Huippupisteet-tietokanta (paikallinen)
 
 
@@ -40,9 +41,10 @@ Sovelluksessa on kaksi eri näkymää: *päävalikkonäkymä* ja *pelinäkymä*.
 
 Perusversion jälkeen peliä tullaan laajentamaan ajan salliessa seuraavasti:
 
-* Älykäs tekoälyvastustaja.
-* Useampia pelattavia karttoja.
-* Useampia erilaisia aseita.
-* Kartan maan tuhoutuminen.
-* Ennen peliä satunnaisesti generoitava kartta.
-* Mahdollisuus lähettää huippupisteet verkossa olevalle listalle.
+* Oppiva tekoälyvastustaja
+* Useampia pelattavia karttoja
+* Useampia erilaisia aseita
+* Taustamusiikki ja ääniefektit
+* Kartan maan tuhoutuminen
+* Ennen peliä satunnaisesti generoitava kartta
+* Mahdollisuus lähettää huippupisteet verkossa olevalle listalle
