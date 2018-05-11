@@ -10,6 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tykkipeli.objects.Vector;
 import tykkipeli.physicobjects.Ammo;
 
 public class GameLogicTest {
@@ -287,4 +288,115 @@ public class GameLogicTest {
         assertTrue(gameLogic.checkAmmoCollision(0, 600));
     }
 
+    // checkIfHit
+    @Test
+    public void PlayerZeroCannonCanBeHit() {
+        Vector location = gameStatus.getPlayer(0).getPlayerCannon().getLocation();
+        location.setComponents(1, 1);
+        gameStatus.getPlayer(0).setHealth(10);
+        gameLogic.checkIfHit(1, 0, location, gameStatus);
+        int ret = gameStatus.getPlayer(0).getHealth();
+        assertEquals(0, ret);
+    }
+
+    @Test
+    public void PlayerOneCannonCanBeHit() {
+        Vector location = gameStatus.getPlayer(1).getPlayerCannon().getLocation();
+        location.setComponents(1, 1);
+        gameStatus.getPlayer(1).setHealth(10);
+        gameLogic.checkIfHit(1, 1, location, gameStatus);
+        int ret = gameStatus.getPlayer(1).getHealth();
+        assertEquals(0, ret);
+    }
+
+    @Test
+    public void PlayerZeroCannonCannotBeHitAfterWaitOver() {
+        Vector location = gameStatus.getPlayer(0).getPlayerCannon().getLocation();
+        location.setComponents(1, 1);
+        gameStatus.getPlayer(0).setHealth(10);
+        gameStatus.setWaitOver(1, true);
+        gameLogic.checkIfHit(1, 0, location, gameStatus);
+        int ret = gameStatus.getPlayer(0).getHealth();
+        assertEquals(10, ret);
+    }
+
+    @Test
+    public void PlayerOneCannonCannotBeHitAfterWaitOver() {
+        Vector location = gameStatus.getPlayer(1).getPlayerCannon().getLocation();
+        location.setComponents(1, 1);
+        gameStatus.getPlayer(1).setHealth(10);
+        gameStatus.setWaitOver(0, true);
+        gameLogic.checkIfHit(1, 1, location, gameStatus);
+        int ret = gameStatus.getPlayer(1).getHealth();
+        assertEquals(10, ret);
+    }
+
+    @Test
+    public void PlayerZeroHealthDoesntChangeWhenNotHit() {
+        Vector location = gameStatus.getPlayer(0).getPlayerCannon().getLocation();
+        location.setComponents(1, 1);
+        gameStatus.getPlayer(0).setHealth(10);
+        gameLogic.checkIfHit(72, 0, location, gameStatus);
+        int ret = gameStatus.getPlayer(0).getHealth();
+        assertEquals(10, ret);
+    }
+
+    @Test
+    public void PlayerOneHealthDoesntChangeWhenNotHit() {
+        Vector location = gameStatus.getPlayer(1).getPlayerCannon().getLocation();
+        location.setComponents(1, 1);
+        gameStatus.getPlayer(1).setHealth(10);
+        gameLogic.checkIfHit(69, 1, location, gameStatus);
+        int ret = gameStatus.getPlayer(1).getHealth();
+        assertEquals(10, ret);
+    }
+
+    // calculateFinalScore
+    @Test
+    public void finalScoreIsRight() {
+        gameStatus.setScore(0, 10);
+        gameStatus.getPlayer(0).setHealth(50);
+        int ret = gameLogic.calculateFinalScore();
+        assertEquals(15, ret);
+    }
+
+    // resetAim
+    @Test
+    public void valuesRightAfterAimReset() {
+        gameStatus.getPlayer(0).getPlayerCannon().setCannonAngle(Math.PI / 5);
+        gameStatus.getPlayer(0).getPlayerCannon().setCannonPower(40);
+        gameLogic.resetAim();
+        double angle = gameStatus.getPlayer(0).getPlayerCannon().getCannonAngle();
+        double power = gameStatus.getPlayer(0).getPlayerCannon().getCannonPower();
+        assertEquals(Math.PI / 4, angle, 0.000001);
+        assertEquals(20, power, 0.000001);
+    }
+
+    // checkIfWaitOver
+    @Test
+    public void gameContinuesWhenWaitOverForBothPlayers() {
+        gameStatus.setPhase(1);
+        gameStatus.setWaitOver(0, true);
+        gameStatus.setWaitOver(1, true);
+        gameLogic.checkIfWaitOver();
+        assertEquals(0, gameStatus.getPhase());
+    }
+
+    @Test
+    public void waitingContinuesIfPlayerZeroIsStillWaiting() {
+        gameStatus.setPhase(1);
+        gameStatus.setWaitOver(0, false);
+        gameStatus.setWaitOver(1, true);
+        gameLogic.checkIfWaitOver();
+        assertEquals(1, gameStatus.getPhase());
+    }
+
+    @Test
+    public void waitingContinuesIfPlayerOneIsStillWaiting() {
+        gameStatus.setPhase(1);
+        gameStatus.setWaitOver(0, true);
+        gameStatus.setWaitOver(1, false);
+        gameLogic.checkIfWaitOver();
+        assertEquals(1, gameStatus.getPhase());
+    }
 }

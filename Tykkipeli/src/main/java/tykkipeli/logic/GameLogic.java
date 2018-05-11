@@ -176,7 +176,8 @@ public class GameLogic {
     }
 
     /**
-     * Method to check if ammo has hit player.
+     * Method to check if ammo has hit player. Hit will be registered only if
+     * it's first time ammo collides with any hitbox.
      *
      * @param x Ammo's x-coordinate where it hit ground
      * @param targetedPlayer Targeted player's number
