@@ -8,7 +8,7 @@ import tykkipeli.objects.Player;
 import tykkipeli.objects.Vector;
 
 /**
- * Class for main game logic.
+ * Class for game logic.
  *
  * @author oskari
  */
@@ -189,13 +189,15 @@ public class GameLogic {
                     && x <= targetedLocation.getX() + 70
                     && !gameStatus.getWaitOver(PLAYER1)) {
                 gameStatus.addPoint(PLAYER1);
-                gameStatus.subtractHealth(PLAYER0, (int) gameStatus.getPlayerWeapon(PLAYER1).getDamage());
+                gameStatus.subtractHealth(PLAYER0,
+                        (int) gameStatus.getPlayerWeapon(PLAYER1).getDamage());
             }
         } else if (x >= targetedLocation.getX() - 23
                 && x <= targetedLocation.getX() + 67
                 && !gameStatus.getWaitOver(PLAYER0)) {
             gameStatus.addPoint(PLAYER0);
-            gameStatus.subtractHealth(PLAYER1, (int) gameStatus.getPlayerWeapon(PLAYER0).getDamage());
+            gameStatus.subtractHealth(PLAYER1,
+                    (int) gameStatus.getPlayerWeapon(PLAYER0).getDamage());
         }
     }
 
@@ -231,6 +233,13 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Method for checking if ammo has hit the ground or is out of bounds.
+     *
+     * @param x Ammo x coordinate
+     * @param y Ammo y coordinate
+     * @return true if there is collision, false if not
+     */
     public boolean checkAmmoCollision(double x, double y) {
         if (y >= 400 && y <= 415) {
             return true;
@@ -239,8 +248,10 @@ public class GameLogic {
             double y0 = 450;
             double a = 150;
             double b = 100;
-            double outerBound = y0 - (b / a * Math.sqrt(Math.pow(a, 2) - Math.pow((x - x0), 2)));
-            double innerBound = y0 - ((b - 10) / (a - 10) * Math.sqrt(Math.pow((a - 10), 2) - Math.pow((x - x0), 2)));
+            double outerBound = y0 - (b / a * Math.sqrt(Math.pow(a, 2)
+                    - Math.pow((x - x0), 2)));
+            double innerBound = y0 - ((b - 10) / (a - 10)
+                    * Math.sqrt(Math.pow((a - 10), 2) - Math.pow((x - x0), 2)));
             if (y >= outerBound && y <= innerBound) {
                 return true;
             }
