@@ -34,7 +34,7 @@ Tähtäysvaiheessa kumpikin pelaaja tähtää vuorollaan tykillään kohti toist
 
 Ampumisvaiheessa tykit ampuvat kohti toisiaan pelaajien tekemien tähtäämisten mukaisesti. Ampumisvaihe päättyy, kun molempien pelaajien ampumat ammukset ovat osuneet joko maahan tai toiseen pelaajaan.
 
-Pelissä pelaaja 1 on aina vasemmalla ja pelaaja 2 (tai tietokoneen ohjaama pelaaja) on oikealla.
+Pelissä pelaaja 1 on aina vasemmalla ja pelaaja 2 (tai tietokoneen ohjaama pelaaja) on oikealla. Kummallakin pelaajalla on "elämää" 100 pisteen verran.
 
 Pelissä on valittavana kaksi erilaista ammustyyppiä:\
 Ammus 1: Osuessaan tuottaa vahinkoa 10 pisteen verran.
@@ -50,3 +50,7 @@ Valitse ammus 1: Numeronäppäin 1
 Valitse ammus 2: Numeronäppäin 2
 
 Pelatessasi tietokonetta vastaan, voit tallentaa saavuttamasi pistemäärän pelin päätyttyä painamalla näppäintä "S". Pisteiden tallennuksen yhteydessä pelin kysyy nimimerkkiä, jolla haluat tallentaa pisteet.
+
+Pisteiden lasku tapahtuu seuraavalla tavalla:
+* Pelaaja saa yhden pisteen jokaista 10 jäljelle jäänyttä elämäpistettä kohti.
+* Pelaaja saa yhden pisteen jokaisesta vastustajaan osumasta ammuksesta.
