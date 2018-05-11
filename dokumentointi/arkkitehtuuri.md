@@ -30,6 +30,7 @@ Algoritmi etenee karkeasti seuraavalla tavalla:
 1. Laske kappaleen sijainti ajan &#916;t kuluttua käyttäen nykyistä nopeutta ja kiihtyvyyttä.
 2. Laske kappaleen uusi kokonaiskiihtyvyys uudessa sijainnissa.
 3. Laske kappaleen uusi nopeus käyttäen sekä vanhaa että uutta kokonaiskiihtyvyyttä.
+
 Yksityiskohtainen kuvaus algoritmin toiminnasta löytyy [Wikipediasta](https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet)
 
 Sekvenssikaavio tilanteesta, jossa ammusta liikutetaan yksi askel:\
