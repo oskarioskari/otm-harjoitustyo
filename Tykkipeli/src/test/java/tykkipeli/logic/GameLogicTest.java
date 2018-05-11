@@ -27,7 +27,8 @@ public class GameLogicTest {
         try {
             Files.deleteIfExists(path);
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.out.println("Error while deleting testdatabase:");
+            System.out.println(ex.getMessage());
         }
     }
 
