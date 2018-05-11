@@ -25,9 +25,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import tykkipeli.ui.uihelpers.uiDraw;
-import tykkipeli.ui.uihelpers.uiText;
+import tykkipeli.ui.uihelpers.UiDraw;
+import tykkipeli.ui.uihelpers.UiText;
 
+/**
+ * Main class of application. Handles drawing of menus and game screen.
+ *
+ * @author oskari
+ */
 public class GameUi extends Application {
 
     static final int PLAYER0 = 0;
@@ -37,16 +42,26 @@ public class GameUi extends Application {
     static final int GAMEOVER = 2;
     static GameStatus gameStatus;
     static GameLogic gameLogic;
-    static uiText text;
-    static uiDraw draw;
+    static UiText text;
+    static UiDraw draw;
 
+    /**
+     * Main method. Launches game.
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         gameStatus = new GameStatus();
         gameLogic = new GameLogic(gameStatus);
-        text = new uiText(gameStatus);
+        text = new UiText(gameStatus);
         launch(args);
     }
 
+    /**
+     * Start method. Draws main menu.
+     *
+     * @param stage Stage object
+     */
     @Override
     public void start(Stage stage) {
 
@@ -89,6 +104,12 @@ public class GameUi extends Application {
         });
     }
 
+    /**
+     * Method to draw menu for viewing high scores.
+     *
+     * @param stage Current stage
+     * @param mainMenu Scene to go back to
+     */
     public void highscoreScreen(Stage stage, Scene mainMenu) {
         Button easyTop3 = new Button("TOP 3 (Easy)");
         Button normTop3 = new Button("TOP 3 (Normal)");
@@ -124,6 +145,13 @@ public class GameUi extends Application {
         });
     }
 
+    /**
+     * Method for viewing top three scores on given list.
+     *
+     * @param stage Current Stage
+     * @param previous Scene to go back to
+     * @param scores List of best three scores
+     */
     public void topThreeScreen(Stage stage, Scene previous, List<String> scores) {
         Label label = new Label("High Scores:");
         Button back = new Button("Back");
@@ -150,6 +178,12 @@ public class GameUi extends Application {
         });
     }
 
+    /**
+     * Method for viewing settings menu.
+     *
+     * @param stage Current Stage
+     * @param mainMenu Scene to go back to
+     */
     public void settingsScreen(Stage stage, Scene mainMenu) {
         Label labelAI = new Label(text.getSettingsLabelAI());
         Label labelDif = new Label(text.getSettingsLabelDifficulty(gameLogic));
@@ -201,6 +235,9 @@ public class GameUi extends Application {
         stage.setScene(settingsMenu);
     }
 
+    /**
+     * Method for drawing game screen. Opens new window on top of the main menu.
+     */
     public void gameScreen() {    // This is where the magic happens
 
         Stage stage = new Stage();
@@ -232,7 +269,7 @@ public class GameUi extends Application {
         root.getChildren().addAll(canvas, barrelLeft, barrelRight, cannonLeft, cannonRight);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        draw = new uiDraw(gc, gameStatus, text);
+        draw = new UiDraw(gc, gameStatus, text);
 
         Timeline gameLoop = new Timeline();
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -247,13 +284,12 @@ public class GameUi extends Application {
             draw.drawCannons(imageList);
             draw.drawHealthBars();
             draw.drawPlayerInfo();
+            draw.drawHelpText();
+            draw.drawWindMeter();
 
             if (gameStatus.getPhase() == PLAYING_PHASE) {
                 draw.drawPowerBar();
             }
-
-            draw.drawHelpText();
-            draw.drawWindMeter();
 
             if (gameStatus.getPhase() == FIRING_PHASE) {
                 gameLogic.moveAmmo();
@@ -277,13 +313,11 @@ public class GameUi extends Application {
                 gameLogic.resetAim();
             }
 
-            // Check if either player has zero health:
             if (player0.getHealth() <= 0 || player1.getHealth() <= 0) {
                 draw.drawWinText(gameLogic);
                 gameStatus.setPhase(GAMEOVER);
             }
 
-            // Process keycommands:
             gameScene.setOnKeyPressed((KeyEvent keypressed) -> {
                 if (gameStatus.getPhase() == PLAYING_PHASE) {
                     String pressedKey = keypressed.getCode().toString();
@@ -306,6 +340,12 @@ public class GameUi extends Application {
         stage.show();
     }
 
+    /**
+     * Opens a new window if player chooses to save his/her score.
+     *
+     * @param score Score to save
+     * @param gameLogic GameLogic object
+     */
     public void saveScore(int score, GameLogic gameLogic) {
         Label label = new Label("Enter your name:");
         TextField field = new TextField();
@@ -330,7 +370,12 @@ public class GameUi extends Application {
         stage.show();
     }
 
-    public void collisionDebugMonster(GraphicsContext gc) {
+    /**
+     * Useful tool for showing hitboxes. Call this from inside keyframe.
+     *
+     * @param gc GraphicsContext
+     */
+    private void collisionDebugMonster(GraphicsContext gc) {
         int xx = 0;
         int yy = 0;
         while (xx < 800) {

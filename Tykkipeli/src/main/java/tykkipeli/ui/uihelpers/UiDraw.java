@@ -10,10 +10,11 @@ import tykkipeli.logic.GameStatus;
 import tykkipeli.objects.Player;
 
 /**
+ * Helper class used for drawing elements into game screen.
  *
  * @author oskari
  */
-public class uiDraw {
+public class UiDraw {
 
     static final int PLAYER0 = 0;
     static final int PLAYER1 = 1;
@@ -22,14 +23,24 @@ public class uiDraw {
     static final int GAMEOVER = 2;
     private final GraphicsContext gc;
     private final GameStatus gameStatus;
-    private final uiText text;
+    private final UiText text;
 
-    public uiDraw(GraphicsContext gc, GameStatus gameStatus, uiText text) {
+    /**
+     * Constructor for class UiDraw.
+     *
+     * @param gc GraphicsContext object
+     * @param gameStatus GameStatus object
+     * @param text uiText object
+     */
+    public UiDraw(GraphicsContext gc, GameStatus gameStatus, UiText text) {
         this.gc = gc;
         this.gameStatus = gameStatus;
         this.text = text;
     }
 
+    /**
+     * Draw background in game.
+     */
     public void drawBackground() {
         gc.setFill(Color.SKYBLUE);
         gc.fillRect(0, 0, 800, 500);
@@ -38,12 +49,22 @@ public class uiDraw {
         gc.fillOval(250, 350, 300, 200);
     }
 
+    /**
+     * Set rotation when drawing ratated objects. Rotates around point (x,y).
+     *
+     * @param angle Rotation angle
+     * @param x X coordinate
+     * @param y Y coordinate
+     */
     private void rotate(double angle, double x, double y) {
         Rotate rotate = new Rotate(angle, x, y);
         gc.setTransform(rotate.getMxx(), rotate.getMyx(), rotate.getMxy(),
                 rotate.getMyy(), rotate.getTx(), rotate.getTy());
     }
 
+    /**
+     * Draws power bar at the end of cannon barrel.
+     */
     public void drawPowerBar() {
         gc.save();
         double rotationAngle;
@@ -71,6 +92,9 @@ public class uiDraw {
         gc.restore();
     }
 
+    /**
+     * Draw health bars under players.
+     */
     public void drawHealthBars() {
         for (Player p : gameStatus.getPlayerList()) {
             gc.setFill(Color.RED);
@@ -80,6 +104,9 @@ public class uiDraw {
         }
     }
 
+    /**
+     * Draw text under players.
+     */
     public void drawPlayerInfo() {
         for (Player p : gameStatus.getPlayerList()) {
             gc.setFill(Color.BLACK);
@@ -87,6 +114,9 @@ public class uiDraw {
         }
     }
 
+    /**
+     * Draw text explaining turn/phase of the game.
+     */
     public void drawHelpText() {
         if (gameStatus.getTurn() == PLAYER0 && gameStatus.getPhase() == PLAYING_PHASE) {
             gc.fillText(text.getTurnText(PLAYER0, gameStatus), 325, 50);
@@ -97,6 +127,9 @@ public class uiDraw {
         }
     }
 
+    /**
+     * Draw bar showing wind speed and direction.
+     */
     public void drawWindMeter() {
         double wind = gameStatus.getWind() * 200;
         gc.fillText("Wind:", 380, 95);
@@ -109,6 +142,11 @@ public class uiDraw {
         }
     }
 
+    /**
+     * Draw text after game is over.
+     *
+     * @param gameLogic
+     */
     public void drawWinText(GameLogic gameLogic) {
         gc.setFill(Color.BLACK);
         if (gameStatus.getPlayer(PLAYER0).getHealth() <= 0) {
@@ -118,6 +156,11 @@ public class uiDraw {
         }
     }
 
+    /**
+     * Draw cannons using parts found from the list in parameter.
+     *
+     * @param cannonPartsList List of cannon parts.
+     */
     public void drawCannons(List<ImageView> cannonPartsList) {
         double leftX = gameStatus.getPlayer(0).getPlayerCannon().getLocation().getX();
         double leftY = gameStatus.getPlayer(0).getPlayerCannon().getLocation().getY();
