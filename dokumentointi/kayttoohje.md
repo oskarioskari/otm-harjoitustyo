@@ -36,7 +36,7 @@ Ampumisvaiheessa tykit ampuvat kohti toisiaan pelaajien tekemien tähtäämisten
 
 Pelissä pelaaja 1 on aina vasemmalla ja pelaaja 2 (tai tietokoneen ohjaama pelaaja) on oikealla. Kummallakin pelaajalla on "elämää" 100 pisteen verran.
 
-Pelissä on valittavana kaksi erilaista ammustyyppiä:\
+Pelissä on valittavana kaksi erilaista ammustyyppiä:
 * Ammus 1: Osuessaan tuottaa vahinkoa 10 pisteen verran.
 * Ammus 2: Osuessaan tuottaa vahinkoa 25 pisteen verran. Ammuksella on neljä kertaa suurempi ilmanvastuskerroin, kuin ammuksella 1.
 
