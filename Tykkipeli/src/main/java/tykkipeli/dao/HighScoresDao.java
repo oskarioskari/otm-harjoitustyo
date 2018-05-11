@@ -72,7 +72,7 @@ public class HighScoresDao {
      *
      * @return List of CREATE TABLE commands
      */
-    public List<String> createTables() {
+    private List<String> createTables() {
         List<String> list = new ArrayList<>();
         list.add("CREATE TABLE scoresEasy (id nvarchar(255), score integer);");
         list.add("CREATE TABLE scoresNormal (id nvarchar(255), score integer);");
@@ -86,7 +86,7 @@ public class HighScoresDao {
      * @param difficulty Selected difficulty
      * @return Table name as string
      */
-    public String getTableName(int difficulty) {
+    private String getTableName(int difficulty) {
         String table;
         if (difficulty == 3) {
             table = "scoresHard";
