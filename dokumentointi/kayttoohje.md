@@ -43,11 +43,11 @@ Ammus 2: Osuessaan tuottaa vahinkoa 25 pisteen verran. Ammuksella on neljä kert
 Pelissä on satunnaisesti muuttuva tuuli, joka vaikuttaa ammusten lentoratoihih. Pelin yläreunassa oleva "Wind"-palkki kertoo sen hetkisen tuulen suunnan ja voimakkuuden.
 
 Näppäinkomennot:\
-Tykin piipun kääntäminen: Nuolinäppäimet ylös/alas
-Ampumisvoiman säätäminen: Nuolinäppäimet oikea/vasen
-Ampuminen/tähtäys valmis: ENTER
-Valitse ammus 1: Numeronäppäin 1
-Valitse ammus 2: Numeronäppäin 2
+* Tykin piipun kääntäminen: Nuolinäppäimet ylös/alas
+* Ampumisvoiman säätäminen: Nuolinäppäimet oikea/vasen
+* Ampuminen/tähtäys valmis: ENTER
+* Valitse ammus 1: Numeronäppäin 1
+* Valitse ammus 2: Numeronäppäin 2
 
 Pelatessasi tietokonetta vastaan, voit tallentaa saavuttamasi pistemäärän pelin päätyttyä painamalla näppäintä "S". Pisteiden tallennuksen yhteydessä pelin kysyy nimimerkkiä, jolla haluat tallentaa pisteet.
 
