@@ -11,7 +11,7 @@ import tykkipeli.objects.Vector;
 public class BasicShell extends Ammo {
 
     /**
-     * Constructor for class BasicShell.
+     * Constructor for class BasicShell. Extends class Ammo.
      */
     public BasicShell() {
         super(1, 10, 0.25);
