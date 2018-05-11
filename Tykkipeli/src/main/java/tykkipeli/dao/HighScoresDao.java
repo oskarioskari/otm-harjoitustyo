@@ -43,7 +43,7 @@ public class HighScoresDao {
 
     /**
      * Attempts to create new database. If database already exists, method
-     * prints warning and does nothing.
+     * prints message and continues.
      */
     public void createNewDatabase() {
         try (Connection conn = getConnection()) {
@@ -54,7 +54,15 @@ public class HighScoresDao {
             st.close();
             conn.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            if (ex.getMessage().equals("table scoresEasy already exists")) {
+                System.out.println("High score database already exists. "
+                        + "Using existing database.");
+            } else if (ex.getMessage().contains("path to 'res/highscores.db'")) {
+                System.out.println("Could not locate path 'res/'. "
+                        + "Make sure that folder 'res' exists before restarting.\n"
+                        + "Closing application.");
+                System.exit(1);
+            }
         }
     }
 
@@ -106,7 +114,7 @@ public class HighScoresDao {
             st.close();
             conn.close();
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Error while saving score to database. Score might not been saved.");
         }
     }
 
@@ -121,7 +129,8 @@ public class HighScoresDao {
         String table = getTableName(difficulty);
         try {
             Connection conn = getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM " + table + " ORDER BY score DESC LIMIT 3;");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM "
+                    + table + " ORDER BY score DESC LIMIT 3;");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("id");
@@ -132,7 +141,7 @@ public class HighScoresDao {
             st.close();
             conn.close();
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Error while reading scores from database.");
         }
         return list;
     }
