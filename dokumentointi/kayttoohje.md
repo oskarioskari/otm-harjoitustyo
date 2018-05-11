@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto *linkki tiedostoon tähän*\
+Lataa tiedosto [Tykkipeli-1.0.jar](https://github.com/oskarioskari/otm-harjoitustyo/releases/download/v1.0/Tykkipeli-1.0.jar)\
 Lataa pelin graafiset [elementit](https://github.com/oskarioskari/otm-harjoitustyo/tree/master/Tykkipeli/res/pictures) pelin asennushakemistossa sijaitsevaan kansioon *res/pictures/*. Tarvittaessa luo kyseinen hakemisto.
 
 ## Konfigurointi
