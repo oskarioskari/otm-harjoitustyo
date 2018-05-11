@@ -11,7 +11,7 @@ Näiden lisäksi *tykkipeli.physicobjects* sisältää pelin graafiset ja fysiik
 
 ### Tarkempi luokkakaavio
 Luokkakaavio:\
-<img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/UML-viikko6.png" width="470">
+<img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/UML-v1_0.png" width="470">
 \
 
 ## Toiminnallisuudet
