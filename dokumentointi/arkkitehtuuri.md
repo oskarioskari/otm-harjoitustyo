@@ -14,11 +14,11 @@ Näiden lisäksi *tykkipeli.physicobjects* sisältää pelin graafiset ja fysiik
 ### Tarkempi luokkakaavio
 Luokkakaavio:\
 <img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/UML-v1_0.png" width="470">
-\
+
 
 ## Toiminnallisuudet
 ### Fysiikkamallinnus
-Pelissä ammusten lentoradat lasketaan reaaliajassa käyttäen hyväksi Velocity Verlet -algoritmia.\
+Pelissä ammusten lentoradat lasketaan reaaliajassa käyttäen hyväksi Velocity Verlet -algoritmia.
 
 Sekvenssikaavio tilanteesta, jossa ammusta liikutetaan yksi askel:\
 <img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio-moveAmmo.png" width="732">
