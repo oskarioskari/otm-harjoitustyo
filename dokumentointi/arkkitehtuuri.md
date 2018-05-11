@@ -34,4 +34,4 @@ Algoritmi etenee karkeasti seuraavalla tavalla:
 Yksityiskohtainen kuvaus algoritmin toiminnasta löytyy [Wikipediasta](https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet).
 
 Sekvenssikaavio tilanteesta, jossa ammusta liikutetaan yksi askel:\
-<img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio-moveAmmo.png" width="732">
+<img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio-moveAmmo_new.png" width="732">
