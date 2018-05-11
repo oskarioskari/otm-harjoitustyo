@@ -48,6 +48,9 @@ Kaikki tietokantataulut sisältävät kaksi saraketta:
 * id - Pelaajan nimimerkki (merkkijono)
 * score - Pelaajan saavuttama pistemäärä (kokonaisluku)
 
+Oheessa esimerkki tilanteesta, jossa pelin päätteeksi tallennetaan pisteet tietokantaan:\
+<img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio-saveHighScore.png" width="732">
+
 ## Ohjelman rakenteeseen jääneet heikkoudet
 ### Käyttöliittymä
 * Pelissä eri päänäkymät avataan aina omiin ikkunoihinsa, jolloin päävalikko jää taustalle auki, kun peli alkaa. Tämä mahdollistaa ei haluttujan toimintoja, kuten esimerkiksi tekoälyn vaikeusasteen vaihtamisen kesken pelin.
