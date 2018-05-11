@@ -66,7 +66,8 @@ public class GameAi {
     }
 
     /**
-     * AI plays one round at hard difficulty.
+     * AI plays one round at hard difficulty. Plays randomly, but tries to
+     * negate the effect caused by wind.
      *
      * @param aiPlayerNum AI player's number
      */
