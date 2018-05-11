@@ -1,7 +1,8 @@
 # Tykkipeli
 
 Harjoitustyö kurssille Ohjelmistotekniikan menetelmät (kevät 2018).\
-Harjoitustyön aiheena on pienimuotoinen peli, nimeltä *Tykkipeli*. Pelissä kaksi pelaajaa antavat ensin tulikomentonsa tykeille (ampumiskulma ja voimakkuus), jonka jälkeen tykit ampuvat yhtäaikaa.\
+Valitsemanani harjoitustyön aiheena on pienimuotoinen peli, nimeltään *Tykkipeli*.\
+Pelissä kaksi pelaajaa antavat ensin tulikomentonsa tykeille (ampumiskulma ja voimakkuus), jonka jälkeen tykit ampuvat toisiaan samanaikaisesti.\
 Pelin tavoitteena on tuhota toisen pelaajan tykki.\
 \
 [Loppupalautus](https://github.com/oskarioskari/otm-harjoitustyo/releases/tag/v1.0)\
