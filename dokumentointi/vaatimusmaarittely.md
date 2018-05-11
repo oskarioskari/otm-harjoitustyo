@@ -19,7 +19,7 @@ Sovelluksella on vain yksi käyttäjärooli *pelaaja*.
 
 Sovelluksessa on kaksi eri näkymää: *päävalikkonäkymä* ja *pelinäkymä*.
 
-* Päävalikon kautta voidaan siirtyä pelinäkymään sekä päästä käsiksi pelin asetuksiin.
+* Päävalikon kautta voidaan siirtyä pelinäkymään sekä päästä käsiksi pelin asetuksiin ja huippupisteisiin.
 
 * Pelinäkymä koostuu kaksiulotteisesta, sivulta päin kuvatusta kartasta jolla itse pelaaminen tapahtuu sekä kuvan yläreunassa olevista pistelaskureista. Kartta koostuu kahdesta alueesta: maasta ja ilmasta. Tykit sijaitsevat maan pinnalla.
 
