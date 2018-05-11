@@ -16,7 +16,7 @@ Ohjelmassa on vain yksi DAO-luokka, *HighScoresDao*. Ennen jokaista testiä luod
 
 Sovelluksen testien (ilman käyttöliittymäluokkia) rivikattavuus on 97% ja haaraumakattavuus on 87%.
 
-*TODO KUVA*
+<img src="https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kuvat/testauskattavuus.png" width="1068">
 
 ## Järjestelmätestaus
 
