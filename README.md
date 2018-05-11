@@ -4,13 +4,16 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät (kevät 2018).\
 Harjoitustyön aiheena on pienimuotoinen peli, nimeltä *Tykkipeli*. Pelissä kaksi pelaajaa antavat ensin tulikomentonsa tykeille (ampumiskulma ja voimakkuus), jonka jälkeen tykit ampuvat yhtäaikaa.\
 Pelin tavoitteena on tuhota toisen pelaajan tykki.\
 \
-[Linkki viikon 5 releaseen](https://github.com/oskarioskari/otm-harjoitustyo/releases/tag/v0.5)
+[Loppupalautus TODO](null)\
+[Viikon 6 release](https://github.com/oskarioskari/otm-harjoitustyo/releases/tag/v0.6)\
+[Viikon 5 release](https://github.com/oskarioskari/otm-harjoitustyo/releases/tag/v0.5)
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)\
 [Vaatimusmäärittely](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)\
-[Tuntikirjanpito](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)\
 [Arkkitehtuuri](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)\
-[Käyttöohje](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
+[Testausdokumentti](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/testaus.md)\
+[Tuntikirjanpito](https://github.com/oskarioskari/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
 
 ## Komentorivitoiminnot
 ### Testaus
@@ -22,18 +25,22 @@ Testauskattavuusraportti luodaan komennolla
 ```
 mvn test jacoco:report
 ```
+Testauskattavuusraporttia voi tarkastella hakemistosta *target/site/jacoco/index.html*
+
 ### Checkstyle
 Checkstyle tarkistukset suoritetaan komennolla
 ```
 mvn jxr:jxr checkstyle:checkstyle
 ```
-Mahdolliset virheilmoitukset löydät tiedostosta *target/site/checkstyle.html*
+Mahdolliset virheilmoitukset löydät hakemistosta *target/site/checkstyle.html*
 
 ### .jar:n generointi
 Suoritettavan .jar-tiedoston generointi tapahtuu komennolla
 ```
 mvn package
 ```
+Suoritettava .jar-tiedosto löytyy hakemistosta *target/*
+
 ### JavaDoc
 JavaDoc generoidaan komennolla
 ```
