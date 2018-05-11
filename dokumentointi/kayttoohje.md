@@ -1,7 +1,7 @@
 # Käyttöohje
 
 Lataa tiedosto *linkki tiedostoon tähän*\
-Lataa pelin graafiset [elementit](https://github.com/oskarioskari/otm-harjoitustyo/tree/master/Tykkipeli/res/pictures) kansioon *res/pictures/*.
+Lataa pelin graafiset [elementit](https://github.com/oskarioskari/otm-harjoitustyo/tree/master/Tykkipeli/res/pictures) pelin asennushakemistossa sijaitsevaan kansioon *res/pictures/*. Tarvittaessa luo kyseinen hakemisto.
 
 ## Konfigurointi
 
