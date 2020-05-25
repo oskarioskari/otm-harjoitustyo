@@ -40,7 +40,7 @@ Pelissä on valittavana kaksi erilaista ammustyyppiä:
 * Ammus 1: Osuessaan tuottaa vahinkoa 10 pisteen verran.
 * Ammus 2: Osuessaan tuottaa vahinkoa 25 pisteen verran. Ammuksella on neljä kertaa suurempi ilmanvastuskerroin, kuin ammuksella 1.
 
-Pelissä on satunnaisesti muuttuva tuuli, joka vaikuttaa ammusten lentoratoihih. Pelin yläreunassa oleva "Wind"-palkki kertoo sen hetkisen tuulen suunnan ja voimakkuuden.
+Pelissä on satunnaisesti muuttuva tuuli, joka vaikuttaa ammusten lentoratoihin. Pelin yläreunassa oleva "Wind"-palkki kertoo sen hetkisen tuulen suunnan ja voimakkuuden.
 
 Näppäinkomennot:
 * Tykin piipun kääntäminen: Nuolinäppäimet ylös/alas
